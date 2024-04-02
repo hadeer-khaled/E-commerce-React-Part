@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 // import { getUserById } from "./../../axios/UserProfile.jsx";
 import { useDispatch, useSelector } from "react-redux";
-
 import { getLoggedUserThunk } from "./../../store/slices/userProfileSlice";
 
 const UserProfile = () => {
