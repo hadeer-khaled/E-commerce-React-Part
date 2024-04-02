@@ -1,6 +1,6 @@
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import UserProfile from "./pages/UserProfile/UserProfile";
-
+import Login from "./pages/Login";
 function Layout() {
   return (
     <>
@@ -28,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: "/userprofile",
         element: <UserProfile />,
+      },
+      {
+        path: "/login",
+        element:<Login/>,
+      },
+      {
+        path: "/register",
+        element: <><h1>Rgister Page</h1></>,
       },
     ],
   },
