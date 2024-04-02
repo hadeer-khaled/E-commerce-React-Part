@@ -75,7 +75,7 @@ function Login() {
         </div>
         <Link to='/register'>
         <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
-          Don&apos;t have an account? <a className="text-red-600 hover:underline hover:underline-offset-4" href="#">Register</a>
+          Don&apos;t have an account? <p className="text-red-600 hover:underline hover:underline-offset-4" href="#">Register</p>
         </div>
         </Link>
         {/* <h1 id={import.meta.env.VITE_BASE_URL}>aaa</h1> */}
