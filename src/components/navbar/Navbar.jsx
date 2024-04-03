@@ -2,58 +2,84 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <><nav className="navbar">
-          <div className="navbar-container">
-              <Link to="/" className="navbar-logo">
-                  Your Logo
-              </Link>
-              <ul className="navbar-menu">
-                  <li className="navbar-item">
-                      <Link to="/" className="navbar-link">
-                          Home
-                      </Link>
-                  </li>
-                  {/* Add other navigation links here */}
-              </ul>
+    <>
+      <div className="navbar fixed top-0 px-5 py-0 bg-base-100 left-0 right-0 shadow-md h-19">
+        <div className="flex-1">
+          <a className="btn btn-ghost text-xl uppercase">E-Shop</a>
+        </div>
+
+        <div className="md:flex items-center">
+          <div className="flex flex-col md:flex-row md:mx-6">
+            <a className="my-1 text-sm font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">Home</a>
+            <a className="my-1 text-sm font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">Shop</a>
+            <a className="my-1 text-sm font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">Contact</a>
+            <a className="my-1 text-sm font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">About</a>
           </div>
-      </nav><nav class="bg-white shadow">
-              <div class="container mx-auto px-6 py-3 md:flex md:justify-between md:items-center">
-                  <div class="flex justify-between items-center">
-                      <div>
-                          <a class="text-gray-800 text-xl font-bold md:text-2xl hover:text-gray-700" href="#">Brand</a>
-                      </div>
+        </div>
 
-                      {/* <!-- Mobile menu button --> */}
-                      <div class="flex md:hidden">
-                          <button type="button" class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="toggle menu">
-                              <svg viewBox="0 0 24 24" class="h-6 w-6 fill-current">
-                                  <path fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
-                              </svg>
-                          </button>
-                      </div>
-                  </div>
-
-                  {/* <!-- Mobile Menu open: "block", Menu closed: "hidden" --> */}
-                  <div class="md:flex items-center">
-                      <div class="flex flex-col md:flex-row md:mx-6">
-                          <a class="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">Home</a>
-                          <a class="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">Shop</a>
-                          <a class="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">Contact</a>
-                          <a class="my-1 text-sm text-gray-700 font-medium hover:text-indigo-500 md:mx-4 md:my-0" href="#">About</a>
-                      </div>
-
-                      <div class="flex justify-center md:block">
-                          <a class="relative text-gray-700 hover:text-gray-600" href="#">
-                              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.70711 15.2929C4.07714 15.9229 4.52331 17 5.41421 17H17M17 17C15.8954 17 15 17.8954 15 19C15 20.1046 15.8954 21 17 21C18.1046 21 19 20.1046 19 19C19 17.8954 18.1046 17 17 17ZM9 19C9 20.1046 8.10457 21 7 21C5.89543 21 5 20.1046 5 19C5 17.8954 5.89543 17 7 17C8.10457 17 9 17.8954 9 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                              </svg>
-
-                              <span class="absolute top-0 left-0 rounded-full bg-indigo-500 text-white p-1 text-xs"></span>
-                          </a>
-                      </div>
-                  </div>
+        <div className="flex-none">
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+              <div className="indicator">
+                <i className="fas fa-heart text-red-500 fa-lg"></i>
+                <span className="badge badge-sm indicator-item -translate-y-4">8</span>
               </div>
-          </nav></>
+            </div>
+
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle translate-y-1 me-4">
+              <div className="indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                <span className="badge badge-sm indicator-item">8</span>
+              </div>
+            </div>
+
+            <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
+              <div className="card-body">
+                <span className="font-bold text-lg">8 Items</span>
+                <span className="text-info">Subtotal: $999</span>
+                <div className="card-actions">
+                  <button className="btn btn-primary btn-block">View cart</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div className="dropdown dropdown-end me-5">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              </div>
+            </div>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li><a>Settings</a></li>
+              <li><a>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn m-1 p-2 bg-transparent border-none shadow-none">
+            Theme
+            <svg width="12px" height="12px" className="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+          </div>
+          <ul tabIndex={0} className="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-40">
+            <li><input type="radio" name="theme-dropdown" className="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Default" value="default" /></li>
+            <li><input type="radio" name="theme-dropdown" className="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="synthwave" value="synthwave" /></li>
+            <li><input type="radio" name="theme-dropdown" className="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="coffee" value="coffee" /></li>
+            <li><input type="radio" name="theme-dropdown" className="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="dark" value="dark" /></li>
+            <li><input type="radio" name="theme-dropdown" className="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="light" value="light" /></li>
+            <li><input type="radio" name="theme-dropdown" className="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="bumblebee" value="bumblebee" /></li>
+            <li><input type="radio" name="theme-dropdown" className="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Retro" value="retro" /></li>
+          </ul>
+        </div>
+      </div>
+    </>
   );
 }
 

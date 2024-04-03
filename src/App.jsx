@@ -3,6 +3,7 @@ import router from "./router";
 import "./App.css";
 import { useEffect } from "react";
 import { themeChange } from "theme-change";
+import '@fortawesome/fontawesome-free/css/all.css';
 
 function App() {
 
