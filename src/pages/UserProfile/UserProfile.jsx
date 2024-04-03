@@ -1,49 +1,15 @@
 import { useState, useEffect } from "react";
-import { getUserById, updateUserById } from "./../../axios/UserProfile.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getLoggedUserThunk,
   updateUserThunk,
 } from "./../../store/slices/userProfileSlice";
 
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
 const UserProfile = () => {
   const userId = 1;
-  // const [userData, setUserData] = useState({});
-
-  // useEffect(() => {
-  //   getUserById(userId)
-  //     .then((res) => {
-  //       console.log("getUserById data", res.data);
-  //       setUserData(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
-  // function updateUser() {
-  //   updateUserById(userId, { first_name: "Hesham" })
-  //     .then((res) => {
-  //       console.log("updated data", res.data);
-  //       setUserData(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-  // useEffect(() => {
-  //   getUserById(userId)
-  //     .then((res) => {
-  //       console.log("res", res.data);
-
-  //       setUserData(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [userData]);
-
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
 
@@ -52,10 +18,20 @@ const UserProfile = () => {
   }, [dispatch]);
   console.log("loggedUser:", loggedUser);
 
-  const updateUserProfile = async () => {
-    const updatedUserData = {
-      first_name: "Hesham",
-    };
+  // Update the form initial values whenever loggedUser changes
+  useEffect(() => {
+    if (loggedUser) {
+      formik.setValues({
+        first_name: loggedUser.first_name,
+        email: loggedUser.email,
+      });
+    }
+  }, [loggedUser]);
+
+  const updateUserProfile = async (updatedUserData) => {
+    // const updatedUserData = {
+    //   first_name: "Rahma",
+    // };
     try {
       console.log("Dispatching updateUserThunk action");
       dispatch(updateUserThunk({ userId, updatedUserData }));
@@ -64,6 +40,25 @@ const UserProfile = () => {
       console.error("Error updating user profile:", error);
     }
   };
+
+  // --------------------- Formik ---------------- \\
+  const formik = useFormik({
+    initialValues: {
+      first_name: "",
+      email: "",
+    },
+    validationSchema: Yup.object({
+      first_name: Yup.string().required("Name is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      updateUserProfile(values);
+    },
+  });
+
   return (
     <div className="container mt-3">
       <h1>User Data </h1>
@@ -77,7 +72,39 @@ const UserProfile = () => {
       <button className="btn" onClick={updateUserProfile}>
         Update Profile
       </button>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <form onSubmit={formik.handleSubmit}>
+          <div>
+            <input
+              type="text"
+              name="first_name"
+              id="first_name"
+              placeholder="first_name"
+              onChange={formik.handleChange}
+              value={formik.values.first_name}
+            />
+            {formik.errors.first_name && formik.touched.first_name && (
+              <div className="error">{formik.errors.first_name}</div>
+            )}
+          </div>
+          <div>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              placeholder="email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+            />
+            {formik.errors.email && formik.touched.email && (
+              <div className="error">{formik.errors.email}</div>
+            )}
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 };
+
 export default UserProfile;

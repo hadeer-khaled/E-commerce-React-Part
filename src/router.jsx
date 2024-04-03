@@ -2,7 +2,7 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-
+import UserProfileForm from "./components/userProfileForm/userProfileForm";
 function Layout() {
   return (
     <>
@@ -32,12 +32,16 @@ const router = createBrowserRouter([
         element: <UserProfile />,
       },
       {
+        path: "/userprofileform",
+        element: <UserProfileForm />,
+      },
+      {
         path: "/login",
-        element:<Login/>,
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register/>,
+        element: <Register />,
       },
     ],
   },
