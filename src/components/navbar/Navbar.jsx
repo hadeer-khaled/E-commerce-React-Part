@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   return (
     <>
-      <div className="navbar me-auto fixed top-0 px-5 py-0 bg-base-100 left-0 right-0 shadow-md h-19 px-14">
+      <div className="navbar me-auto fixed top-0 pe-5 ps-2 py-0 bg-base-100 left-0 right-0 shadow-md h-19 px-14">
         
         <div className="">
 
           <div className="">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-conten">
+            <div className="drawer-content">
               {/* Page content here */}
               <label htmlFor="my-drawer" className="btn btn-square btn-ghost drawer-label">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
               </label>
             </div> 
             <div className="drawer-side">
-              <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-              <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+              <ul className="menu p-2 pt-20 w-36 min-h-full bg-base-200 text-base-content">
                 {/* Sidebar content here */}
                 <li>
                   <Link to='/'>
@@ -95,7 +95,7 @@ function Navbar() {
                   <span className="badge badge-sm indicator-item -translate-y-4">0</span>
                 </div>
               </div>
-              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow translate-x-16">
+              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600">
                 <div className="card-body">
                   <span className="font-bold text-lg">0 Items</span>
                   <div className="card-actions">
@@ -112,7 +112,7 @@ function Navbar() {
                   <span className="badge badge-sm indicator-item">0</span>
                 </div>
               </div>
-              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow translate-x-14">
+              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600">
                 <div className="card-body">
                   <span className="font-bold text-lg">0 Items</span>
                   <span className="text-info">Subtotal: $999</span>
@@ -132,9 +132,9 @@ function Navbar() {
                   <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                 </div>
               </div>
-              <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-slate-600">
+              <ul tabIndex={0} className="mt-3 z-[1] py-4 shadow menu menu-sm dropdown-content w-36 h-30 p-2 bg-base-100 rounded-box translate-x-6 -translate-y-1 border border-slate-600 justify-evenly">
                 <li>
-                  <a className="justify-between">
+                  <a className="">
                     Profile
                     {/* <span className="badge">New</span> */}
                   </a>
