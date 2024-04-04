@@ -2,6 +2,7 @@ import { Outlet, createBrowserRouter } from "react-router-dom";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import Payment from "./pages/payment/Payment";
 
 function Layout() {
   return (
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register/>,
+      }
+      ,{
+        path: "/payment",
+        element: <Payment/>,
       },
     ],
   },
