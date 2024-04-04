@@ -29,9 +29,6 @@ const UserProfile = () => {
   }, [loggedUser]);
 
   const updateUserProfile = async (updatedUserData) => {
-    // const updatedUserData = {
-    //   first_name: "Rahma",
-    // };
     try {
       console.log("Dispatching updateUserThunk action");
       dispatch(updateUserThunk({ userId, updatedUserData }));
@@ -61,17 +58,6 @@ const UserProfile = () => {
 
   return (
     <div className="container mt-3">
-      <h1>User Data </h1>
-      <div className="row mt-3">
-        <ul>
-          <li> {loggedUser.first_name}</li>
-          <li> {loggedUser.last_name}</li>
-          <li> {loggedUser.phone}</li>
-        </ul>
-      </div>
-      <button className="btn" onClick={updateUserProfile}>
-        Update Profile
-      </button>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <form onSubmit={formik.handleSubmit}>
           <div>
