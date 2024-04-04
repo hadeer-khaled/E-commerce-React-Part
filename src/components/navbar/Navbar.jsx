@@ -7,10 +7,6 @@ function Navbar() {
         
         <div className="">
 
-          <div className="flex-1 text-start">
-            <a className="btn btn-ghost text-xl uppercase">E-Shop</a>
-          </div>
-
           <div className="">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-conten">
@@ -23,10 +19,39 @@ function Navbar() {
               <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
               <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                 {/* Sidebar content here */}
-                <li><a>Sidebar Item 1</a></li>
-                <li><a>Sidebar Item 2</a></li>
+                <li>
+                  <Link to='/'>
+                    <a>Home</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/'>
+                    <a>Shop</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/'>
+                    <a>Contact</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/'>
+                    <a>about</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/footer'>
+                    <a>Footer</a>
+                  </Link>
+                </li>
               </ul>
             </div>
+          </div>
+
+          <div className="flex-1 text-start">
+            <Link to='/'>
+              <a className="btn btn-ghost text-xl uppercase">E-Shop</a>
+            </Link>
           </div>
 
         </div>
@@ -53,6 +78,13 @@ function Navbar() {
           <button className="btn btn-ghost btn-circle">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </button>
+
+          <div id="login" className='px-2'>
+            <Link to='/login'>Login</Link>
+          </div>
+          <div id="register" className='px-2'>
+            <Link to='/register'>Register</Link>
+          </div>
 
           <div id='nav-cart-icons' className="flex-none">
 
