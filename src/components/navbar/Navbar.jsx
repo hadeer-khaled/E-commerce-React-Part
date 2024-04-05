@@ -17,7 +17,7 @@ function Navbar() {
             </div> 
             <div className="drawer-side">
             <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-              <ul className="menu p-2 pt-20 w-36 min-h-full bg-base-200 text-base-content">
+              <ul className="menu p-2 pt-20 w-36 min-h-full bg-base-200 text-base-content z-50">
                 {/* Sidebar content here */}
                 <li>
                   <Link to='/'>
@@ -95,7 +95,7 @@ function Navbar() {
                   <span className="badge badge-sm indicator-item -translate-y-4">0</span>
                 </div>
               </div>
-              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600">
+              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
                 <div className="card-body">
                   <span className="font-bold text-lg">0 Items</span>
                   <div className="card-actions">
@@ -112,7 +112,7 @@ function Navbar() {
                   <span className="badge badge-sm indicator-item">0</span>
                 </div>
               </div>
-              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600">
+              <div tabIndex={0} className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
                 <div className="card-body">
                   <span className="font-bold text-lg">0 Items</span>
                   <span className="text-info">Subtotal: $999</span>
@@ -132,7 +132,7 @@ function Navbar() {
                   <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                 </div>
               </div>
-              <ul tabIndex={0} className="mt-3 z-[1] py-4 shadow menu menu-sm dropdown-content w-36 h-30 p-2 bg-base-100 rounded-box translate-x-6 -translate-y-1 border border-slate-600 justify-evenly">
+              <ul tabIndex={0} className="mt-3 z-[1] py-4 shadow menu menu-sm dropdown-content w-36 h-30 p-2 bg-base-100 rounded-box translate-x-6 -translate-y-1 border border-slate-600 justify-evenly z-50">
                 <li>
                   <a className="">
                     Profile
@@ -145,7 +145,7 @@ function Navbar() {
             </div>
           </div>
 
-          <div id='nav-theme' className="dropdown fixed top-20 end-0">
+          <div id='nav-theme' className="dropdown fixed top-20 end-0 z-50">
             <div tabIndex={0} role="button" className="btn ps-4 bg-transparent shadow-none border-none w-12 me-0 pe-7 rounded-s-2xl rounded-e-none">
               {/* <svg width="12px" height="12px" className="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg> */}
               <i className="fas fa-gear fa-lg"></i>
