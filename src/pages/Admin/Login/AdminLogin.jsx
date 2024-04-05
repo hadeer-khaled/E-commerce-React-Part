@@ -1,3 +1,11 @@
+// function AdminLogin() {
+//   return (
+//     <div>AdminLogin</div>
+//   )
+// }
+
+// export default AdminLogin
+
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
@@ -10,7 +18,7 @@ const client = axios.create({
   baseURL: "http://127.0.0.1:8000" 
 })
 
-function Login() {
+function AdminLogin() {
   // console.log(client.baseURL)
   const [email , setEmail] = useState('')
   const [password , setPassword] = useState('')
@@ -41,12 +49,15 @@ function Login() {
       email:email,
       password:password
     })
-    client.post("/users/login/",
+    client.post("/users/admin/login/",
     {
       email:email,
       password:password
     }).then((res)=>{
       console.log(res.data.message)
+      console.log(JSON.stringify(res.data.data))
+    }).catch((err)=>{
+      console.log(err.response.statusText)
     })
     console.log("Email : " + email )
     console.log("Password : " + password )
@@ -85,4 +96,4 @@ function Login() {
   )
 }
 
-export default Login
+export default AdminLogin
