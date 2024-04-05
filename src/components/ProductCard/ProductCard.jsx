@@ -16,17 +16,13 @@ const ProductCard = ({ product }) => {
             <div className='rating-container'>
                 <div className="rating grid-cols-subgrid">
                   <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
-                  <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" checked />
+                  <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
                   <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
                   <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
                   <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
                 </div>
             </div>
-            <button className='grid-cols-subgrid'>
-                <Link to='/'>
-                    <a className='text-blue-600'>{product.category}</a>
-                </Link>
-            </button>
+            <Link to='/' className='grid-cols-subgrid text-blue-600'>{product.category}</Link>
             <button className=' justify-self-start grid-cols-subgrid'><i className="fas fa-heart fa-xl text-red-800"></i></button>
             {/* <button className="btn btn-primary">Add to cart</button> */}
         </div>
