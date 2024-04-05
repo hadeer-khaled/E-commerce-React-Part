@@ -5,7 +5,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home/Home";
-
+import Wishlist from "../src/pages/Wishlist/Wishlist";
 function Layout() {
   return (
     <>
@@ -28,27 +28,30 @@ function Layout() {
 const router = createBrowserRouter([
   {
     element: <Layout />,
-    // errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Home />,
       },
       {
-        path: "/userprofile",
+        path: '/userprofile',
         element: <UserProfile />,
       },
       {
-        path: "/userOrders",
+        path: '/userOrders',
         element: <UserOrders />,
       },
       {
-        path: "/login",
+        path: '/login',
         element: <Login />,
       },
       {
-        path: "/register",
+        path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/wishlist', // Define the path for the wishlist page
+        element: <Wishlist />, // Render the Wishlist component
       },
     ],
   },
