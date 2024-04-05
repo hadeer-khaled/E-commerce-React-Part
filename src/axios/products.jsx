@@ -1,9 +1,10 @@
 import axiosInstance from "./config.js";
 
-export const getProducts = () => {
-  return axiosInstance.get("products")
+export const getProducts = (page, limit) => {
+  
+  return axiosInstance.get(`products/?page=${page}&limit=${limit}`)
     .then((response) => {
-      console.log("Data:", response.data);
+      // console.log("Data:", response.data);
       return response.data;
     })
     .catch((error) => {

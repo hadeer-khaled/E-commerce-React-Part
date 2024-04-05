@@ -5,13 +5,16 @@ const initialState = {
   productList: [],
   isLoading: false,
   error: null,
+  currentPage: 1,
+  totalPages: 1,
 };
 
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async () => {
-      const products = await getProducts();
-      return products;
+export const getProductsThunk = createAsyncThunk(
+  "products/getProducts",
+  async ({ page, limit }) => {
+    const data = await getProducts(page, limit);
+    // console.log("Data:", data);
+    return data;
   }
 );
 
@@ -21,20 +24,21 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(getProductsThunk.pending, (state) => {
         state.isLoading = true;
-        state.error = null; // Clear any previous errors
+        state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(getProductsThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.productList = action.payload;
+        state.productList = action.payload.products;
+        state.currentPage = action.payload.current_page;
+        state.totalPages = action.payload.total_pages;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(getProductsThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
   },
 });
 
-// Export the reducer
 export default productSlice.reducer;

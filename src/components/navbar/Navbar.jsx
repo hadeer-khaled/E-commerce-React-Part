@@ -21,36 +21,36 @@ function Navbar() {
                 {/* Sidebar content here */}
                 <li>
                   <Link to='/'>
-                    <a>Home</a>
+                    Home
                   </Link>
                 </li>
                 <li>
                   <Link to='/'>
-                    <a>Shop</a>
+                    Shop
                   </Link>
                 </li>
                 <li>
                   <Link to='/'>
-                    <a>Contact</a>
+                    Contact
                   </Link>
                 </li>
                 <li>
                   <Link to='/'>
-                    <a>about</a>
+                    about
                   </Link>
                 </li>
                 <li>
                   <Link to='/'>
-                    <a>Footer</a>
+                    Footer
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="flex-1 text-start">
+          <div className="flex-1 text-start btn btn-ghost text-xl uppercase">
             <Link to='/'>
-              <a className="btn btn-ghost text-xl uppercase">E-Shop</a>
+              E-Shop
             </Link>
           </div>
 
