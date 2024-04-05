@@ -1,0 +1,14 @@
+.hero{
+    height: 42vh;
+    top: 0px;
+    background-image: url("img/");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media(max-width: 500px){
+    .hero{
+        height: 500px;
+    }
+}

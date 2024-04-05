@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   return (
     <>
-      <div className="navbar me-auto fixed top-0 pe-5 ps-2 py-0 bg-base-200 left-0 right-0 shadow-md   h-19 px-14">
+      <div className="navbar me-auto fixed top-0 z-50 pe-5 ps-2 py-0 bg-base-200 left-0 right-0 shadow-md h-19 px-14">
         
         <div className="">
 
