@@ -5,13 +5,14 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home/Home";
+import Footer from "./components/footer/Footer";
 
 function Layout() {
   return (
     <>
       <Navbar />
       <Outlet />
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

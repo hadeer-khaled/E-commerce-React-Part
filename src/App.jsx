@@ -4,6 +4,7 @@ import "./App.css";
 import { useEffect } from "react";
 import { themeChange } from "theme-change";
 import '@fortawesome/fontawesome-free/css/all.css';
+// import ProductsList from "./components/product-list/product-list";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     <>
       <div className="App" data-choose-theme>
         <RouterProvider router={router} />
+        {/* <ProductsList></ProductsList> */}
       </div>
     </>
   );
