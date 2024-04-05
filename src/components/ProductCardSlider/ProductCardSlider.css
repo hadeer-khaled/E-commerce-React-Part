@@ -1,0 +1,20 @@
+.ProductCardSlider .carousel {
+    position: relative;
+    padding-top: 41vh;
+    left: 0;
+    right: 0;
+
+}
+
+.ProductCardSlider .ProductCardSlider {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.ProductCardSlider .card {
+    width: 25% !important;
+}
+
+.ProductCardSlider figure {
+ height: 70px !important;
+}

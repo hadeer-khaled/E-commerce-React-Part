@@ -1,70 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts } from '../../store/slices/productsSlice';
 import ProductCard from '../ProductCard/ProductCard';
-import ReactPaginate from 'react-paginate'; // Import React Paginate
-import './product-list.css'
+import './ProductCardSlider.css'
 
-const ProductsList = () => {
-//   const dispatch = useDispatch();
-//   const productList = useSelector(state => state.products.productList);
-//   const isLoading = useSelector(state => state.products.isLoading);
-//   const error = useSelector(state => state.products.error);
+const ProductCardSlider = () => {
 
-  // Pagination state
-  const [pageNumber, setPageNumber] = useState(0);
-  const productsPerPage = 8; // Number of products per page
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-//   useEffect(() => {
-//     dispatch(fetchProducts());
-//   }, [dispatch]);
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % Math.ceil(productList.length / 4));
+    };
 
-  const pageCount = Math.ceil(productList.length / productsPerPage);
+    const handlePrev = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + Math.ceil(productList.length / 4)) % Math.ceil(productList.length / 4));
+    };
 
-  const handlePageChange = ({ selected }) => {
-    setPageNumber(selected);
-  };
-
-  const displayedProducts = productList.slice(
-    pageNumber * productsPerPage,
-    (pageNumber + 1) * productsPerPage
-  );
-
-//   if (isLoading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (error) {
-//     return <div>Error: {error}</div>;
-//   }
-
-//   if (!productList || productList.length === 0) {
-//     return <div>No products found.</div>;
-//   }
-
-  return (
-    <div className='products-list'>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-16">
-        {displayedProducts.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-      <ReactPaginate
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={'pagination'}
-        activeClassName={'active'}
-      />
-    </div>
-  );
+    return (
+        <div className="ProductCardSlider hidden md:block">
+            <div className="carousel w-full relative">
+                {productList.length > 0 && (
+                    <div className="carousel-inner flex gap-4 ps-20 pe-20">
+                        {productList.slice(currentIndex * 4, (currentIndex + 1) * 4).map((product, index) => (
+                            <ProductCard key={index} product={product}/>
+                        ))}
+                    </div>
+                )}
+                <div className="absolute flex justify-between items-center w-full">
+                    <button className="btn btn-circle border" onClick={handlePrev}>❮</button>
+                    <button className="btn btn-circle border" onClick={handleNext}>❯</button>
+                </div>
+            </div>
+        </div>
+    );
 };
 
-export default ProductsList;
+export default ProductCardSlider;
+
+
 
 // dummy data to try before fetching the products list
 const productList =[
