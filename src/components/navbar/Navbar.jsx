@@ -40,7 +40,7 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link to='/footer'>
+                  <Link to='/'>
                     <a>Footer</a>
                   </Link>
                 </li>
