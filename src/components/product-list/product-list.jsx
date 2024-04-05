@@ -1,23 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts } from '../../store/slices/productsSlice';
+import React, { useState } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
-import ReactPaginate from 'react-paginate'; // Import React Paginate
-import './product-list.css'
 
 const ProductsList = () => {
-//   const dispatch = useDispatch();
-//   const productList = useSelector(state => state.products.productList);
-//   const isLoading = useSelector(state => state.products.isLoading);
-//   const error = useSelector(state => state.products.error);
-
-  // Pagination state
   const [pageNumber, setPageNumber] = useState(0);
   const productsPerPage = 8; // Number of products per page
-
-//   useEffect(() => {
-//     dispatch(fetchProducts());
-//   }, [dispatch]);
 
   const pageCount = Math.ceil(productList.length / productsPerPage);
 
@@ -25,46 +11,40 @@ const ProductsList = () => {
     setPageNumber(selected);
   };
 
+  const handlePrev = () => {
+    setPageNumber(prevPage => Math.max(0, prevPage - 1));
+  };
+
+  const handleNext = () => {
+    setPageNumber(prevPage => Math.min(pageCount - 1, prevPage + 1));
+  };
+
   const displayedProducts = productList.slice(
     pageNumber * productsPerPage,
     (pageNumber + 1) * productsPerPage
   );
 
-//   if (isLoading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (error) {
-//     return <div>Error: {error}</div>;
-//   }
-
-//   if (!productList || productList.length === 0) {
-//     return <div>No products found.</div>;
-//   }
-
   return (
-    <div className='products-list'>
+    <div className='products-list pt-16 text-center'>
+      <h2 className='card-title text-4xl pb-8 text-center m-auto self-center'>All Products</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-16">
         {displayedProducts.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <ReactPaginate
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
-        breakLabel={'...'}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={'pagination'}
-        activeClassName={'active'}
-      />
+      <div className="join">
+        <button className="join-item btn" onClick={handlePrev} disabled={pageNumber === 0}>«</button>
+        {[...Array(pageCount).keys()].map(page => (
+          <button key={page} className="join-item btn" onClick={() => handlePageChange({ selected: page })}>{page + 1}</button>
+        ))}
+        <button className="join-item btn" onClick={handleNext} disabled={pageNumber === pageCount - 1}>»</button>
+      </div>
     </div>
   );
 };
 
 export default ProductsList;
+
 
 // dummy data to try before fetching the products list
 const productList =[
