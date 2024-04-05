@@ -51,7 +51,7 @@ export default function Wishlist() {
           </thead>
           <tbody>
           {wishlistItems.map((product, index) => (
-  <tr key={index} className={index % 2 === 0 ? 'bg-warning' : ''}>
+  <tr key={index} className={index % 2 === 0 ? '' : ''}>
     <td>
       <div className="flex items-center gap-9">
         <div className="avatar">
