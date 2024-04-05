@@ -12,20 +12,20 @@ const ProductCard = ({ product }) => {
       <div className="card-body">
         <h2 className="card-title">{product.name}</h2>
         <p>{product.description}</p>
-        <div className="card-actions justify-between items-center p-3">
-            <div className="rating">
+        <div className="card-actions justify-between items-center p-3 grid-cols-* gap-4">
+            <div className="rating grid-cols-subgrid">
               <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
               <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" checked />
               <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
               <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
               <input type="radio" name="rating-2" className="mask mask-star-2 bg-orange-400 size-5" />
             </div>
-            <button className=''>
+            <button className='grid-cols-subgrid'>
                 <Link to='/'>
                     <a className='text-blue-600'>{product.category}</a>
                 </Link>
             </button>
-            <button className=' justify-self-start'><i className="fas fa-heart fa-xl text-red-800"></i></button>
+            <button className=' justify-self-start grid-cols-subgrid'><i className="fas fa-heart fa-xl text-red-800"></i></button>
             {/* <button className="btn btn-primary">Add to cart</button> */}
         </div>
       </div>
