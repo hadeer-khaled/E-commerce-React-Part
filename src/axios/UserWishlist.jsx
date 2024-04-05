@@ -12,7 +12,7 @@ export const fetchWishlistItems = async (userId) => {
     }
   } catch (error) {
     console.error('Error fetching wishlist items:', error);
-    throw error; // Propagate the error
+    throw error; 
   }
 };
 
@@ -25,10 +25,10 @@ export const removeProductFromWishlist = async (userId, productId) => {
         }
       });
       console.log('Product removed from wishlist:', response.data);
-      return response.data; // Return response data if needed
+      return response.data; 
     } catch (error) {
       console.error('Error removing product from wishlist:', error);
-      throw error; // Propagate the error
+      throw error; 
     }
   };
   
