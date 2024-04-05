@@ -11,9 +11,8 @@ const initialState = {
 
 export const getProductsThunk = createAsyncThunk(
   "products/getProducts",
-  async ({ page, limit }) => {
-    const data = await getProducts(page, limit);
-    // console.log("Data:", data);
+  async ({ page, limit, order, search, ...filters }) => {
+    const data = await getProducts({ page, limit, order, search, ...filters });
     return data;
   }
 );
