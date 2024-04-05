@@ -3,6 +3,7 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Payment from "./pages/payment/Payment";
+import AdminLogin from "./pages/Admin/Login/AdminLogin";
 
 function Layout() {
   return (
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         path: "/payment",
         element: <Payment/>,
       },
+      {
+        path: "/admin/login",
+        element: <AdminLogin/>,
+      }
     ],
   },
   // {
