@@ -13,8 +13,9 @@ export const getLoggedUserThunk = createAsyncThunk(
 );
 export const updateUserThunk = createAsyncThunk(
   "users/updateUser",
-  async ({ userId, updatedUserData }) => {
-    const res = await updateUserById(userId, updatedUserData);
+  async ({ userId, formData }) => {
+    console.log("userId", userId);
+    const res = await updateUserById(userId, formData);
     console.log("updated user data", res.data);
     return res.data;
   }

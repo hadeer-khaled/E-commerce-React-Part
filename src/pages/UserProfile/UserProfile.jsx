@@ -4,19 +4,19 @@ import {
   getLoggedUserThunk,
   updateUserThunk,
 } from "./../../store/slices/userProfileSlice";
+import axiosInstance from "./../../axios/config";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const UserProfile = () => {
-  const userId = 1;
+  const userId = 7;
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
 
   useEffect(() => {
     dispatch(getLoggedUserThunk(userId));
   }, [dispatch]);
-  console.log("loggedUser:", loggedUser);
 
   // Update the form initial values whenever loggedUser changes
   useEffect(() => {
@@ -28,10 +28,12 @@ const UserProfile = () => {
     }
   }, [loggedUser]);
 
-  const updateUserProfile = async (updatedUserData) => {
+  const updateUserProfile = async (formData) => {
     try {
-      console.log("Dispatching updateUserThunk action");
-      dispatch(updateUserThunk({ userId, updatedUserData }));
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ": " + pair[1]);
+      }
+      dispatch(updateUserThunk({ userId, formData }));
       console.log("Update dispatch successful");
     } catch (error) {
       console.error("Error updating user profile:", error);
@@ -43,6 +45,7 @@ const UserProfile = () => {
     initialValues: {
       first_name: "",
       email: "",
+      profileImage: null,
     },
     validationSchema: Yup.object({
       first_name: Yup.string().required("Name is required"),
@@ -51,8 +54,13 @@ const UserProfile = () => {
         .required("Email is required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      updateUserProfile(values);
+      console.log("Form values:", values);
+      const formData = new FormData();
+      formData.append("first_name", values.first_name);
+      formData.append("email", values.email);
+      formData.append("profileImage", values.profileImage);
+
+      updateUserProfile(formData);
     },
   });
 
@@ -85,6 +93,20 @@ const UserProfile = () => {
             {formik.errors.email && formik.touched.email && (
               <div className="error">{formik.errors.email}</div>
             )}
+          </div>
+          <div>
+            <input
+              type="file"
+              name="profileImage"
+              id="profileImage"
+              accept="image/*"
+              onChange={(event) => {
+                formik.setFieldValue(
+                  "profileImage",
+                  event.currentTarget.files[0]
+                );
+              }}
+            />
           </div>
           <button type="submit">Submit</button>
         </form>

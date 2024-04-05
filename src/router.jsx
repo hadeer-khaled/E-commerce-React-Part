@@ -31,10 +31,10 @@ const router = createBrowserRouter([
         path: "/userprofile",
         element: <UserProfile />,
       },
-      {
-        path: "/userprofileform",
-        element: <UserProfileForm />,
-      },
+      // {
+      //   path: "/userprofileform",
+      //   element: <UserProfileForm />,
+      // },
       {
         path: "/login",
         element: <Login />,
