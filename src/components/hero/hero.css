@@ -1,10 +1,10 @@
 .hero {
     height: 100vh;
     top: 0px;
-    background-image: url("img/7.webp");
-    /* background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0,0,0,0.2));
-    background-size: cover; */
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)), url("img/7.webp");
+    /* background-image: url("img/7.webp"); */
+    background-size: cover;
+    /* background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0,0,0,0.2)); */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("img/64935af2dc28f4e5ab236bbe_Group-5.svg");
     background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
