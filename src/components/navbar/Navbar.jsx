@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   return (
     <>
-      <div className="navbar me-auto fixed top-0 pe-5 ps-2 py-0 bg-base-100 left-0 right-0 shadow-md h-19 px-14">
+      <div className="navbar me-auto fixed top-0 pe-5 ps-2 py-0 bg-base-200 left-0 right-0 shadow-md   h-19 px-14">
         
         <div className="">
 
@@ -146,7 +146,7 @@ function Navbar() {
           </div>
 
           <div id='nav-theme' className="dropdown fixed top-20 end-0">
-            <div tabIndex={0} role="button" className="btn ps-4 bg-transparent shadow-none border-none w-12 me-0 pe-5 rounded-s-2xl rounded-e-none">
+            <div tabIndex={0} role="button" className="btn ps-4 bg-transparent shadow-none border-none w-12 me-0 pe-7 rounded-s-2xl rounded-e-none">
               {/* <svg width="12px" height="12px" className="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg> */}
               <i className="fas fa-gear fa-lg"></i>
             </div>

@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
             </div>
             <button className=''>
                 <Link to='/'>
-                    <a className='text-blue-400'>{product.category}</a>
+                    <a className='text-blue-600'>{product.category}</a>
                 </Link>
             </button>
             <button className=' justify-self-start'><i className="fas fa-heart fa-xl text-red-800"></i></button>
