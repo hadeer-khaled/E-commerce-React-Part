@@ -58,7 +58,7 @@ const UserProfile = () => {
       const formData = new FormData();
       formData.append("first_name", values.first_name);
       formData.append("email", values.email);
-      formData.append("profileImage", values.profileImage);
+      formData.append("image", values.profileImage);
 
       updateUserProfile(formData);
     },
@@ -67,6 +67,13 @@ const UserProfile = () => {
   return (
     <div className="container mt-3">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {loggedUser.image && (
+          <img
+            src={`http://127.0.0.1:8000/${loggedUser.image}`}
+            alt="User Profile Image"
+            style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+          />
+        )}
         <form onSubmit={formik.handleSubmit}>
           <div>
             <input
