@@ -5,7 +5,8 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home/Home";
-import Wishlist from "../src/pages/Wishlist/Wishlist";
+import Wishlist from "./pages/Wishlist/Wishlist";
+import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 function Layout() {
   return (
     <>
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: '/wishlist', // Define the path for the wishlist page
         element: <Wishlist />, // Render the Wishlist component
+      },
+      {
+        path: '/shoppingCart', // Define the path for the shoppingCart page
+        element: <ShoppingCart />, // Render the ShoppingCart component
       },
     ],
   },
