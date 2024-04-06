@@ -59,8 +59,8 @@ const UserOrders = () => {
   const handleCancelOrder = () => {};
 
   return (
-    <div className="container user-order-container flex sm:flex-col md:flex-col lg:flex-row   mx-auto mt-28 pt-6 pb-6 rounded-lg">
-      <div className="orders-table mx-auto pb-6 rounded-lg mr-3 ">
+    <div className="container user-order-container flex sm:flex-col md:flex-col lg:flex-row mx-auto mt-28 pt-6 pb-6 rounded-lg">
+      <div className="orders-table pb-6 rounded-lg mx-3 ">
         <table className="table table-zebra ">
           {/* head */}
           <thead>
