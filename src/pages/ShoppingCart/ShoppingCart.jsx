@@ -57,36 +57,11 @@ export default function ShoppingCart() {
               <td>
                 <div className="flex flex-col items-center">
                   <button className="btn btn-outline btn-warning btn-sm">
-                    <svg
-                      className="w-3 h-3 text-gray-800 dark:text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 7H1"
-                      />
-                    </svg>
+                  <i className="fa fa-plus" aria-hidden="true"></i>
                   </button>
                   <button className="btn btn-outline btn-info btn-sm">
-                    <svg
-                      className="w-3 h-3 text-gray-800 dark:text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M1 7h12M7 1v12"
-                      />
-                    </svg>
+                  <i className="fa fa-minus" aria-hidden="true"></i>
+
                   </button>
                 </div>
               </td>
@@ -148,36 +123,11 @@ export default function ShoppingCart() {
               <td>
                 <div className="flex flex-col items-center">
                   <button className="btn btn-outline btn-warning btn-sm">
-                    <svg
-                      className="w-3 h-3 text-gray-800 dark:text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 7H1"
-                      />
-                    </svg>
+                  <i className="fa fa-plus" aria-hidden="true"></i>
                   </button>
                   <button className="btn btn-outline btn-info btn-sm">
-                    <svg
-                      className="w-3 h-3 text-gray-800 dark:text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M1 7h12M7 1v12"
-                      />
-                    </svg>
+                  <i className="fa fa-minus" aria-hidden="true"></i>
+
                   </button>
                 </div>
               </td>
@@ -236,43 +186,18 @@ export default function ShoppingCart() {
               <td>Indigo</td>
               <td></td>
 
+          
               <td>
                 <div className="flex flex-col items-center">
                   <button className="btn btn-outline btn-warning btn-sm">
-                    <svg
-                      className="w-3 h-3 text-gray-800 dark:text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 7H1"
-                      />
-                    </svg>
+                  <i className="fa fa-plus" aria-hidden="true"></i>
                   </button>
                   <button className="btn btn-outline btn-info btn-sm">
-                    <svg
-                      className="w-3 h-3 text-gray-800 dark:text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M1 7h12M7 1v12"
-                      />
-                    </svg>
+                  <i className="fa fa-minus" aria-hidden="true"></i>
+
                   </button>
                 </div>
               </td>
-
               <td>123.12</td>
               <td>
                 <button
@@ -315,7 +240,7 @@ export default function ShoppingCart() {
           alt="Wishlist"
           style={{ width: "500px", height: "500px", marginTop: "-30px" }}
         />
-      </div>
+        </div>
     </div>
   );
 }
