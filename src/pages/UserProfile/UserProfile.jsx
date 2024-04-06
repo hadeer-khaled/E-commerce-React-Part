@@ -8,6 +8,9 @@ import { BaseURL } from "./../../axios/config";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+
 import "./UserProfile.css";
 const UserProfile = () => {
   const userId = 7;
@@ -67,9 +70,9 @@ const UserProfile = () => {
   });
 
   return (
-    <div className="container mx-auto">
-      <div className="grid grid-cols-3">
-        <div className="col-span-1">
+    <div className="container mx-auto p-6 mt-5 rounded-lg">
+      {/* <div className="grid grid-cols-3"> */}
+      {/* <div className="col-span-1">
           <div className="drawer lg:drawer-open width-fit-content">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-side">
@@ -90,13 +93,26 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
+        </div> */}
+      {loggedUser.image && (
+        <div>
+          <div className="avatar">
+            <div className="w-40 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
+              <img src={`${BaseURL}/${loggedUser.image}`} />
+            </div>
+          </div>
+          <div className="edit-btn badge bg-accent badge-lg rounded-full">
+            <FontAwesomeIcon icon={faPen} style={{ fontSize: "14px" }} />
+          </div>
         </div>
-        {/* <div className="flex justify-center"> */}
-        <div className="col-span-2">
-          <div className="form-div rounded-lg mt-4 p-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <form className="w-full max-w-sm" onSubmit={formik.handleSubmit}>
-              {/* ------------------------------ Image ------------------------------ */}
-              {/* <div>
+      )}
+
+      {/* <div className="flex justify-center"> */}
+      {/* <div className="col-span-2"> */}
+      <div className="form-div rounded-lg mt-4 p-4 mx-auto w-1/2 px-4 sm:px-6 lg:px-8">
+        <form className="w-full max-w-sm" onSubmit={formik.handleSubmit}>
+          {/* ------------------------------ Image ------------------------------ */}
+          {/* <div>
             <input
               type="file"
               name="profileImage"
@@ -107,106 +123,109 @@ const UserProfile = () => {
               }}
             />
           </div> */}
-              {/* ------------------------------ First Name ------------------------------ */}
-              <div className="md:flex md:items-center mb-6">
-                <div className="md:w-1/3">
-                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                    First Name
-                  </label>
-                </div>
-                <div className="md:w-2/3">
-                  <input
-                    type="text"
-                    name="first_name"
-                    id="first_name"
-                    placeholder="first_name"
-                    onChange={formik.handleChange}
-                    value={formik.values.first_name}
-                  />
-                  {formik.errors.first_name && formik.touched.first_name && (
-                    <div className="error">{formik.errors.first_name}</div>
-                  )}
-                </div>
-              </div>
-              {/* ------------------------------ Last Name ------------------------------ */}
-              <div className="md:flex md:items-center mb-6">
-                <div className="md:w-1/3">
-                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                    Last Name
-                  </label>
-                </div>
-                <div className="md:w-2/3">
-                  <input
-                    type="text"
-                    name="last_name"
-                    id="last_name"
-                    placeholder="last_name"
-                    onChange={formik.handleChange}
-                    value={formik.values.last_name}
-                  />
-                  {formik.errors.last_name && formik.touched.last_name && (
-                    <div className="error">{formik.errors.last_name}</div>
-                  )}
-                </div>
-              </div>
-              {/* ------------------------------ Email ------------------------------ */}
-              <div className="md:flex md:items-center mb-6">
-                <div className="md:w-1/3">
-                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                    Email
-                  </label>
-                </div>
-                <div className="md:w-2/3">
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                  />
-                  {formik.errors.email && formik.touched.email && (
-                    <div className="error">{formik.errors.email}</div>
-                  )}
-                </div>
-              </div>
-              {/* ------------------------------ Phone ------------------------------ */}
-
-              <div className="md:flex md:items-center mb-6">
-                <div className="md:w-1/3">
-                  <label className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                    Phone
-                  </label>
-                </div>
-                <div className="md:w-2/3">
-                  <input
-                    type="phone"
-                    name="phone"
-                    id="phone"
-                    placeholder="phone"
-                    onChange={formik.handleChange}
-                    value={formik.values.phone}
-                  />
-                  {formik.errors.phone && formik.touched.phone && (
-                    <div className="error">{formik.errors.phone}</div>
-                  )}
-                </div>
-              </div>
-              {/* ------------------------------ Button ------------------------------ */}
-              <div className="md:flex md:items-center">
-                <div className="md:w-1/3"></div>
-                <div className="md:w-2/3">
-                  <button
-                    className="shadow info  bg-accent hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                    type="submit">
-                    Update Profile
-                  </button>
-                </div>
-              </div>
-            </form>
+          {/* ------------------------------ First Name ------------------------------ */}
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label className="block font-bold md:text-right mb-1 md:mb-0 pr-4">
+                First Name
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              <input
+                type="text"
+                name="first_name"
+                id="first_name"
+                placeholder="first_name"
+                onChange={formik.handleChange}
+                value={formik.values.first_name}
+                className="input input-bordered input-accent w-full max-w-xs"
+              />
+              {formik.errors.first_name && formik.touched.first_name && (
+                <div className="error">{formik.errors.first_name}</div>
+              )}
+            </div>
           </div>
-        </div>
+          {/* ------------------------------ Last Name ------------------------------ */}
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label className="block font-bold md:text-right mb-1 md:mb-0 pr-4">
+                Last Name
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              <input
+                type="text"
+                name="last_name"
+                id="last_name"
+                placeholder="last_name"
+                onChange={formik.handleChange}
+                value={formik.values.last_name}
+                className="input input-bordered input-accent w-full max-w-xs"
+              />
+              {formik.errors.last_name && formik.touched.last_name && (
+                <div className="error">{formik.errors.last_name}</div>
+              )}
+            </div>
+          </div>
+          {/* ------------------------------ Email ------------------------------ */}
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label className="block font-bold md:text-right mb-1 md:mb-0 pr-4">
+                Email
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="email"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                className="input input-bordered input-accent w-full max-w-xs"
+              />
+              {formik.errors.email && formik.touched.email && (
+                <div className="error">{formik.errors.email}</div>
+              )}
+            </div>
+          </div>
+          {/* ------------------------------ Phone ------------------------------ */}
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label className="block  font-bold md:text-right mb-1 md:mb-0 pr-4">
+                Phone
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              <input
+                type="phone"
+                name="phone"
+                id="phone"
+                placeholder="phone"
+                onChange={formik.handleChange}
+                value={formik.values.phone}
+                className="input input-bordered input-accent w-full max-w-xs"
+              />
+              {formik.errors.phone && formik.touched.phone && (
+                <div className="error">{formik.errors.phone}</div>
+              )}
+            </div>
+          </div>
+          {/* ------------------------------ Button ------------------------------ */}
+          <div className="md:flex md:items-center">
+            <div className="md:w-1/3"></div>
+            <div className="md:w-2/3">
+              <button
+                className="shadow info  bg-accent hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="submit">
+                Update Profile
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
+      {/* </div> */}
+      {/* </div> */}
     </div>
   );
 };
