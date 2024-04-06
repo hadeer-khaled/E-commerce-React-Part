@@ -3,7 +3,7 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import UserOrders from "./pages/UserOrders/UserOrders";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-
+import UserProfileForm from "./components/userProfileForm/userProfileForm";
 function Layout() {
   return (
     <>
@@ -32,6 +32,10 @@ const router = createBrowserRouter([
         path: "/userprofile",
         element: <UserProfile />,
       },
+      // {
+      //   path: "/userprofileform",
+      //   element: <UserProfileForm />,
+      // },
       {
         path: "/userorders",
         element: <UserOrders />,
