@@ -3,8 +3,9 @@ import { getOrderDetails } from "../../axios/UserOrders.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersThunk } from "./../../store/slices/userOrdersSlice";
 import "./UserOrders.css";
+import productImage from "./../../assets/product.png";
 const UserOrders = () => {
-  const userId = 2;
+  const userId = 11;
   const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -19,18 +20,6 @@ const UserOrders = () => {
 
   console.log("userOrders:", userOrders);
 
-  const fetchOrderDetails = async (orderId) => {
-    setLoading(true);
-    try {
-      const response = await getOrderDetails(userId, orderId);
-      console.log("orderId", orderId);
-      setOrderDetails(response.data);
-    } catch (error) {
-      console.error("Error fetching order details:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
   useEffect(() => {
     if (orderDetails.length != 0) {
       console.log("orderDetails", orderDetails);
@@ -55,21 +44,35 @@ const UserOrders = () => {
         return <div className="badge badge-neutral">Pending</div>;
     }
   };
+  const fetchOrderDetails = async (orderId) => {
+    setLoading(true);
+    try {
+      const response = await getOrderDetails(userId, orderId);
+      console.log("orderId", orderId);
+      setOrderDetails(response.data);
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleCancelOrder = () => {};
 
   return (
-    <div className="container flex mx-auto mt-4 pt-6 pb-6 rounded-lg">
-      <div className="orders-table mx-auto pb-6 rounded-lg">
-        <table className="table table-zebra">
+    <div className="container user-order-container flex sm:flex-col md:flex-col lg:flex-row   mx-auto mt-28 pt-6 pb-6 rounded-lg">
+      <div className="orders-table mx-auto pb-6 rounded-lg mr-3 ">
+        <table className="table table-zebra ">
           {/* head */}
           <thead>
             <tr>
               <th>ID</th>
               <th>Order Date</th>
-              <th>Total Amount</th>
-              <th>Total Quantity</th>
+              <th>Total Price</th>
+              <th>Quantity</th>
               <th>Adsress</th>
               <th>Status</th>
               <th>Details</th>
+              <th>Cancel</th>
             </tr>
           </thead>
           <tbody>
@@ -86,9 +89,18 @@ const UserOrders = () => {
                 <td>
                   {
                     <button
-                      className="btn"
+                      className="btn btn-outline btn-sm rounded-full"
                       onClick={() => fetchOrderDetails(order.order_id)}>
                       see details
+                    </button>
+                  }
+                </td>
+                <td>
+                  {
+                    <button
+                      className="btn btn-outline  btn-error btn-sm rounded-full"
+                      onClick={() => handleCancelOrder(order.order_id)}>
+                      Cancel
                     </button>
                   }
                 </td>
@@ -97,32 +109,51 @@ const UserOrders = () => {
           </tbody>
         </table>
       </div>
-      <div className="order-details rounded-lg">
+      <div className="order-details rounded-lg ">
         {loading && <p>Loading...</p>}
         {orderDetails.length != 0 && (
           <div>
+            <h3 className="my-4 font-bold	"> Order Details</h3>
+            <hr></hr>
             {orderDetails.map((orderItem, index) => (
               <>
                 <div
                   key={index - ` ${orderItem.order_item_id}`}
                   className="card w-96">
                   <div className="card-body">
-                    <div className="product-details">
-                      <div className="product-image-div"></div>
-                      <div className="product-data-div">
-                        <p>{orderItem.product.name}</p>
-                        <p>Price: {orderItem.product.price}</p>
+                    <div className="product-details flex justify-between items-center	w-full">
+                      <div className="product-image-div">
+                        <img
+                          src={productImage}
+                          alt="Description of the image"
+                          style={{ width: "150px" }}
+                        />
+                      </div>
+                      <div className="product-data-div text-sm">
+                        <p className="mt-2">
+                          <span className="font-bold	">
+                            {orderItem.product.name}
+                          </span>
+                        </p>
+                        <p className="mt-2">
+                          <span className="font-bold	">Price: </span>
+                          {orderItem.product.price}
+                        </p>
+                        <p className="mt-2">
+                          <span className="font-bold	">Quantity: </span>
+                          {orderItem.quantity}
+                        </p>
+                        <p className="mt-2">
+                          <span className="font-bold	"> Sub Total: </span>
+                          {(
+                            orderItem.quantity * orderItem.product.price
+                          ).toFixed(2)}
+                        </p>
                       </div>
                     </div>
-                    <div className="">
-                      <p>Quantity: {orderItem.quantity}</p>
-                      <p>
-                        SubTotal:
-                        {(orderItem.quantity * orderItem.product.price).toFixed(
-                          2
-                        )}
-                      </p>
-                    </div>
+                    {/* <div className="">
+                      
+                    </div> */}
                   </div>
                 </div>
                 <hr></hr>

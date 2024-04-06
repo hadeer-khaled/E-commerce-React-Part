@@ -9,17 +9,22 @@ import { BaseURL } from "./../../axios/config";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Cookies from "universal-cookie";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 import "./UserProfile.css";
 
 const UserProfile = () => {
-  const userId = 1;
+  const userId = 11;
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
 
   const navigate = useNavigate();
+  const cookies = new Cookies();
+  const jwt = cookies.get("jwt");
+  console.log("jwt", jwt);
 
   useEffect(() => {
     dispatch(getLoggedUserThunk(userId));
@@ -93,7 +98,7 @@ const UserProfile = () => {
   });
 
   return (
-    <div className="userprofile-container  container mx-auto mt-4 pt-6 pb-6 rounded-lg">
+    <div className="userprofile-container  container mx-auto mt-28 mb-20 pt-6 pb-6 rounded-lg">
       <div className="flex">
         <div className="basis-1/4">
           <div className="sidebar-container">
@@ -106,18 +111,6 @@ const UserProfile = () => {
                 </div>
                 <div className="image-edit-btn badge bg-accent badge-lg rounded-full">
                   <FontAwesomeIcon icon={faPen} style={{ fontSize: "14px" }} />
-                  {/* <input
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={handleImageChange}
-                  /> */}
-                  {/* <label htmlFor="image-upload">
-                    <FontAwesomeIcon
-                      icon={faPen}
-                      style={{ fontSize: "14px" }}
-                    />
-                  </label> */}
                 </div>
               </div>
             )}
