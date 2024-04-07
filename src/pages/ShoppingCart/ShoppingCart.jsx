@@ -1,6 +1,7 @@
 import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShoppingCartItemsThunk } from "../../store/slices/userShoppingCartSlice";
+import { decrementQuantityInWishList, incrementQuantityInWishList } from "../../axios/userShoppingCart";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
@@ -23,6 +24,24 @@ export default function ShoppingCart() {
     }, 3000);
   };
 
+  const incrementQuantity = async (cartItemId) => {
+    try {
+      await incrementQuantityInWishList(userId, cartItemId);
+      dispatch(fetchShoppingCartItemsThunk(userId));
+    } catch (error) {
+      console.error("Error handling incrementing quantity product:", error.message);
+    }
+  };
+
+  const decrementQuantity = async (cartItemId) => {
+    try {
+      await decrementQuantityInWishList(userId, cartItemId);
+
+      dispatch(fetchShoppingCartItemsThunk(userId));
+    } catch (error) {
+      console.error("Error handling decrementing quantity product:", error.message);
+    }
+  };
   return (
     <div className="flex">
       <div className="overflow-x-auto flex-grow">
@@ -54,21 +73,16 @@ export default function ShoppingCart() {
                   </div>
                 </td>
                 <td>
-                  <div>
                     <div className="font-bold">{cartItem.product.name}</div>
-                    <div className="text-sm opacity-50">
-                      {cartItem.product.description}
-                    </div>
-                  </div>
                 </td>
                 <td>{cartItem.product.description}</td>
                 <td>{cartItem.quantity}</td>
                 <td>
                   <div className="flex flex-col items-center">
-                    <button className="btn btn-outline btn-warning btn-sm">
+                    <button className="btn btn-outline btn-warning btn-sm" onClick={() => incrementQuantity(cartItem.cart_item_id)}>
                       <i className="fa fa-plus" aria-hidden="true"></i>
                     </button>
-                    <button className="btn btn-outline btn-info btn-sm">
+                    <button className="btn btn-outline btn-info btn-sm" onClick={() => decrementQuantity(cartItem.cart_item_id)}>
                       <i className="fa fa-minus" aria-hidden="true"></i>
                     </button>
                   </div>
