@@ -27,3 +27,16 @@ export const getProducts = ({ page, limit, order, search, ...filters }) => {
       throw error;
     });
 };
+
+export const getProductById = ({ productId }) => {
+  let url = `products/${productId}`;
+  
+  return axiosInstance.get(url)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+      throw error;
+    });
+};

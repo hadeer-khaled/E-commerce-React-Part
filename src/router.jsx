@@ -4,8 +4,9 @@ import UserOrders from "./pages/UserOrders/UserOrders";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Navbar from "./components/navbar/Navbar";
-import Home from "./pages/Home/Home";
 import Footer from "./components/footer/Footer";
+import Home from "./pages/Home/Home";
+import ProductDetails from "./pages/product-details/product-details";
 
 function Layout() {
   return (
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/products/:productId",
+        element: <ProductDetails />,
       },
       {
         path: "/userprofile",
