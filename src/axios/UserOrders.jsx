@@ -11,3 +11,7 @@ export const getUserOrders = (userId) => {
 export const getOrderDetails = (userId, orderId) => {
   return axiosInstance.get(`users/user/${userId}/orders/order/${orderId}/`);
 };
+export const cancelOrder = (userId, orderId) => {
+  console.log("in axios:", orderId);
+  return axiosInstance.patch(`orders/order/${orderId}/`);
+};
