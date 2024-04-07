@@ -71,6 +71,13 @@ const ProductDetails = () => {
                 <span>{product.stock > 0 ? 'In Stock' : 'Out of Stock'}</span>
               </div>
             </div>
+            <div className="flex mb-4 py-6">
+              <div className="mr-4">
+                <span className="font-bold">Rating:</span>
+                <span>${product.price}</span>
+              </div>
+            </div>
+
             <div className="flex -mx-2 my-4">
               <div className="xl:w-1/2 px-2">
                 <button className="w-full py-2 px-4 rounded-full font-bold border transition duration-300 ease-in-out transform hover:scale-105">Add to Cart</button>
