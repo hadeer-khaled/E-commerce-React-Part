@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { getOrderDetails } from "../../axios/UserOrders.jsx";
+import { getOrderDetails, cancelOrder } from "../../axios/UserOrders.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersThunk } from "./../../store/slices/userOrdersSlice";
 import "./UserOrders.css";
 import productImage from "./../../assets/product.png";
 const UserOrders = () => {
   const userId = 11;
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -25,13 +26,27 @@ const UserOrders = () => {
       console.log("orderDetails", orderDetails);
     }
   }, [orderDetails]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
 
+  // function formatDate(dateString) {
+  //   const date = new Date(dateString);
+  //   const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+  //   return date.toLocaleDateString("en-GB", options);
+  // }
   function formatDate(dateString) {
-    const date = new Date(dateString);
+    const dateParts = dateString.split(" ")[0].split("-");
+    const year = parseInt(dateParts[0]);
+    const month = parseInt(dateParts[1]) - 1; // Months are zero-indexed
+    const day = parseInt(dateParts[2]);
+    const date = new Date(year, month, day);
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
     return date.toLocaleDateString("en-GB", options);
   }
-
   const getStatusBadge = (status) => {
     switch (status) {
       case "shipped":
@@ -56,8 +71,24 @@ const UserOrders = () => {
       setLoading(false);
     }
   };
-  const handleCancelOrder = () => {};
+  const handleCancelOrder = (orderId) => {
+    cancelOrder(userId, orderId)
+      .then(() => {
+        console.log("Order canceled successfully");
+        dispatch(getUserOrdersThunk(userId));
+      })
+      .catch((error) => {
+        console.error("Error canceling order", error);
+      });
+  };
 
+  const isOrderDateOlderThan3Days = (orderDate) => {
+    const differenceInMs = currentDate - new Date(orderDate);
+    const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
+    const isOrderDateOlderThan3Days = differenceInDays > 3;
+    return isOrderDateOlderThan3Days;
+    // const isOrderCancelled = order.shipment.status === "cancelled";
+  };
   return (
     <div className="container user-order-container flex sm:flex-col md:flex-col lg:flex-row mx-auto mt-28 pt-6 pb-6 rounded-lg">
       <div className="orders-table pb-6 rounded-lg mx-3 ">
@@ -96,18 +127,29 @@ const UserOrders = () => {
                   }
                 </td>
                 <td>
-                  {
+                  {order.shipment.status !== "cancelled" &&
+                  order.shipment.status !== "delivered" &&
+                  !isOrderDateOlderThan3Days(order.order_date) ? (
                     <button
-                      className="btn btn-outline  btn-error btn-sm rounded-full"
+                      className="btn btn-outline btn-error btn-sm rounded-full"
                       onClick={() => handleCancelOrder(order.order_id)}>
                       Cancel
                     </button>
-                  }
+                  ) : (
+                    <button
+                      className="btn btn-outline btn-error btn-sm rounded-full"
+                      disabled>
+                      Cancel
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        <p className="text-red-900	 text-sm mt-4">
+          Please note that orders older than three days cannot be canceled.
+        </p>
       </div>
       <div className="order-details rounded-lg ">
         {loading && <p>Loading...</p>}
@@ -166,13 +208,3 @@ const UserOrders = () => {
   );
 };
 export default UserOrders;
-
-// product
-
-// avg_rating
-
-// name
-
-// price
-
-// quantity
