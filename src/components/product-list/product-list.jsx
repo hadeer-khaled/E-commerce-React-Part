@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsThunk } from '../../store/slices/productsSlice';
 import ProductCard from '../ProductCard/ProductCard';
+import Pagination from '../pagination/Pagination'; // Import the Pagination component
 
 const ProductsList = () => {
   const dispatch = useDispatch();
@@ -22,19 +23,6 @@ const ProductsList = () => {
     const limit = productsPerPage;
     dispatch(getProductsThunk({ page, limit }));
   };
-  
-
-  const handlePrev = () => {
-    if (pageNumber > 1) {
-      handlePageChange(pageNumber - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (pageNumber < totalPages) {
-      handlePageChange(pageNumber + 1);
-    }
-  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -52,13 +40,11 @@ const ProductsList = () => {
           <ProductCard key={product.product_id} product={product} />
         ))}
       </div>
-      <div className="join">
-        <button className="join-item btn" onClick={handlePrev} disabled={pageNumber === 1}>«</button>
-        {[...Array(totalPages).keys()].map(page => (
-          <button key={page} className="join-item btn" onClick={() => handlePageChange(page + 1)}>{page + 1}</button>
-        ))}
-        <button className="join-item btn" onClick={handleNext} disabled={pageNumber === totalPages}>»</button>
-      </div>
+      <Pagination // Use the Pagination component
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
