@@ -15,7 +15,7 @@ export const fetchShoppingCartItems = async (userId) => {
   }
 };
 
-export const incrementQuantityInWishList = async (userId, cartItemId) => {
+export const incrementQuantityInShoppingCart = async (userId, cartItemId) => {
     console.log("inside axios");
     try {
       const response = await axiosInstance.post('/cartItem/increment-quantity/', {
@@ -32,7 +32,7 @@ export const incrementQuantityInWishList = async (userId, cartItemId) => {
   };
   
 
-  export const decrementQuantityInWishList = async (userId, cartItemId) => {
+  export const decrementQuantityInShoppingCart = async (userId, cartItemId) => {
     try {
       const response = await axiosInstance.post('/cartItem/decrement-quantity/', {
           user_id: userId,
@@ -46,3 +46,27 @@ export const incrementQuantityInWishList = async (userId, cartItemId) => {
     }
   };
   
+
+  export const removeCartItemInShoppingCart = async (userId, cartItemId) => {
+    try {
+      const response = await axiosInstance.delete(`/cartItem/remove-from-cart/?user_id=${userId}&cart_item_id=${cartItemId}`);
+      console.log('Cart item removed successfully :', response.data);
+      return response.data; 
+    } catch (error) {
+      console.error('cart item can not be removed:', error);
+      throw error; 
+    }
+  };
+  
+
+
+  export const removeCartInShoppingCart = async (userId) => {
+    try {
+      const response = await axiosInstance.delete(`/shoppingCart/delete/?user_id=${userId}`);
+      console.log('Cart  removed successfully :', response.data);
+      return response.data; 
+    } catch (error) {
+      console.error('cart can not be removed:', error);
+      throw error; 
+    }
+  };

@@ -1,7 +1,7 @@
 import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShoppingCartItemsThunk } from "../../store/slices/userShoppingCartSlice";
-import { decrementQuantityInWishList, incrementQuantityInWishList } from "../../axios/userShoppingCart";
+import { decrementQuantityInShoppingCart, incrementQuantityInShoppingCart, removeCartInShoppingCart, removeCartItemInShoppingCart } from "../../axios/userShoppingCart";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
@@ -14,19 +14,27 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     dispatch(fetchShoppingCartItemsThunk(userId));
-  }, [dispatch, userId]);
+  }, [dispatch]),[cartItems];
 
-  const handleClick = () => {
-    setShowAlert(true);
+  const handleClick = async (cartItemId) => {
+    try {
+      await removeCartItemInShoppingCart(userId, cartItemId);
 
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 3000);
+      dispatch(fetchShoppingCartItemsThunk(userId));
+
+      setShowAlert(true);
+
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error handling remove item:", error.message);
+    }
   };
 
   const incrementQuantity = async (cartItemId) => {
     try {
-      await incrementQuantityInWishList(userId, cartItemId);
+      await incrementQuantityInShoppingCart(userId, cartItemId);
       dispatch(fetchShoppingCartItemsThunk(userId));
     } catch (error) {
       console.error("Error handling incrementing quantity product:", error.message);
@@ -35,16 +43,33 @@ export default function ShoppingCart() {
 
   const decrementQuantity = async (cartItemId) => {
     try {
-      await decrementQuantityInWishList(userId, cartItemId);
+      await decrementQuantityInShoppingCart(userId, cartItemId);
 
       dispatch(fetchShoppingCartItemsThunk(userId));
     } catch (error) {
       console.error("Error handling decrementing quantity product:", error.message);
     }
   };
+  const removeCart = async () => {
+    try {
+      await removeCartInShoppingCart(userId);
+
+      dispatch(fetchShoppingCartItemsThunk(userId));
+      setShowAlert(true);
+
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error handling decrementing quantity product:", error.message);
+    }
+  };
+  
+
   return (
     <div className="flex">
-      <div className="overflow-x-auto flex-grow">
+    <div className="overflow-x-auto flex-grow">
+      {cartItems.length > 0 ? (
         <table className="table">
           <thead>
             <tr>
@@ -91,7 +116,7 @@ export default function ShoppingCart() {
                 <td>
                   <button
                     className="btn btn-circle bg-transparent hover:text-red-500 shadow-lg"
-                    onClick={() => handleClick(cartItem.product.product_id)}
+                    onClick={() => handleClick(cartItem.cart_item_id)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -124,9 +149,9 @@ export default function ShoppingCart() {
                  </span>
               </td>
             </tr>
-            <tr>
+              <tr>
               <td colSpan="10" className="text-center">
-                <button className="btn btn-md btn-outline btn-error mx-2">
+                <button className="btn btn-md btn-outline btn-error mx-2"  onClick={() => removeCart()}>
                   Delete all
                 </button>
                 <button className="btn btn-outline btn-primary mx-2">
@@ -136,12 +161,15 @@ export default function ShoppingCart() {
             </tr>
           </tbody>
         </table>
+         ) : (
+          <h2 className="text-error ">Your cart is empty</h2>
+        )}
       </div>
       <div>
         {showAlert && (
           <div className="toast toast-bottom toast-end">
             <div className="alert alert-success">
-              <span>Product removed successfully from cart.</span>
+              <span>removed successfully.</span>
             </div>
           </div>
         )}
@@ -151,6 +179,7 @@ export default function ShoppingCart() {
           style={{ width: "500px", height: "500px", marginTop: "-30px" }}
         />
       </div>
+      
     </div>
   );
 }
