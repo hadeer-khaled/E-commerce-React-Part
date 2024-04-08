@@ -9,6 +9,7 @@ import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Footer from "./components/footer/Footer";
 import OrdersManagemet from "./pages/AdminPages/OrdersManagement/OrdersManagemet";
+import OrdersTable from "./pages/AdminPages/OrdersManagement/ordersTable";
 
 function Layout() {
   return (
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/ordersmanagement",
         element: <OrdersManagemet />,
+      },
+      {
+        path: "/orderstable",
+        element: <OrdersTable />,
       },
     ],
   },

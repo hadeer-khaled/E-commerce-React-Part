@@ -1,15 +1,37 @@
-import getAllOrders from "./../../../axios/AdminOrders";
+import { useState, useEffect } from "react";
+
+import { getAllOrders, getOrderItems } from "./../../../axios/AdminOrders";
 
 const OrdersManagemet = () => {
-  getAllOrders()
-    .then((response) => {
-      const orders = response.data; // Assuming that the orders data is returned as response.data
-      // Handle the orders data, such as setting it to state or processing it further
-      console.log("Orders:", orders);
-    })
-    .catch((error) => {
-      // Handle error
-      console.error("Error fetching orders:", error);
-    });
+  const [orders, setOrders] = useState([]);
+  const [FetchingOrderseError, setFetchingOrderseError] = useState(null);
+
+  useEffect(() => {
+    getAllOrders()
+      .then((response) => {
+        const orders = response.data;
+        setOrders(orders);
+        console.log("Orders:", orders);
+      })
+      .catch((error) => {
+        console.log(error);
+        setFetchingOrderseError(error);
+      });
+  }, []);
+
+  return (
+    <div>
+      {FetchingOrderseError ? (
+        <p>Error fetching orders: {FetchingOrderseError.message}</p>
+      ) : (
+        <ul>
+          {orders.map((order) => (
+            <li key={`Order_${order.order_id}`}>{order.order_id}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };
+
 export default OrdersManagemet;
