@@ -9,7 +9,9 @@ const Hero = () => {
           <p className="py-3 text-2xl max-md:text-lg">
           Welcome to our e-commerce hero page! Explore convenience and excellence in online retail with our user-friendly platform and innovative features.
           </p>
-          <Link to="/shop" className="btn btn-wide bg-blue-600 hover:bg-blue-500 text-white">Shop Now</Link>
+          <button>
+            <Link to="/shop" id="shopButton" className="btn btn-wide bg-blue-600 hover:bg-blue-500 text-white">Shop Now</Link>
+          </button>
         </div>
       </div>
     </div>

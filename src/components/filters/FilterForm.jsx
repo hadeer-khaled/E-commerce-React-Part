@@ -21,7 +21,7 @@ const FilterForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="">
-      <div className="mb-4 px-4">
+      <div className="mb-4 px-8">
         <input
           type="text"
           id="search"
@@ -33,7 +33,7 @@ const FilterForm = ({ onSubmit }) => {
         />
       </div>
       <div className="flex flex-wrap mb-4 px-4">
-        <div className="w-full sm:w-1/2 mb-4 sm:mb-0 pe-4">
+        <div className="w-full sm:w-1/2 mb-4 sm:mb-0 px-4">
           <select
             id="category"
             name="category"
@@ -45,7 +45,7 @@ const FilterForm = ({ onSubmit }) => {
             {/* Add options for different categories */}
           </select>
         </div>
-        <div className="w-full sm:w-1/2">
+        <div className="w-full sm:w-1/2 px-4">
           <select
             id="sortBy"
             name="order"
