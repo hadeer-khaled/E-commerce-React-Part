@@ -33,7 +33,7 @@ const ProductCardSlider = () => {
                         </div>
                     )}
                     <div className="absolute flex justify-between items-center w-full">
-                        <button className="btn btn-circle border" onClick={handlePrev}>❮</button>
+                        <button className="btn btn-circle border right-3" onClick={handlePrev}>❮</button>
                         <button className="btn btn-circle border" onClick={handleNext}>❯</button>
                     </div>
                 </div>

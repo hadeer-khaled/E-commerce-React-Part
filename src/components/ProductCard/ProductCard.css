@@ -1,13 +1,13 @@
 figure {
     background-color: rebeccapurple;
-    height: 50% !important;
+    height: 100px !important;
 }
 
 img {
-    /* top: 0;
+    top: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; */
+    object-fit: cover;
 }
 
 .rating-container {

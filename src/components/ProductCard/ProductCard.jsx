@@ -29,7 +29,11 @@ const renderRatingStars = (avgRating) => {
         </Link>
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{product.name}</h2>
+        <h2 className="card-title">
+          <Link to={`/products/${product.product_id}`}>
+            {product.name}
+          </Link>
+        </h2>
         <p>{product.description}</p>
         <Link to='/shop' className='grid-cols-subgrid text-blue-600 self-start ps-3'>{product.category}</Link>
         <div className="card-actions p-3 flex items-center justify-between">
