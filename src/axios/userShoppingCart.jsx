@@ -70,3 +70,18 @@ export const incrementQuantityInShoppingCart = async (userId, cartItemId) => {
       throw error; 
     }
   };
+
+
+  export const addToCart = async (userId, productId) => {
+    try {
+      const response = await axiosInstance.post('/cartItem/add-to-cart/', {
+        user_id: userId,
+        product_id: productId
+      });
+      console.log('Added to cart:', response.data);
+      return response.data; 
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      throw error; 
+    }
+  };
