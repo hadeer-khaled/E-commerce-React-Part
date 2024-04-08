@@ -34,20 +34,10 @@ const CategoryAdminDashboard = () => {
     }
   };
 
-return (
-  <div className="flex">
-    <div className="flex-shrink-0 mr-4">
-      <img
-        className="image"
-        src="https://www.sprinkdigital.com/images/dcommerce_perspective.png"
-        style={{ width: "500px", height: "500px" ,marginTop:"-45px" ,marginLeft:"130px"}}
-        alt="Ecommerce Website Development"
-      />
-    </div>
-    
-    <div className="flex flex-col">
+  return (
+    <div className="flex flex-col items-center justify-center h-screen mt-0">
       <h1 className="text-2xl font-bold mb-4">Category Admin Dashboard</h1>
-      <div className="flex mb-4">
+      <div className="flex items-center mb-4">
         <input
           type="text"
           value={newCategoryName}
@@ -62,34 +52,35 @@ return (
           Add Category
         </button>
       </div>
-      
-      <table className="border-collapse border border-gray-400">
-        <thead>
-          <tr>
-            <th className="border border-gray-400 px-4 py-2">Category Name</th>
-            <th className="border border-gray-400 px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories &&
-            categories.map((category) => (
-              <tr key={category.id} className="border border-gray-400">
-                <td className="border border-gray-400 px-4 py-2">{category.name}</td>
-                <td className="border border-gray-400 px-4 py-2">
-                  <button
-                    onClick={() => handleDeleteCategory(category.category_id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <div className="w-full max-w-screen-lg">
+        <table className="w-full border-collapse border border-gray-400">
+          <thead>
+            <tr>
+              <th className="border border-gray-400 px-4 py-2">Category Name</th>
+              <th className="border border-gray-400 px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories &&
+              categories.map((category) => (
+                <tr key={category.id} className="border border-gray-400">
+                  <td className="border border-gray-400 px-4 py-2">{category.name}</td>
+                  <td className="border border-gray-400 px-4 py-2">
+                    <button
+                      onClick={() => handleDeleteCategory(category.category_id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-);
+  );
+  
 
 };
 
