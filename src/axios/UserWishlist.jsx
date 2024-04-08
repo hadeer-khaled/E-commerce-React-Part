@@ -31,4 +31,16 @@ export const removeProductFromWishlist = async (userId, productId) => {
       throw error; 
     }
   };
-  
+  export const addToWishlist = async (userId, productId) => {
+    try {
+      const response = await axiosInstance.post('/wishlist/wishlist/add/', {
+        user_id: userId,
+        product_id: productId
+      });
+      console.log('Added to wishlist:', response.data);
+      return response.data; 
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+      throw error; 
+    }
+  };
