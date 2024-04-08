@@ -22,18 +22,20 @@ const ProductCardSlider = () => {
     };
 
     return (
-        <div className="ProductCardSlider hidden md:block">
-            <div className="carousel w-full relative">
-                {productList.length > 0 && (
-                    <div className="carousel-inner flex gap-4 ps-20 pe-20">
-                        {productList.slice(currentIndex * 4, (currentIndex + 1) * 4).map((product, index) => (
-                            <ProductCard key={index} product={product}/>
-                        ))}
+        <div className='container'>
+            <div className="ProductCardSlider hidden md:block w-5/6 self-center mx-auto">
+                <div className="carousel w-full relative">
+                    {productList.length > 0 && (
+                        <div className="carousel-inner flex gap-4 ps-20 pe-20">
+                            {productList.slice(currentIndex * 4, (currentIndex + 1) * 4).map((product, index) => (
+                                <ProductCard key={index} product={product}/>
+                            ))}
+                        </div>
+                    )}
+                    <div className="absolute flex justify-between items-center w-full">
+                        <button className="btn btn-circle border" onClick={handlePrev}>❮</button>
+                        <button className="btn btn-circle border" onClick={handleNext}>❯</button>
                     </div>
-                )}
-                <div className="absolute flex justify-between items-center w-full">
-                    <button className="btn btn-circle border" onClick={handlePrev}>❮</button>
-                    <button className="btn btn-circle border" onClick={handleNext}>❯</button>
                 </div>
             </div>
         </div>
