@@ -18,6 +18,7 @@ import "./UserProfile.css";
 
 const UserProfile = () => {
   const userId = 11;
+
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
 

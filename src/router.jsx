@@ -8,6 +8,7 @@ import AdminLogin from "./pages/AdminPages/Login/AdminLogin";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Footer from "./components/footer/Footer";
+import OrdersManagemet from "./pages/AdminPages/OrdersManagement/OrdersManagemet";
 
 function Layout() {
   return (
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/login",
         element: <AdminLogin />,
+      },
+      {
+        path: "/admin/ordersmanagement",
+        element: <OrdersManagemet />,
       },
     ],
   },
