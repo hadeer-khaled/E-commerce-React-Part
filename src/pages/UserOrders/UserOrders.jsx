@@ -165,10 +165,15 @@ const UserOrders = () => {
                   <div className="card-body">
                     <div className="product-details flex justify-between items-center	w-full">
                       <div className="product-image-div">
-                        <img
+                        {/* <img
                           src={productImage}
                           alt="Description of the image"
                           style={{ width: "150px" }}
+                        /> */}
+                        <img
+                          src={`${orderItem.product.image}`}
+                          alt="product  image"
+                          style={{ width: "160px" }}
                         />
                       </div>
                       <div className="product-data-div text-sm">
