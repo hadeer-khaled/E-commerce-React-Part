@@ -10,7 +10,9 @@ export default function ShoppingCart() {
   const [showAlert, setShowAlert] = useState(false);
   const userId = 1;
 
-  const totalPrice = cartItems ? cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0) : 0;
+  const totalPrice = Array.isArray(cartItems) 
+  ? cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0) 
+  : 0;
 
   useEffect(() => {
     dispatch(fetchShoppingCartItemsThunk(userId));
