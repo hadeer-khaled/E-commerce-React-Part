@@ -13,7 +13,7 @@ const ShopPage = () => {
 
   return (
     <div className='pt-20 px-24'>
-      <h1 className="text-3xl font-semibold text-center py-8">Shop</h1>
+      {/* <h1 className="text-3xl font-semibold text-center py-8">Shop</h1> */}
       <FilterForm onSubmit={handleFilterSubmit} />
       <ProductsList filters={appliedFilters} />
     </div>
