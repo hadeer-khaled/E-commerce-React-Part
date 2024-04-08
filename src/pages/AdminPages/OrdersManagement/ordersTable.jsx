@@ -15,8 +15,21 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useState, useEffect } from "react";
 import { getAllOrders, getOrderItems } from "./../../../axios/AdminOrders";
+import {
+  formatDate,
+  getStatusBadge,
+  isOrderDateOlderThan3Days,
+} from "./../../../OrderHelperFunctions";
+import { cancelOrder } from "./../../../axios/AdminOrders";
 
-function Row({ order, orderItems, isOpen, handleCollapse }) {
+function Row({
+  order,
+  orderItems,
+  isOpen,
+  handleCollapse,
+  handleCancelOrder,
+  currentDate,
+}) {
   const orderId = order.order_id;
   const [open, setOpen] = React.useState(isOpen);
 
@@ -38,50 +51,86 @@ function Row({ order, orderItems, isOpen, handleCollapse }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell align="right">{order.order_id}</TableCell>
-        <TableCell align="right">{order.order_date}</TableCell>
-        <TableCell align="right">{order.total_amount}</TableCell>
-        <TableCell align="right">{order.total_quantity}</TableCell>
+        <TableCell align="center">{order.order_id}</TableCell>
+        <TableCell align="center">{formatDate(order.order_date)}</TableCell>
+        <TableCell align="center">{order.total_amount}</TableCell>
+        <TableCell align="center">{order.total_quantity}</TableCell>
+        <TableCell align="center">
+          {order.address} - {order.city}
+        </TableCell>
+        <TableCell align="center">
+          {getStatusBadge(order.shipment.status)}
+        </TableCell>
+        <TableCell align="center">
+          {order.shipment.status !== "cancelled" &&
+          order.shipment.status !== "delivered" &&
+          !isOrderDateOlderThan3Days(currentDate, order.order_date) ? (
+            <button
+              className="btn btn-outline btn-error btn-sm rounded-full"
+              onClick={() => handleCancelOrder(order.order_id)}>
+              Cancel
+            </button>
+          ) : (
+            <button
+              className="btn btn-outline btn-error btn-sm rounded-full"
+              disabled>
+              Cancel
+            </button>
+          )}
+        </TableCell>
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+      <TableRow style={{ backgroundColor: "#9e9e9e0d" }}>
+        <TableCell
+          style={{
+            paddingBottom: 0,
+            paddingTop: 0,
+            textAlign: "center",
+          }}
+          colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Order Items
-              </Typography>
-              <Table size="small" aria-label="purchases">
+              <Table size="small" className="ml-7" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell align="center" style={{ fontWeight: "bold" }}>
+                      Image
+                    </TableCell>
+                    <TableCell align="center" style={{ fontWeight: "bold" }}>
+                      Name
+                    </TableCell>
+                    <TableCell align="center" style={{ fontWeight: "bold" }}>
+                      Price
+                    </TableCell>
+                    <TableCell align="center" style={{ fontWeight: "bold" }}>
+                      Quantity
+                    </TableCell>
+                    <TableCell align="center" style={{ fontWeight: "bold" }}>
+                      {" "}
+                      Sub Total
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))} */}
-
                   {orderItems.map((orderItem) => (
-                    <TableRow key={orderItem.quantity}>
-                      <TableCell>{orderItem.product.name}</TableCell>
-                      <TableCell>{orderItem.product.name}</TableCell>
-                      <TableCell align="right">
+                    <TableRow key={`orderItem_${orderItem.order_item_id}`}>
+                      <TableCell align="center">
+                        <img
+                          src={`${orderItem.product.image}`}
+                          alt="product  image"
+                          style={{ width: "60px" }}
+                        />
+                      </TableCell>
+                      <TableCell align="center">
+                        {orderItem.product.name}
+                      </TableCell>
+                      <TableCell align="center">
                         {orderItem.product.price}
                       </TableCell>
-                      <TableCell align="right">
-                        {orderItem.product.price}
+                      <TableCell align="center">{orderItem.quantity}</TableCell>
+                      <TableCell align="center">
+                        {(orderItem.quantity * orderItem.product.price).toFixed(
+                          2
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -97,29 +146,23 @@ function Row({ order, orderItems, isOpen, handleCollapse }) {
 
 export default function OrdersTable() {
   const [orders, setOrders] = useState([]);
-  const [openRowId, setOpenRowId] = useState(null); // State to track the ID of the currently open row
+  const [openRowId, setOpenRowId] = useState(null);
   const [FetchingOrderseError, setFetchingOrderseError] = useState(null);
   const [orderItems, setOrderItems] = useState([]);
   const [fetchingOrderItemsError, setFetchingOrderItemsError] = useState(null);
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  // const handleCollapse = (orderId) => {
-  //   getOrderItems(orderId)
-  //     .then((response) => {
-  //       const orderItems = response.data;
-  //       console.log("orderItems", orderItems);
-  //       setOrderItems(orderItems);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching orders:", error);
-  //     });
-  // };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000); // Update every minute
+    return () => clearInterval(interval);
+  }, []);
   const handleCollapse = (orderId) => {
-    // Check if the clicked row is already open
     if (orderId === openRowId) {
-      setOpenRowId(null); // Close the row if it's already open
+      setOpenRowId(null);
     } else {
-      setOpenRowId(orderId); // Otherwise, open the clicked row
-      // Fetch order items for the clicked row
+      setOpenRowId(orderId);
       getOrderItems(orderId)
         .then((response) => {
           const orderItems = response.data;
@@ -133,7 +176,7 @@ export default function OrdersTable() {
     }
   };
 
-  useEffect(() => {
+  function fetchAllOrders() {
     getAllOrders()
       .then((response) => {
         const orders = response.data;
@@ -144,20 +187,51 @@ export default function OrdersTable() {
         console.log(error);
         setFetchingOrderseError(error);
       });
+  }
+  useEffect(() => {
+    fetchAllOrders();
   }, []);
 
+  const handleCancelOrder = (orderId) => {
+    cancelOrder(orderId)
+      .then(() => {
+        console.log("Order canceled successfully");
+        fetchAllOrders();
+      })
+      .catch((error) => {
+        console.error("Error canceling order", error);
+      });
+  };
   return (
-    <div className="contianer mt-28">
-      <TableContainer component={Paper}>
+    <div className="container  mx-auto mt-28 mb-28">
+      <TableContainer
+        component={Paper}
+        style={{ backgroundColor: "#9e9e9e0d" }}>
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                ID
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                Order Date
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                Total Price
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                Quantity
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                Adsress
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                Status
+              </TableCell>
+              <TableCell align="center" style={{ fontWeight: "bold" }}>
+                Cancel
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -167,6 +241,8 @@ export default function OrdersTable() {
                 order={order}
                 orderItems={orderItems}
                 handleCollapse={handleCollapse}
+                handleCancelOrder={handleCancelOrder}
+                currentDate={currentDate}
                 isOpen={order.order_id === openRowId}
               />
             ))}

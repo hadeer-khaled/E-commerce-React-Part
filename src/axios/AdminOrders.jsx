@@ -6,11 +6,6 @@ export const getOrderItems = (orderId) => {
   return axiosInstance.get(`orders/order/${orderId}/order_items`);
 };
 
-// getOrderItems(1)
-//   .then((response) => {
-//     const orders = response.data;
-//     console.log("Orders items:", orders);
-//   })
-//   .catch((error) => {
-//     console.error("Error fetching orders:", error);
-//   });
+export const cancelOrder = (orderId) => {
+  return axiosInstance.patch(`orders/order/${orderId}/`);
+};
