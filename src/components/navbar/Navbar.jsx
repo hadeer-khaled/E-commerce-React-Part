@@ -25,11 +25,11 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link to='/'>
+                  <Link to='/shop'>
                     Shop
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link to='/'>
                     Contact
                   </Link>
@@ -43,7 +43,7 @@ function Navbar() {
                   <Link to='/'>
                     Footer
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -75,9 +75,11 @@ function Navbar() {
             <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
           </div> */}
 
-          <button className="btn btn-ghost btn-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-          </button>
+          <div className="btn btn-ghost btn-circle">
+            <Link to='/shop'>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            </Link>
+          </div>
 
           <div id="login" className='px-5'>
             <Link to='/login'>Login</Link>
@@ -135,17 +137,17 @@ function Navbar() {
               <ul tabIndex={0} className="mt-3 z-[1] py-4 shadow menu menu-sm dropdown-content w-36 h-30 p-2 bg-base-100 rounded-box translate-x-6 -translate-y-1 border border-slate-600 justify-evenly z-50">
                 <li>
                   <a className="">
-                    Profile
+                    Cart
                     {/* <span className="badge">New</span> */}
                   </a>
                 </li>
-                <li><a>Settings</a></li>
+                <li><a>Wishlist</a></li>
                 <li><a>Logout</a></li>
               </ul>
             </div>
           </div>
 
-          <div id='nav-theme' className="dropdown fixed top-20 end-0 z-50">
+          <div id='nav-theme' className="dropdown fixed top-20 end-0">
             <div tabIndex={0} role="button" className="btn ps-4 bg-transparent shadow-none border-none w-12 me-0 pe-7 rounded-s-2xl rounded-e-none">
               {/* <svg width="12px" height="12px" className="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg> */}
               <i className="fas fa-gear fa-lg"></i>
