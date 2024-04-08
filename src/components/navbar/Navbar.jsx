@@ -135,14 +135,10 @@ function Navbar() {
                 </div>
               </div>
               <ul tabIndex={0} className="mt-3 z-[1] py-4 shadow menu menu-sm dropdown-content w-36 h-30 p-2 bg-base-100 rounded-box translate-x-6 -translate-y-1 border border-slate-600 justify-evenly z-50">
-                <li>
-                  <a className="">
-                    Cart
-                    {/* <span className="badge">New</span> */}
-                  </a>
-                </li>
-                <li><a>Wishlist</a></li>
-                <li><a>Logout</a></li>
+                <li><Link to="/userprofile">Profile</Link></li>
+                <li><Link to="/">Cart</Link></li>
+                <li><Link to="/">Wishlist</Link></li>
+                <li><Link to="/logout">Logout</Link></li>
               </ul>
             </div>
           </div>
