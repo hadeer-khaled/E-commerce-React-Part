@@ -5,6 +5,7 @@ export const fetchShoppingCartItemsThunk = createAsyncThunk(
   'cartItem/fetchShoppingCartItems',
   async (userId) => {
     const cartResponse = await fetchShoppingCartItems(userId);
+    console.log("cartResponse",cartResponse)
     return cartResponse;
   }
 );
@@ -26,7 +27,8 @@ const shoppingCartSlice = createSlice({
       })
       .addCase(fetchShoppingCartItemsThunk.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.cartItems = action.payload.cart_items;
+        state.cartItems = action.payload;
+        console.log("inside action", state.cartItems)
         state.cartItemsCount = action.payload.cart_items_count;
         state.totalQuantity = action.payload.total_quantity;
       })

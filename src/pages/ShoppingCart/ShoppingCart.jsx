@@ -14,7 +14,8 @@ export default function ShoppingCart() {
 
   useEffect(() => {
     dispatch(fetchShoppingCartItemsThunk(userId));
-  }, [dispatch]),[cartItems];
+    console.log(cartItems)
+  }, [dispatch]);
 
   const handleClick = async (cartItemId) => {
     try {
