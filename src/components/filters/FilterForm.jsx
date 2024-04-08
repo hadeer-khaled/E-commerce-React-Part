@@ -81,8 +81,8 @@ const FilterForm = ({ onSubmit, initialCategory }) => {
             <option value="">Filter</option>
             <option value="-avg_rating">Price: High rated first</option>
             <option value="price">Price: low prices first</option>
-            <option value="avg_rating">Price: low rated first</option>
-            <option value="-price">Price: High prices first</option>
+            <option value="-price">Rating: High prices first</option>
+            <option value="avg_rating">Rating: low rated first</option>
             {/* Add more options for sorting */}
           </select>
         </div>
