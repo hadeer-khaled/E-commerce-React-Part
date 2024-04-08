@@ -1,26 +1,47 @@
-// FilterForm.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { getCategoriesThunk } from "../../store/slices/categoriesSlice";
+import { useNavigate } from 'react-router-dom';
 
-const FilterForm = ({ onSubmit }) => {
+const FilterForm = ({ onSubmit, initialCategory }) => {
+  const dispatch = useDispatch();
+  const categoriesList = useSelector((state) => state.categoriesSliceReducer.categoryList);
+  let navigateTo  = useNavigate();
+
   const [filters, setFilters] = useState({
     search: "",
-    // category: "",
+    category: "", // Set initial category value to empty string
     order: "",
   });
 
+  useEffect(() => {
+    dispatch(getCategoriesThunk({ page: '', limit: '' }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    onSubmit(filters);
+  }, [filters, onSubmit]);
+
+  // Find category ID based on the initial category name
+  useEffect(() => {
+    const initialCategoryId = categoriesList.find(category => category.name === initialCategory)?.category_id || "";
+    setFilters(prevFilters => ({ ...prevFilters, category: initialCategoryId }));
+  }, [categoriesList, initialCategory]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (value === "") {
+      navigateTo(`/shop`);
+    } else if (name === "category") {
+      const selectedOption = e.target.options[e.target.selectedIndex];
+      const selectedText = selectedOption ? selectedOption.textContent : "";
+      navigateTo(`/shop?category=${selectedText}`);
+    }
     setFilters({ ...filters, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitting filters:", filters); // Add this log to see the filters before submission
-    onSubmit(filters);
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="">
+    <form className="pt-2 pb-4">
       <div className="mb-4 px-8">
         <input
           type="text"
@@ -42,30 +63,30 @@ const FilterForm = ({ onSubmit }) => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option value="">All Categories</option>
-            {/* Add options for different categories */}
+            {categoriesList.map((category) => (
+              <option key={category.category_id} value={category.category_id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="w-full sm:w-1/2 px-4">
           <select
             id="sortBy"
             name="order"
-            value={filters.sortBy}
+            value={filters.order}
             onChange={handleChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
-            <option value="">Sort by Default</option>
-            <option value="price">Price: Low to High</option>
-            <option value="-price">Price: High to Low</option>
+            <option value="">Filter</option>
+            <option value="-avg_rating">Price: High rated first</option>
+            <option value="price">Price: low prices first</option>
+            <option value="avg_rating">Price: low rated first</option>
+            <option value="-price">Price: High prices first</option>
             {/* Add more options for sorting */}
           </select>
         </div>
       </div>
-      <button
-        type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Apply Filters
-      </button>
     </form>
   );
 };

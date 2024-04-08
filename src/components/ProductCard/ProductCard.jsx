@@ -35,7 +35,7 @@ const renderRatingStars = (avgRating) => {
           </Link>
         </h2>
         <p>{product.description}</p>
-        <Link to='/shop' className='grid-cols-subgrid text-blue-600 self-start ps-3'>{product.category}</Link>
+        <Link to={`/shop?category=${product.category}`} className='grid-cols-subgrid text-blue-600 self-start ps-3'>{product.category}</Link>
         <div className="card-actions p-3 flex items-center justify-between">
     <div className="flex items-center w-full">
         <div className="rating-container">
