@@ -7,6 +7,7 @@ import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
+import AdminCategory from "./pages/AdminCategory/AdminCategory"
 function Layout() {
   return (
     <>
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
         path: '/shoppingCart', // Define the path for the shoppingCart page
         element: <ShoppingCart />, // Render the ShoppingCart component
       },
+      {
+        path:'/adminCategory',
+        element:<AdminCategory />
+      }
     ],
   },
   // {
