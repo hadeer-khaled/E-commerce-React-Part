@@ -3,6 +3,9 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import UserOrders from "./pages/UserOrders/UserOrders";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import UserProfileForm from "./components/userProfileForm/userProfileForm";
+import Payment from "./pages/payment/Payment";
+import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/Home/Home";
@@ -50,7 +53,7 @@ const router = createBrowserRouter([
         element: <UserProfile />,
       },
       {
-        path: "/userOrders",
+        path: "/userorders",
         element: <UserOrders />,
       },
       {
@@ -60,6 +63,14 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
+      },
+      {
+        path: "/admin/login",
+        element: <AdminLogin />,
       },
     ],
   },
