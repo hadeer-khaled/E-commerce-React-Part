@@ -99,7 +99,7 @@ const UserProfile = () => {
   });
 
   return (
-    <div className="userprofile-container  container mx-auto mt-28 mb-20 pt-6 pb-6 rounded-lg">
+    <div className="userprofile-container container mt-28  mb-16 mx-auto  pt-6 pb-6 rounded-lg">
       <div className="flex">
         <div className="basis-1/4">
           <div className="sidebar-container">
@@ -107,7 +107,8 @@ const UserProfile = () => {
               <div className="image-div">
                 <div className="avatar">
                   <div className="w-40 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
-                    <img src={`${BaseURL}/${loggedUser.image}`} />
+                    {/* <img src={`${BaseURL}/${loggedUser.image}`} /> */}
+                    <img src={`${loggedUser.image}`} />
                   </div>
                 </div>
                 <div className="image-edit-btn badge bg-accent badge-lg rounded-full">

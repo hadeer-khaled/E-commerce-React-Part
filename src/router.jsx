@@ -14,7 +14,8 @@ import ProductDetails from "./pages/product-details/product-details";
 import ShopPage from "./pages/shop/shop";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
-import AdminCategory from "./pages/AdminCategory/AdminCategory"
+import AdminCategory from "./pages/AdminCategory/AdminCategory";
+import TestCloudinary from "./pages/UserProfile/test";
 function Layout() {
   return (
     <>
@@ -25,21 +26,21 @@ function Layout() {
   );
 }
 
-// function WithoutLayout() {
-//   return (
-//     <>
-//       <Outlet />
-//       {/* <Footer /> */}
-//     </>
-//   );
-// }
+function WithoutLayout() {
+  return (
+    <>
+      <Outlet />
+      {/* <Footer /> */}
+    </>
+  );
+}
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
@@ -63,15 +64,15 @@ const router = createBrowserRouter([
         element: <UserProfile />,
       },
       {
-        path: '/userorders',
+        path: "/userorders",
         element: <UserOrders />,
       },
       {
-        path: '/login',
+        path: "/login",
         element: <Login />,
       },
       {
-        path: '/register',
+        path: "/register",
         element: <Register />,
       },
       {
@@ -91,28 +92,28 @@ const router = createBrowserRouter([
         element: <OrdersTable />,
       },
       {
-        path: '/wishlist', // Define the path for the wishlist page
+        path: "/wishlist", // Define the path for the wishlist page
         element: <Wishlist />, // Render the Wishlist component
       },
       {
-        path: '/shoppingCart', // Define the path for the shoppingCart page
+        path: "/shoppingCart", // Define the path for the shoppingCart page
         element: <ShoppingCart />, // Render the ShoppingCart component
       },
       {
-        path:'/adminCategory',
-        element:<AdminCategory />
-      }
+        path: "/adminCategory",
+        element: <AdminCategory />,
+      },
     ],
   },
-  // {
-  //   element: <WithoutLayout />,
-  //   children: [
-  //     {
-  //       path: "/",
-  //       element: < />,
-  //     },
-  //   ],
-  // },
+  {
+    element: <WithoutLayout />,
+    children: [
+      {
+        path: "/test",
+        element: <TestCloudinary />,
+      },
+    ],
+  },
 ]);
 
 export default router;
