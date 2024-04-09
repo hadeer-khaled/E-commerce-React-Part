@@ -1,6 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -11,48 +12,35 @@ const client = axios.create({
 });
 
 function Login() {
-  // console.log(client.baseURL)
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [validEmail, setValidEmail] = useState(true);
-  const [validPassword, setValidPassword] = useState(true);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().required("Email is required").email("Invalid email format"),
+      password: Yup.string().required("Password is required").min(8),
+    }),
+    onSubmit: (values) => {
+      values.role = "user";
+      client
+        .post("/users/login/", values)
+        .then((res) => {
+          console.log(res.data.message);
+        })
+        .catch((err) => console.log(err));
+      console.log(values);
+    },
+  });
 
-  function emailHandler(e) {
-    setEmail(e.target.value);
-    if (email.split("@").length > 1) {
-      setValidEmail(false);
-    }
-  }
-
-  function passwordHandler(e) {
-    setPassword(e.target.value);
-    if (password.length > 8) {
-      setValidPassword(false);
-    }
-  }
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log({
-      email: email,
-      password: password,
-    });
+  function handleLogout() {
     client
-      .post("/users/login/", {
-        email: email,
-        password: password,
-      })
+      .post("/users/logout/", { withCredentials: true })
       .then((res) => {
         console.log(res.data.message);
       });
-    console.log("Email : " + email);
-    console.log("Password : " + password);
   }
 
-  function handleLogout() {
-    client.post("/users/logout/", { withCredentials: true }).then((res) => {
-      console.log(res.data.message);
-    });
-  }
   return (
     <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
       <div className="md:w-1/3 max-w-sm">
@@ -61,58 +49,56 @@ function Login() {
           alt="Sample image"
         />
       </div>
-      <div className="md:w-1/3 max-w-sm">
+      <form className="md:w-1/3 max-w-sm" onSubmit={formik.handleSubmit}>
         <input
           className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
           type="text"
           placeholder="Email Address"
-          onChange={emailHandler}
+          name="email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.email}
         />
-        {validEmail && email && <p className="text-red-500">Invalid Email</p>}
+        {formik.touched.email && formik.errors.email && (
+          <p className="text-red-500">{formik.errors.email}</p>
+        )}
+
         <input
           className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mt-4"
           type="password"
           placeholder="Password"
-          onChange={passwordHandler}
+          name="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.password}
         />
-        {validPassword && password && (
-          <p className="text-red-500">Invalid Password</p>
+        {formik.touched.password && formik.errors.password && (
+          <p className="text-red-500">{formik.errors.password}</p>
         )}
+
         <div className="mt-4 flex justify-between font-semibold text-sm"></div>
         <div className="text-center md:text-left">
           <button
             className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
             type="submit"
-            onClick={handleSubmit}
-            disabled={validPassword && validEmail}>
+            disabled={!formik.isValid || !formik.dirty}
+          >
             Login
           </button>
         </div>
-        <Link to="/register">
           <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
-            Don&apos;t have an account?{" "}
-            <p
-              className="text-red-600 hover:underline hover:underline-offset-4"
-              href="#">
+            Don &apos; t have an account?{" "}
+        <Link to="/register">
+            <p className="text-red-600 hover:underline hover:underline-offset-4">
               Register
             </p>
-          </div>
         </Link>
-      </div>
+          </div>
+      </form>
 
       <button className="btn" onClick={handleLogout}>
         Logout
       </button>
-      <Link to="/userprofile">
-        <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
-          user profile{" "}
-          <p
-            className="text-red-600 hover:underline hover:underline-offset-4"
-            href="#">
-            Register
-          </p>
-        </div>
-      </Link>
     </section>
   );
 }
