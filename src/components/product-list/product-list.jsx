@@ -35,18 +35,24 @@ const ProductsList = ({ filters }) => {
   }
 
   return (
-    <div className='products-list text-center'>
-      <h2 className='card-title text-4xl pb-8 text-center m-auto self-center'>Products</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-16">
-        {productList.map(product => (
-          <ProductCard key={product.product_id} product={product} />
-        ))}
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+    <div className='products-list text-center min-h-52 mt-1'>
+      {productList.length > 0 ? (
+        <>
+            <h2 className='card-title text-4xl pb-8 text-center m-auto self-center'>Products</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 pb-16">
+              {productList.map(product => (
+                <ProductCard key={product.product_id} product={product} />
+              ))}
+            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+        </>
+      ) : (
+        <h2 className='card-title text-4xl pb-8 text-center m-auto self-center'>No products</h2>
+      )}
     </div>
   );
 };

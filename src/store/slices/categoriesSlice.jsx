@@ -13,6 +13,7 @@ const initialState = {
 export const getCategoriesThunk = createAsyncThunk(
   "categories/getCategories",
   async ({ page, limit, order, search, ...filters }) => {
+    console.log("Categoriessss=======================================================================");
     const data = await getCategories({ page, limit, order, search, ...filters });
     return data;
   }
