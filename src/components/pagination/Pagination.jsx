@@ -15,7 +15,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="join">
+    <div className="join pb-5">
       <button className="join-item btn" onClick={handlePrev} disabled={currentPage === 1}>«</button>
       {[...Array(totalPages).keys()].map(page => (
         <button key={page} className="join-item btn" onClick={() => onPageChange(page + 1)}>{page + 1}</button>
