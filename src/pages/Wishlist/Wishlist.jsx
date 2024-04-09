@@ -13,7 +13,7 @@ export default function Wishlist() {
 
   useEffect(() => {
     dispatch(fetchWishlistItemsThunk(userId));
-  }, [dispatch, userId]);
+  }, [dispatch],[wishlistItems]);
 
   const handleClick = async (productId) => {
     try {
@@ -42,6 +42,7 @@ export default function Wishlist() {
       </div>
       {/* Table */}
       <div className="overflow-x-auto flex-grow">
+      {wishlistItems.length > 0 ? (
         <table className="table">
           {/* head */}
           <thead>
@@ -126,6 +127,9 @@ export default function Wishlist() {
             ))}
           </tbody>
         </table>
+         ) : (
+          <h2 className="text-error ">Your wishlist is empty</h2>
+        )}
       </div>
     </div>
   );

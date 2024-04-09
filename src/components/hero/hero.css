@@ -1,0 +1,25 @@
+.hero {
+    /* position: absolute;  */
+    z-index: -100;
+    height: 100vh;
+    /* background-image: url("img/7.webp"); */
+    background-size: cover;
+    /* background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0,0,0,0.2)); */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("img/64935af2dc28f4e5ab236bbe_Group-5.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: flex;
+    align-items: start !important;
+    padding-top: 50px !important;
+}
+
+@media (max-width: 500px) {
+    .hero {
+        height: 500px;
+    }
+}
+
+#shopButton {
+    z-index: 99999999;
+}
