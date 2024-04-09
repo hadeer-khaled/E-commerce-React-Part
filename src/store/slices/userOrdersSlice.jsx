@@ -1,11 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserOrders } from "./../../axios/UserOrders.jsx";
 
-const userId = 1;
-
 export const getUserOrdersThunk = createAsyncThunk(
   "user/getUserOrders",
-  async () => {
+  async (userId) => {
     const res = await getUserOrders(userId);
     console.log("res", res);
     return res.data;

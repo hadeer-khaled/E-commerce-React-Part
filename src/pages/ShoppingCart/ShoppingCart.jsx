@@ -10,11 +10,14 @@ export default function ShoppingCart() {
   const [showAlert, setShowAlert] = useState(false);
   const userId = 1;
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  const totalPrice = Array.isArray(cartItems) 
+  ? cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0) 
+  : 0;
 
   useEffect(() => {
     dispatch(fetchShoppingCartItemsThunk(userId));
-  }, [dispatch]),[cartItems];
+    console.log(cartItems)
+  }, [dispatch]);
 
   const handleClick = async (cartItemId) => {
     try {
@@ -69,8 +72,8 @@ export default function ShoppingCart() {
   return (
     <div className="flex">
     <div className="overflow-x-auto flex-grow">
-      {cartItems.length > 0 ? (
-        <table className="table">
+    {cartItems && cartItems.length > 0 ? (
+              <table className="table">
           <thead>
             <tr>
               <th>Image</th>
