@@ -27,6 +27,7 @@
     "formik": "^2.4.5",
     "prop-types": "^15.8.1",
     "query-string": "^9.0.0",
+    "fortawesome": "^0.0.1-security",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-paginate": "^8.2.0",
