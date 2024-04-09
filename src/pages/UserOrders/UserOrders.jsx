@@ -3,7 +3,12 @@ import { getOrderDetails, cancelOrder } from "../../axios/UserOrders.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersThunk } from "./../../store/slices/userOrdersSlice";
 import "./UserOrders.css";
-import productImage from "./../../assets/product.png";
+import {
+  formatDate,
+  getStatusBadge,
+  isOrderDateOlderThan3Days,
+} from "./../../OrderHelperFunctions.jsx";
+
 const UserOrders = () => {
   const userId = 11;
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -32,33 +37,6 @@ const UserOrders = () => {
     }, 60000); // Update every minute
     return () => clearInterval(interval);
   }, []);
-
-  // function formatDate(dateString) {
-  //   const date = new Date(dateString);
-  //   const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-  //   return date.toLocaleDateString("en-GB", options);
-  // }
-  function formatDate(dateString) {
-    const dateParts = dateString.split(" ")[0].split("-");
-    const year = parseInt(dateParts[0]);
-    const month = parseInt(dateParts[1]) - 1; // Months are zero-indexed
-    const day = parseInt(dateParts[2]);
-    const date = new Date(year, month, day);
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-    return date.toLocaleDateString("en-GB", options);
-  }
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case "shipped":
-        return <div className="badge badge-warning">Shipped</div>;
-      case "delivered":
-        return <div className="badge badge-success">Delivered</div>;
-      case "cancelled":
-        return <div className="badge badge-error">Cancelled</div>;
-      default:
-        return <div className="badge badge-neutral">Pending</div>;
-    }
-  };
   const fetchOrderDetails = async (orderId) => {
     setLoading(true);
     try {
@@ -82,13 +60,6 @@ const UserOrders = () => {
       });
   };
 
-  const isOrderDateOlderThan3Days = (orderDate) => {
-    const differenceInMs = currentDate - new Date(orderDate);
-    const differenceInDays = differenceInMs / (1000 * 60 * 60 * 24);
-    const isOrderDateOlderThan3Days = differenceInDays > 3;
-    return isOrderDateOlderThan3Days;
-    // const isOrderCancelled = order.shipment.status === "cancelled";
-  };
   return (
     <div className="container user-order-container flex sm:flex-col md:flex-col lg:flex-row mx-auto mt-28 pt-6 pb-6 rounded-lg">
       <div className="orders-table pb-6 rounded-lg mx-3 ">
@@ -129,7 +100,7 @@ const UserOrders = () => {
                 <td>
                   {order.shipment.status !== "cancelled" &&
                   order.shipment.status !== "delivered" &&
-                  !isOrderDateOlderThan3Days(order.order_date) ? (
+                  !isOrderDateOlderThan3Days(currentDate, order.order_date) ? (
                     <button
                       className="btn btn-outline btn-error btn-sm rounded-full"
                       onClick={() => handleCancelOrder(order.order_id)}>
