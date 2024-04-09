@@ -1,13 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserById } from "./../../axios/UserProfile.jsx";
+import { getUserById, updateUserById } from "./../../axios/UserProfile.jsx";
 
-const userId = 1;
+// const userId = 1;
 
 export const getLoggedUserThunk = createAsyncThunk(
   "users/getLoggedUser",
-  async () => {
+  async (userId) => {
     const res = await getUserById(userId);
     console.log("res.data", res.data);
+    return res.data;
+  }
+);
+export const updateUserThunk = createAsyncThunk(
+  "users/updateUser",
+  async ({ userId, formData }) => {
+    console.log("userId", userId);
+    const res = await updateUserById(userId, formData);
+    console.log("updated user data", res.data);
     return res.data;
   }
 );
@@ -30,6 +39,18 @@ const userProfile = createSlice({
         state.LoggedUser = action.payload;
       })
       .addCase(getLoggedUserThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(updateUserThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.LoggedUser = action.payload;
+        console.log("Update successful. Updated user data:", action.payload);
+      })
+      .addCase(updateUserThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
