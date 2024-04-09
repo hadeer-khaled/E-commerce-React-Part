@@ -1,4 +1,3 @@
-// ShopPage.js
 import React, { useState } from "react";
 import ProductsList from "../../components/product-list/product-list";
 import FilterForm from "../../components/filters/FilterForm";
@@ -8,6 +7,8 @@ const ShopPage = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const initialCategory = searchParams.get('category') || '';
+
+  
 
   const [appliedFilters, setAppliedFilters] = useState({});
 

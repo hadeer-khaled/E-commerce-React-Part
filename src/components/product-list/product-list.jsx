@@ -1,9 +1,9 @@
-// ProductsList.js
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductsThunk } from '../../store/slices/productsSlice';
 import ProductCard from '../ProductCard/ProductCard';
 import Pagination from '../pagination/Pagination';
+import { useLocation } from 'react-router-dom';
 
 const ProductsList = ({ filters }) => {
   const dispatch = useDispatch();
@@ -15,9 +15,16 @@ const ProductsList = ({ filters }) => {
   const [pageNumber, setPageNumber] = useState(currentPage);
   const productsPerPage = 16;
 
+  const location = useLocation();
+
   useEffect(() => {
     handlePageChange(pageNumber);
   }, [dispatch, pageNumber, filters]);
+
+  useEffect(() => {
+    // Reset page number to 1 when location changes
+    setPageNumber(1);
+  }, [location]);
 
   const handlePageChange = (page) => {
     setPageNumber(page);
