@@ -35,7 +35,7 @@ const CategoryAdminDashboard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen mt-0">
+    <div className="categ flex flex-col items-center justify-center ">
       <h1 className="text-2xl font-bold mb-4">Category Admin Dashboard</h1>
       <div className="flex items-center mb-4">
         <input
