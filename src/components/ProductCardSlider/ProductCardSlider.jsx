@@ -9,9 +9,9 @@ const ProductCardSlider = () => {
     const productList = useSelector((state) => state.productsSliceReducer.productList);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    useEffect(() => {
-        dispatch(getProductsThunk());
-      }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getProductsThunk({page:'1',limit:'16'}));
+    //   }, [dispatch]);
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % Math.ceil(productList.length / 4));
