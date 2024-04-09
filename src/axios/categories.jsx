@@ -1,7 +1,7 @@
 import axiosInstance from "./config.js";
 
-export const getProducts = ({ page, limit, order, search, ...filters }) => {
-  let url = `products/?page=${page}&limit=${limit}`;
+export const getCategories = ({ page, limit, order, search, ...filters }) => {
+  let url = `categories/?page=${page}&limit=${limit}`;
   
   // Add order and search parameters if provided
   if (order) {
@@ -28,15 +28,15 @@ export const getProducts = ({ page, limit, order, search, ...filters }) => {
     });
 };
 
-export const getProductById = ({ productId }) => {
-  let url = `products/${productId}`;
+export const getCategoryById = ({ categoryId }) => {
+  let url = `categories/${categoryId}`;
   
   return axiosInstance.get(url)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching data by Id:", error);
       throw error;
     });
 };

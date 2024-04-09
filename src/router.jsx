@@ -6,10 +6,12 @@ import Register from "./pages/Register/Register";
 import Payment from "./pages/payment/Payment";
 import AdminLogin from "./pages/AdminPages/Login/AdminLogin";
 import Navbar from "./components/navbar/Navbar";
-import Home from "./pages/Home/Home";
 import Footer from "./components/footer/Footer";
 import OrdersManagemet from "./pages/AdminPages/OrdersManagement/OrdersManagemet";
 import OrdersTable from "./pages/AdminPages/OrdersManagement/ordersTable";
+import Home from "./pages/Home/Home";
+import ProductDetails from "./pages/product-details/product-details";
+import ShopPage from "./pages/shop/shop";
 
 function Layout() {
   return (
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/products/:productId",
+        element: <ProductDetails />,
+      },
+      {
+        path: "/shop",
+        element: <ShopPage />,
       },
       {
         path: "/userprofile",

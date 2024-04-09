@@ -1,8 +1,13 @@
-.ProductCardSlider .carousel {
-    position: relative;
-    padding-top: 41vh;
+.container {
+    position: absolute;
+    transform: translatey(-58vh);
+    /* padding-top: 41vh; */
     left: 0;
     right: 0;
+}
+.ProductCardSlider .carousel {
+    
+
 
 }
 
