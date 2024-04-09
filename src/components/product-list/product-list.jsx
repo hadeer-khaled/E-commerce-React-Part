@@ -16,7 +16,6 @@ const ProductsList = ({ filters }) => {
   const productsPerPage = 16;
 
   useEffect(() => {
-    console.log("Filters changed:", filters); // Add this log to see when filters change
     handlePageChange(pageNumber);
   }, [dispatch, pageNumber, filters]);
 

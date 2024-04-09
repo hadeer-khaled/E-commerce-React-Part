@@ -12,7 +12,6 @@ const ShopPage = () => {
   const [appliedFilters, setAppliedFilters] = useState({});
 
   const handleFilterSubmit = (filters) => {
-    console.log("Filters submitted:", filters); // Add this log to see the filters received from the form
     setAppliedFilters(filters);
   };
 
