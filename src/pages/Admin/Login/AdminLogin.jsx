@@ -1,11 +1,3 @@
-// function AdminLogin() {
-//   return (
-//     <div>AdminLogin</div>
-//   )
-// }
-
-// export default AdminLogin
-
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"

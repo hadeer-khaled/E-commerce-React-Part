@@ -8,6 +8,8 @@ import AdminLogin from "./pages/Admin/Login/AdminLogin";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Footer from "./components/footer/Footer";
+import OrderDetails from "./pages/payment/OrderDetails/OrderDetails";
+import TestPayment from "./pages/payment/TestPayment";
 
 
 function Layout() {
@@ -59,8 +61,16 @@ const router = createBrowserRouter([
         element: <Payment/>,
       },
       {
+        path: "/test-payment",
+        element: <TestPayment/>,
+      },
+      {
         path: "/admin/login",
         element: <AdminLogin/>,
+      },
+      {
+        path: "/order-details",
+        element: <OrderDetails/>
       }
     ],
   },
