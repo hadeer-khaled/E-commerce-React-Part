@@ -8,14 +8,13 @@ import AdminLogin from "./pages/AdminPages/Login/AdminLogin";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import OrdersManagemet from "./pages/AdminPages/OrdersManagement/OrdersManagemet";
-import OrdersTable from "./pages/AdminPages/OrdersManagement/ordersTable";
+// import OrdersTable from "./pages/AdminPages/OrdersManagement/ordersTable";
 import Home from "./pages/Home/Home";
 import ProductDetails from "./pages/product-details/product-details";
 import ShopPage from "./pages/shop/shop";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import AdminCategory from "./pages/AdminCategory/AdminCategory";
-import TestCloudinary from "./pages/UserProfile/test";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 function Layout() {
   return (
@@ -32,10 +31,6 @@ const router = createBrowserRouter([
     element: <Layout />,
     // errorElement: <NotFoundPage />,
     children: [
-      // {
-      //   path: "/NotFoundPage",
-      //   element: <NotFoundPage />,
-      // },
       {
         path: "/",
         element: <Home />,
@@ -83,10 +78,6 @@ const router = createBrowserRouter([
       {
         path: "/admin/ordersmanagement",
         element: <OrdersManagemet />,
-      },
-      {
-        path: "/orderstable",
-        element: <OrdersTable />,
       },
       {
         path: "/wishlist", // Define the path for the wishlist page
