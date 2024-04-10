@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { getOrderDetails, cancelOrder } from "../../axios/UserOrders.jsx";
+import {
+  getProductRatings,
+  setProductRating,
+} from "./../../axios/UserRatings.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersThunk } from "./../../store/slices/userOrdersSlice";
 import "./UserOrders.css";
@@ -8,6 +12,8 @@ import {
   getStatusBadge,
   isOrderDateOlderThan3Days,
 } from "./../../OrderHelperFunctions.jsx";
+
+import Rating from "@mui/material/Rating";
 
 const UserOrders = () => {
   const userId = 10;
@@ -19,6 +25,7 @@ const UserOrders = () => {
   const userOrders = useSelector((state) => {
     return state.userOrdersReducer.UserOrdersList;
   });
+  const [ratingValue, setRatingValue] = useState(0);
 
   useEffect(() => {
     dispatch(getUserOrdersThunk(userId));
@@ -60,6 +67,16 @@ const UserOrders = () => {
       });
   };
 
+  const handleRating = (newValue, produc_id) => {
+    setRatingValue(newValue);
+    setProductRating(produc_id, userId, newValue)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="container user-order-container flex sm:flex-col md:flex-col lg:flex-row mx-auto mt-28 pt-6 pb-6 rounded-lg">
       <div className="orders-table pb-6 rounded-lg mx-3 ">
@@ -128,11 +145,9 @@ const UserOrders = () => {
           <div>
             <h3 className="my-4 font-bold	"> Order Details</h3>
             <hr></hr>
-            {orderDetails.map((orderItem, index) => (
-              <>
-                <div
-                  key={index - ` ${orderItem.order_item_id}`}
-                  className="card w-96">
+            {orderDetails.map((orderItem) => (
+              <div key={`order_${orderItem.order_item_id}`}>
+                <div className="card w-96">
                   <div className="order-item-card-body">
                     <div className="product-details flex justify-between items-center	w-full">
                       <div className="product-image-div">
@@ -140,6 +155,14 @@ const UserOrders = () => {
                           src={orderItem.product.image}
                           alt="product  image"
                           style={{ width: "160px" }}
+                        />
+                        <Rating
+                          className="mt-3"
+                          name="simple-controlled"
+                          value={ratingValue}
+                          onChange={(event, newValue) => {
+                            handleRating(newValue, orderItem.product_id);
+                          }}
                         />
                       </div>
                       <div className="product-data-div text-sm">
@@ -164,13 +187,10 @@ const UserOrders = () => {
                         </p>
                       </div>
                     </div>
-                    {/* <div className="">
-                      
-                    </div> */}
                   </div>
                 </div>
                 <hr></hr>
-              </>
+              </div>
             ))}
           </div>
         )}
