@@ -16,7 +16,10 @@ import {
 import Rating from "@mui/material/Rating";
 
 const UserOrders = () => {
-  const userId = 10;
+  // const userId = 10;
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,8 +31,13 @@ const UserOrders = () => {
   const [ratingValue, setRatingValue] = useState(0);
 
   useEffect(() => {
-    dispatch(getUserOrdersThunk(userId));
-  }, [dispatch]);
+    setUserId(loggedUser.user_id);
+    console.log("userId", userId);
+    if (userId != 0) {
+      console.log("userId", userId);
+      dispatch(getUserOrdersThunk(userId));
+    }
+  }, [userId]);
 
   console.log("userOrders:", userOrders);
 
