@@ -1,23 +1,23 @@
 import { useEffect } from "react";
-import  QueryString  from 'query-string'
+// import  QueryString  from 'query-string'
 function Payment() {
 
 useEffect(() => {
     // Check to see if this is a redirect back from Checkout
     // const query = new URLSearchParams(window.location.search);
-    const values = QueryString(location.search)
-    if (values.success) {
-      // add cart items into order table
-      // delete cart items for current user
-    console.log("Order placed! You will receive an email confirmation.");
-    }
+    // const values = QueryString(location.search)
+    // if (values.success) {
+    //   // add cart items into order table
+    //   // delete cart items for current user
+    // console.log("Order placed! You will receive an email confirmation.");
+    // }
 
-    if (values.canceled) {
-      // send alert !
-    console.log(
-        "Order canceled -- continue to shop around and checkout when you're ready."
-    );
-    }
+    // if (values.canceled) {
+    //   // send alert !
+    // console.log(
+    //     "Order canceled -- continue to shop around and checkout when you're ready."
+    // );
+    // }
 }, []);
 
     const url = import.meta.env.VITE_BASE_URL
