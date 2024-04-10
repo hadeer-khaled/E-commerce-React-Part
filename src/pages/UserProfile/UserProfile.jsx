@@ -5,19 +5,15 @@ import {
   getLoggedUserThunk,
   updateUserThunk,
 } from "./../../store/slices/userProfileSlice";
-import { BaseURL } from "./../../axios/config";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Cookies from "universal-cookie";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faL, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 import "./UserProfile.css";
 
 const UserProfile = () => {
-  const userId = 11;
+  const userId = 10;
 
   const phoneRegExp = /^(010|011|012|015)[0-9]{8}$/;
   const nameRegExp = /^[a-zA-Z ]+$/;

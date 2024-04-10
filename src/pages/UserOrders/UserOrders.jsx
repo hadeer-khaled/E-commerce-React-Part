@@ -10,7 +10,7 @@ import {
 } from "./../../OrderHelperFunctions.jsx";
 
 const UserOrders = () => {
-  const userId = 11;
+  const userId = 10;
   const [currentDate, setCurrentDate] = useState(new Date());
   const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -133,16 +133,11 @@ const UserOrders = () => {
                 <div
                   key={index - ` ${orderItem.order_item_id}`}
                   className="card w-96">
-                  <div className="card-body">
+                  <div className="order-item-card-body">
                     <div className="product-details flex justify-between items-center	w-full">
                       <div className="product-image-div">
-                        {/* <img
-                          src={productImage}
-                          alt="Description of the image"
-                          style={{ width: "150px" }}
-                        /> */}
                         <img
-                          src={`${orderItem.product.image}`}
+                          src={orderItem.product.image}
                           alt="product  image"
                           style={{ width: "160px" }}
                         />
