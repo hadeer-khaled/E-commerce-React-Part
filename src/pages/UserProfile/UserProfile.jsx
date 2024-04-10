@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,20 +12,22 @@ import * as Yup from "yup";
 import Cookies from "universal-cookie";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faL, faPen } from "@fortawesome/free-solid-svg-icons";
 
 import "./UserProfile.css";
 
 const UserProfile = () => {
   const userId = 11;
 
-  const dispatch = useDispatch();
-  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const phoneRegExp = /^(010|011|012|015)[0-9]{8}$/;
+  const nameRegExp = /^[a-zA-Z ]+$/;
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cookies = new Cookies();
-  const jwt = cookies.get("jwt");
-  console.log("jwt", jwt);
+
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [imgUrl, setImgUrl] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getLoggedUserThunk(userId));
@@ -38,10 +40,39 @@ const UserProfile = () => {
         last_name: loggedUser.last_name,
         email: loggedUser.email,
         phone: loggedUser.phone,
-        // image: loggedUser.image,
       });
     }
   }, [loggedUser]);
+  const handleImageChange = (e) => {
+    setImgUrl(e.target.files[0]);
+  };
+  const handleImageSubmit = async () => {
+    setLoading(true);
+    return new Promise((resolve, reject) => {
+      const image = new FormData();
+      image.append("file", imgUrl);
+      image.append("cloud_name", "dywqswxz9");
+      image.append("upload_preset", "dcqofyur");
+
+      fetch("https://api.cloudinary.com/v1_1/dywqswxz9/image/upload", {
+        method: "post",
+        body: image,
+      })
+        .then((res) => {
+          console.log(res);
+          res.json().then((imgData) => {
+            const imageURL = imgData.url.toString();
+            console.log(imageURL);
+            resolve(imageURL);
+            setLoading(false);
+          });
+        })
+        .catch((error) => {
+          console.error("Error handling image submission:", error);
+          reject(error);
+        });
+    });
+  };
 
   const updateUserProfile = async (formData) => {
     try {
@@ -54,10 +85,8 @@ const UserProfile = () => {
   const handleNavigateMyOrders = () => {
     navigate("/userorders");
   };
-  const phoneRegExp = /^(010|011|012|015)[0-9]{8}$/;
-  const nameRegExp = /^[a-zA-Z ]+$/;
 
-  // --------------------- Formik ---------------- \\
+  // --------------------- User Data Formik ---------------- \\
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -98,8 +127,27 @@ const UserProfile = () => {
     },
   });
 
+  // --------------------- User Image Formik ---------------- \\
+  const imageFormik = useFormik({
+    initialValues: {
+      image: null,
+    },
+    onSubmit: (values) => {
+      console.log("Form values:", values);
+      handleImageSubmit()
+        .then((imageURL) => {
+          const formData = new FormData();
+          formData.append("image", imageURL);
+          updateUserProfile(formData);
+        })
+        .catch((error) => {
+          console.error("Error handling image submission:", error);
+        });
+    },
+  });
+
   return (
-    <div className="userprofile-container  container mx-auto mt-28 mb-20 pt-6 pb-6 rounded-lg">
+    <div className="userprofile-container container mt-28  mb-16 mx-auto  pt-6 pb-6 rounded-lg">
       <div className="flex">
         <div className="basis-1/4">
           <div className="sidebar-container">
@@ -107,12 +155,17 @@ const UserProfile = () => {
               <div className="image-div">
                 <div className="avatar">
                   <div className="w-40 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
-                    <img src={`${BaseURL}/${loggedUser.image}`} />
+                    <img src={`${loggedUser.image}`} />
                   </div>
                 </div>
-                <div className="image-edit-btn badge bg-accent badge-lg rounded-full">
+                <button
+                  className="image-edit-btn btn-sm badge bg-accent badge-lg rounded-full"
+                  style={{ outline: "none" }}
+                  onClick={() =>
+                    document.getElementById("change_image_modal").showModal()
+                  }>
                   <FontAwesomeIcon icon={faPen} style={{ fontSize: "14px" }} />
-                </div>
+                </button>
               </div>
             )}
             <div className="mt-4 text-center" style={{ color: "#a3a3a3" }}>
@@ -250,6 +303,51 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+
+      <dialog
+        id="change_image_modal"
+        className="modal modal-bottom sm:modal-middle ">
+        <div className="modal-box p-1 flex flex-col justify-center items-center">
+          <p className="py-4">
+            Press ESC key to close the dialog after image uploading
+          </p>
+          <div className="modal-action">
+            <form method="dialog" onSubmit={imageFormik.handleSubmit}>
+              <div>
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  className="file-input file-input-bordered w-full file-input-accent file-input-sm max-w-xs"
+                  accept="image/*"
+                  onChange={(e) => {
+                    handleImageChange(e);
+                  }}
+                />
+              </div>
+              {/* <button
+                type="submit"
+                className="mb-4 show-order-btn rounded-full shadow info btn btn-outline btn-sm btn-accent text-white mt-4  px-4 rounded"
+                disabled={!imageFormik.isValid}>
+                Update Profile Picture
+              </button> */}
+
+              <p>
+                {isLoading ? (
+                  "Uploading..."
+                ) : (
+                  <button
+                    type="submit"
+                    className="mb-4 show-order-btn rounded-full shadow info btn btn-outline btn-sm btn-accent text-white mt-4  px-4 rounded"
+                    disabled={!imageFormik.isValid}>
+                    Update Profile Picture
+                  </button>
+                )}
+              </p>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
