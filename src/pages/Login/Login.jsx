@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Swal from 'sweetalert2';
+
+import { setProfileData , resetProfileData } from '../../store/slices/userProfileSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -12,6 +16,10 @@ const client = axios.create({
 });
 
 function Login() {
+
+  const user = useSelector( (state) => state.userReducer)
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,9 +35,25 @@ function Login() {
         .post("/users/login/", values)
         .then((res) => {
           console.log(res.data.message);
+          console.log(res.data.data);
+          Swal.fire({
+            icon: 'success',
+            title: `Welcome ${res.data.data.first_name}`,
+            timer: 2000
+          })
+
+          dispatch(setProfileData(res.data.data))
+          console.log("data is set")
+          console.log('user',user)
         })
-        .catch((err) => console.log(err));
-      console.log(values);
+        .catch(() => {
+          Swal.fire({
+            icon:'error',
+            text:"incorrect email or password",
+            timer:2000
+          })
+        });
+      
     },
   });
 
@@ -39,6 +63,8 @@ function Login() {
       .then((res) => {
         console.log(res.data.message);
       });
+      dispatch(resetProfileData())
+      console.log('reset',"Data :", user)
   }
 
   return (

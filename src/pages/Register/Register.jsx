@@ -1,7 +1,9 @@
+import {useState} from 'react';
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -12,6 +14,17 @@ const client = axios.create({
 })
 
 function Register() {
+
+    // image upload variables
+    const [imgUrl,setImgUrl] = useState('')
+    const [isLoading, setLoading] = useState(false)
+
+    // img on change event
+    const handleImgChange = (e)=>
+    {
+        setImgUrl(e.target.files[0])
+    }
+
     const formik = useFormik({
         initialValues: {
             first_name:'',
@@ -20,23 +33,110 @@ function Register() {
             password:'',
             confirm_password:'',
             phone:'',
+            image:'/assets/default.png'
         },
         validationSchema: Yup.object({
             first_name: Yup.string().required("First Name is required").min(3).max(20),
             last_name: Yup.string().required("Last Name is required").min(3).max(20),
             email: Yup.string().required("Email is required").email("Wrong email format"),
-            password: Yup.string().min(8),
+            password: Yup.string().min(8,"Password must be at least 8 charachters"),
             confirm_password: Yup.string().oneOf([Yup.ref('password'),null], "Password doesn't match"),
-            phone: Yup.string().matches('^01[0125][0-9]{8}','Wrong phone number format')
+            phone: Yup.string().matches('^01[0125][0-9]{8}','Wrong phone number format'),
+            image: Yup.string()
         }),
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
+
+        try {
+            if(imgUrl)
+            {
+            
+            setLoading(true)
+            let imageURL;
+                
+            if(imgUrl && (imgUrl.type === "image/png" ||
+                imgUrl.type === "image/jpg" ||
+                imgUrl.type === "image/jpeg" ))
+            {
+                const image = new FormData()
+                image.append("file", imgUrl)
+                image.append("cloud_name", "dywqswxz9")
+                image.append("upload_preset", "dcqofyur")
+
+                const res = await fetch(
+                    "https://api.cloudinary.com/v1_1/dywqswxz9/image/upload",
+                    {
+                        method: "post",
+                        body: image
+                    }
+                )
+                
+                const imgData = await res.json()
+                imageURL = imgData.url.toString()
+            }
+            
+            setLoading(false)
+            
+            
             values.role = 'user'
-            values.username = 'default1'
-            client.post("/users/register/",values)
-            .then((res)=>{console.log(res.data.message)})
-            .catch(err => console.log(err))
-            console.log(values)
+            values.image = imageURL
+            
+            const response = await client.post("/users/register/", values)
+            .then(()=> {
+                Swal.fire({
+                    icon:'success',
+                    text:'registered successfully !!',
+                    timer:2000
+                })
+            })
+            .catch(
+                (err)=> {
+                    console.log(11,err.response.data.message)
+                    console.log("Here")
+                    Swal.fire(
+                        {
+                            icon:'error',
+                            text: err.response.data.message ,
+                            timer:2000
+                        }
+                    )
+                }
+            );
+            console.log("res",response);
+            // console.log(values);
         }
+
+        else {
+            values.role = 'user'
+            values.image = '/assets/defult.png'
+            // console.log(values)
+            const response = await client.post("/users/register/", values)
+            .then(()=> {
+                Swal.fire({
+                    icon:'success',
+                    text:'registered successfully !!',
+                    timer:2000
+                })
+            })
+            .catch(
+                    (err)=> {
+                    console.log(11,err.response.data.message)
+                    Swal.fire(
+                        {
+                            icon:'error',
+                            text: err.response.data.message ,
+                            timer:2000
+                        }
+                    )
+                }
+            );
+            
+            console.log("res",response);
+        }
+
+    }  catch(err) {
+            console.log(err.message)
+        }
+    }
     })
 return (
     <section className="bg-gray-50 dark:bg-gray-900 heig p-10">
@@ -178,7 +278,7 @@ return (
                     <div className="label">
                     <p className="text-white">Profile Picture</p> 
                     </div>
-                    <input type="file" className="file-input file-input-bordered w-full max-w-xs" name="image" />
+                    <input type="file" className="file-input file-input-bordered w-full max-w-xs" name="image" onChange={handleImgChange}/>
                     <div className="label">
                     </div>
             </label>
@@ -200,6 +300,7 @@ return (
             </Link>
             </p>
         </form>
+        {isLoading ? <p>Creating your account</p> : ""}
         </div>
     </div>
     </div>

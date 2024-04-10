@@ -16,6 +16,7 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import OrderDetails from './pages/payment/OrderDetails/OrderDetails'
 function Layout() {
   return (
     <>
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment />,
+      },
+      {
+        path: "/order-details",
+        element: <OrderDetails/>
       },
       {
         path: "/admin/login",
