@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -49,14 +50,12 @@ function Register() {
             if(imgUrl)
             {
             
-                setLoading(true)
-                let imageURL;
+            setLoading(true)
+            let imageURL;
                 
-                if(imgUrl && (
-                    imgUrl.type === "image/png" ||
-                    imgUrl.type === "image/jpg" ||
-                    imgUrl.type === "image/jpeg" ))
-
+            if(imgUrl && (imgUrl.type === "image/png" ||
+                imgUrl.type === "image/jpg" ||
+                imgUrl.type === "image/jpeg" ))
             {
                 const image = new FormData()
                 image.append("file", imgUrl)
@@ -64,7 +63,6 @@ function Register() {
                 image.append("upload_preset", "dcqofyur")
 
                 const res = await fetch(
-                    // CLOUDINARY_URL=cloudinary://614342951996957:mf2rxcQEmR2eruq6mGXwkWU26xE@dywqswxz9
                     "https://api.cloudinary.com/v1_1/dywqswxz9/image/upload",
                     {
                         method: "post",
@@ -82,18 +80,57 @@ function Register() {
             values.role = 'user'
             values.image = imageURL
             
-            const response = await client.post("/users/register/", values);
-            console.log(response.data.message);
-            console.log(values);
+            const response = await client.post("/users/register/", values)
+            .then(()=> {
+                Swal.fire({
+                    icon:'success',
+                    text:'registered successfully !!',
+                    timer:2000
+                })
+            })
+            .catch(
+                (err)=> {
+                    console.log(11,err.response.data.message)
+                    console.log("Here")
+                    Swal.fire(
+                        {
+                            icon:'error',
+                            text: err.response.data.message ,
+                            timer:2000
+                        }
+                    )
+                }
+            );
+            console.log("res",response);
+            // console.log(values);
         }
 
         else {
             values.role = 'user'
             values.image = '/assets/defult.png'
-            console.log(values)
-            const response = await client.post("/users/register/", values);
-            console.log(response.data.message);
-            console.log(values);           
+            // console.log(values)
+            const response = await client.post("/users/register/", values)
+            .then(()=> {
+                Swal.fire({
+                    icon:'success',
+                    text:'registered successfully !!',
+                    timer:2000
+                })
+            })
+            .catch(
+                    (err)=> {
+                    console.log(11,err.response.data.message)
+                    Swal.fire(
+                        {
+                            icon:'error',
+                            text: err.response.data.message ,
+                            timer:2000
+                        }
+                    )
+                }
+            );
+            
+            console.log("res",response);
         }
 
     }  catch(err) {
