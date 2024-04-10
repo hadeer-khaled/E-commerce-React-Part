@@ -16,6 +16,7 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import TestCloudinary from "./pages/UserProfile/test";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 function Layout() {
   return (
     <>
@@ -26,19 +27,15 @@ function Layout() {
   );
 }
 
-function WithoutLayout() {
-  return (
-    <>
-      <Outlet />
-      {/* <Footer /> */}
-    </>
-  );
-}
-
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    // errorElement: <NotFoundPage />,
     children: [
+      // {
+      //   path: "/NotFoundPage",
+      //   element: <NotFoundPage />,
+      // },
       {
         path: "/",
         element: <Home />,
@@ -103,14 +100,9 @@ const router = createBrowserRouter([
         path: "/adminCategory",
         element: <AdminCategory />,
       },
-    ],
-  },
-  {
-    element: <WithoutLayout />,
-    children: [
       {
-        path: "/test",
-        element: <TestCloudinary />,
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },
