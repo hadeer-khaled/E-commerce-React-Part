@@ -8,13 +8,14 @@ import AdminLogin from "./pages/AdminPages/Login/AdminLogin";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import OrdersManagemet from "./pages/AdminPages/OrdersManagement/OrdersManagemet";
-import OrdersTable from "./pages/AdminPages/OrdersManagement/ordersTable";
+// import OrdersTable from "./pages/AdminPages/OrdersManagement/ordersTable";
 import Home from "./pages/Home/Home";
 import ProductDetails from "./pages/product-details/product-details";
 import ShopPage from "./pages/shop/shop";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
-import AdminCategory from "./pages/AdminCategory/AdminCategory"
+import AdminCategory from "./pages/AdminCategory/AdminCategory";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import OrderDetails from './pages/payment/OrderDetails/OrderDetails'
 function Layout() {
   return (
@@ -26,21 +27,13 @@ function Layout() {
   );
 }
 
-// function WithoutLayout() {
-//   return (
-//     <>
-//       <Outlet />
-//       {/* <Footer /> */}
-//     </>
-//   );
-// }
-
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    // errorElement: <NotFoundPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
@@ -64,15 +57,15 @@ const router = createBrowserRouter([
         element: <UserProfile />,
       },
       {
-        path: '/userorders',
+        path: "/userorders",
         element: <UserOrders />,
       },
       {
-        path: '/login',
+        path: "/login",
         element: <Login />,
       },
       {
-        path: '/register',
+        path: "/register",
         element: <Register />,
       },
       {
@@ -92,32 +85,23 @@ const router = createBrowserRouter([
         element: <OrdersManagemet />,
       },
       {
-        path: "/orderstable",
-        element: <OrdersTable />,
-      },
-      {
-        path: '/wishlist', // Define the path for the wishlist page
+        path: "/wishlist", // Define the path for the wishlist page
         element: <Wishlist />, // Render the Wishlist component
       },
       {
-        path: '/shoppingCart', // Define the path for the shoppingCart page
+        path: "/shoppingCart", // Define the path for the shoppingCart page
         element: <ShoppingCart />, // Render the ShoppingCart component
       },
       {
-        path:'/adminCategory',
-        element:<AdminCategory />
-      }
+        path: "/adminCategory",
+        element: <AdminCategory />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
+      },
     ],
   },
-  // {
-  //   element: <WithoutLayout />,
-  //   children: [
-  //     {
-  //       path: "/",
-  //       element: < />,
-  //     },
-  //   ],
-  // },
 ]);
 
 export default router;
