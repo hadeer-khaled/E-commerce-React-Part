@@ -86,12 +86,12 @@ const router = createBrowserRouter([
         element: <OrdersManagemet />,
       },
       {
-        path: "/wishlist", // Define the path for the wishlist page
-        element: <Wishlist />, // Render the Wishlist component
+        path: "/wishlist",
+        element: <Wishlist />, 
       },
       {
-        path: "/shoppingCart", // Define the path for the shoppingCart page
-        element: <ShoppingCart />, // Render the ShoppingCart component
+        path: "/shoppingCart", 
+        element: <ShoppingCart />,
       },
       {
         path: "/adminCategory",

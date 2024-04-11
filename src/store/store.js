@@ -17,7 +17,8 @@ export default configureStore({
     userWishlistReducer:wishlist,
     userShoppingCartReducer:shoppingCart,
     adminCategoryReducer:adminCategories,
-    orderDetailsReducer:orderDetails    adminUsersReducer:adminUsersSlice,
+    orderDetailsReducer:orderDetails,    
+    adminUsersReducer:adminUsersSlice,
 
   },
 });

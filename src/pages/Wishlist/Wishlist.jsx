@@ -9,11 +9,17 @@ export default function Wishlist() {
     (state) => state.userWishlistReducer.wishlistItems
   );
   const [showAlert, setShowAlert] = useState(false);
-  const userId = 2;
+  // const userId = 2;
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchWishlistItemsThunk(userId));
-  }, [dispatch]);
+    setUserId(loggedUser.user_id);
+    console.log("from wishlist page",userId);
+    if(userId!=0){
+      dispatch(fetchWishlistItemsThunk(userId));
+    }
+  }, [userId]);
 
   const handleClick = async (productId) => {
     try {
