@@ -8,16 +8,22 @@ export default function ShoppingCart() {
   const { cartItems, totalQuantity, cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
 
   const [showAlert, setShowAlert] = useState(false);
-  const userId = 2;
+  // const userId = 2;
 
   const totalPrice = Array.isArray(cartItems) 
   ? cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0) 
   : 0;
 
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
+
   useEffect(() => {
-    dispatch(fetchShoppingCartItemsThunk(userId));
-    console.log(cartItems)
-  }, [dispatch]);
+    setUserId(loggedUser.user_id);
+    console.log("from cart page",userId);
+    if(userId!=0){
+      dispatch(fetchShoppingCartItemsThunk(userId));
+    }
+  }, [userId]);
 
   const handleClick = async (cartItemId) => {
     try {
