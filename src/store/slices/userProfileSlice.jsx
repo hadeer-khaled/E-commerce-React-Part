@@ -28,7 +28,18 @@ const userProfile = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setProfileData: (state, action) => {
+      console.log(action.payload);
+      return {
+        ...state,
+        LoggedUser: action.payload,
+      };
+    },
+    resetProfileData: (state) => {
+      state.LoggedUser = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getLoggedUserThunk.pending, (state) => {
@@ -57,4 +68,5 @@ const userProfile = createSlice({
   },
 });
 
+export const { setProfileData, resetProfileData } = userProfile.actions;
 export default userProfile.reducer;

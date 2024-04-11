@@ -1,6 +1,31 @@
 import { Link } from "react-router-dom";
-
+import {useState} from 'react';
+import {setDetails} from '../../../store/slices/orderDetailsSlice'
+import {useDispatch , useSelector} from 'react-redux'
 function OrderDetails() {
+
+    const [address1 , setAddress] = useState('')
+    const [city1 , setCity] = useState('')
+    const dispatch = useDispatch()
+
+    const {address,city} = useSelector( (state) => state.orderDetailsReducer)
+
+    function handleAddress(e)
+    {
+        setAddress(e.target.value)
+    }
+
+    function handleCity(e)
+    {
+        setCity(e.target.value)
+    }
+
+    function handleSubmit()
+    {
+        dispatch(setDetails({address: address1,city: city1}))
+        console.log("data is set")
+        console.log(`Address : ${address} , City: ${city}`)
+    }
   return (
     <div className="bg-gray-100 dark:bg-gray-900 p-8 m-8">
     <div className="w-full max-w-3xl mx-auto p-8">
@@ -14,31 +39,21 @@ function OrderDetails() {
 
                 <div className="mt-4">
                     <label htmlFor="address" className="block text-gray-700 dark:text-white mb-1">Address</label>
-                    <input type="text" id="address" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"/>
+                    <input type="text" onChange={handleAddress} id="address" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"/>
                 </div>
 
                 <div className="mt-4">
                     <label htmlFor="city" className="block text-gray-700 dark:text-white mb-1">City</label>
-                    <input type="text" id="city" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"/>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                    <div>
-                        <label htmlFor="state" className="block text-gray-700 dark:text-white mb-1">State</label>
-                        <input type="text" id="state" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"/>
-                    </div>
-                    <div>
-                        <label htmlFor="zip" className="block text-gray-700 dark:text-white mb-1">ZIP Code</label>
-                        <input type="text" id="zip" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"/>
-                    </div>
+                    <input type="text" onChange={handleCity} id="city" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"/>
                 </div>
             </div>
 
-            <Link to="/payment" >
+            <Link to="/payment" onClick={handleSubmit}>
             <div className="mt-8 flex justify-end">
                 <button className="btn btn-success text-white font-normal">Place Order</button>
             </div>
             </Link>
+
         </div>
     </div>
     </div>

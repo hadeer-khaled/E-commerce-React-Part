@@ -6,6 +6,7 @@ import categoriesSliceReducer from "./slices/categoriesSlice";
 import wishlist from './slices/userShowWishlistSlice'
 import shoppingCart from "./slices/userShoppingCartSlice";
 import adminCategories from "./slices/adminCategorySlice"
+import orderDetails from "./slices/orderDetailsSlice"
 import adminUsersSlice from "./slices/adminUsersSlice";
 export default configureStore({
   reducer: {
@@ -16,7 +17,7 @@ export default configureStore({
     userWishlistReducer:wishlist,
     userShoppingCartReducer:shoppingCart,
     adminCategoryReducer:adminCategories,
-    adminUsersReducer:adminUsersSlice,
+    orderDetailsReducer:orderDetails    adminUsersReducer:adminUsersSlice,
 
   },
 });
