@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-<<<<<<< Updated upstream
-=======
 import Swal from "sweetalert2";
 
 import {
@@ -11,7 +9,6 @@ import {
   resetProfileData,
 } from "../../store/slices/userProfileSlice";
 import { useDispatch, useSelector } from "react-redux";
->>>>>>> Stashed changes
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -22,12 +19,9 @@ const client = axios.create({
 });
 
 function Login() {
-<<<<<<< Updated upstream
-=======
   const user = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
->>>>>>> Stashed changes
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -45,11 +39,6 @@ function Login() {
         .post("/users/login/", values)
         .then((res) => {
           console.log(res.data.message);
-<<<<<<< Updated upstream
-        })
-        .catch((err) => console.log(err));
-      console.log(values);
-=======
           console.log(res.data.data);
           Swal.fire({
             icon: "success",
@@ -68,24 +57,15 @@ function Login() {
             timer: 2000,
           });
         });
->>>>>>> Stashed changes
     },
   });
 
   function handleLogout() {
-<<<<<<< Updated upstream
-    client
-      .post("/users/logout/", { withCredentials: true })
-      .then((res) => {
-        console.log(res.data.message);
-      });
-=======
     client.post("/users/logout/", { withCredentials: true }).then((res) => {
       console.log(res.data.message);
     });
     dispatch(resetProfileData());
     console.log("reset", "Data :", user);
->>>>>>> Stashed changes
   }
 
   return (

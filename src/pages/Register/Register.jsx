@@ -1,15 +1,9 @@
-<<<<<<< Updated upstream
-=======
 import { useState } from "react";
->>>>>>> Stashed changes
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-<<<<<<< Updated upstream
-=======
 import Swal from "sweetalert2";
->>>>>>> Stashed changes
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -20,35 +14,6 @@ const client = axios.create({
 });
 
 function Register() {
-<<<<<<< Updated upstream
-    const formik = useFormik({
-        initialValues: {
-            first_name:'',
-            last_name:'',
-            email:'',
-            password:'',
-            confirm_password:'',
-            phone:'',
-        },
-        validationSchema: Yup.object({
-            first_name: Yup.string().required("First Name is required").min(3).max(20),
-            last_name: Yup.string().required("Last Name is required").min(3).max(20),
-            email: Yup.string().required("Email is required").email("Wrong email format"),
-            password: Yup.string().min(8),
-            confirm_password: Yup.string().oneOf([Yup.ref('password'),null], "Password doesn't match"),
-            phone: Yup.string().matches('^01[0125][0-9]{8}','Wrong phone number format')
-        }),
-        onSubmit: (values) => {
-            values.role = 'user'
-            values.username = 'default1'
-            client.post("/users/register/",values)
-            .then((res)=>{console.log(res.data.message)})
-            .catch(err => console.log(err))
-            console.log(values)
-        }
-    })
-return (
-=======
   // image upload variables
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -174,7 +139,6 @@ return (
     },
   });
   return (
->>>>>>> Stashed changes
     <section className="bg-gray-50 dark:bg-gray-900 heig p-10">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -324,34 +288,6 @@ return (
                 )}
               </div>
 
-<<<<<<< Updated upstream
-            <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                    <p className="text-white">Profile Picture</p> 
-                    </div>
-                    <input type="file" className="file-input file-input-bordered w-full max-w-xs" name="image" />
-                    <div className="label">
-                    </div>
-            </label>
-            <button
-            type="submit"
-            className=" btn btn-active btn-neutral w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            disabled={!formik.isValid && !formik.dirty}
-            >
-            Create an account
-            </button>
-            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-            Already have an account?{" "}
-            <Link to='/login'>
-            <p
-                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-            >
-                Login here
-            </p>
-            </Link>
-            </p>
-        </form>
-=======
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <p className="text-white">Profile Picture</p>
@@ -381,7 +317,6 @@ return (
             </form>
             {isLoading ? <p>Creating your account</p> : ""}
           </div>
->>>>>>> Stashed changes
         </div>
       </div>
     </section>
