@@ -57,7 +57,12 @@ const UserOrders = () => {
     try {
       const response = await getOrderDetails(userId, orderId);
       console.log("orderId", orderId);
-      setOrderDetails(response.data);
+      const updatedProducts = response.data.map((item) => ({
+        ...item,
+        product_rating: 0,
+      }));
+      setOrderDetails(updatedProducts);
+      console.log("OrderDetails After add product_rating: 0", orderDetails);
     } catch (error) {
       console.error("Error fetching order details:", error);
     } finally {
@@ -74,9 +79,21 @@ const UserOrders = () => {
         console.error("Error canceling order", error);
       });
   };
-
+  const updatedOrderDetailsRating = (newValue, produc_id) => {
+    const updatedProducts = orderDetails.map((item) => {
+      if (item.product_id === produc_id) {
+        return {
+          ...item,
+          product_rating: newValue,
+        };
+      }
+      return item;
+    });
+    setOrderDetails(updatedProducts);
+  };
   const handleRating = (newValue, produc_id) => {
     setRatingValue(newValue);
+    updatedOrderDetailsRating(newValue, produc_id);
     setProductRating(produc_id, userId, newValue)
       .then((res) => {
         console.log(res.data);
@@ -167,7 +184,7 @@ const UserOrders = () => {
                         <Rating
                           className="mt-3"
                           name="simple-controlled"
-                          value={ratingValue}
+                          value={orderItem.product_rating}
                           onChange={(event, newValue) => {
                             handleRating(newValue, orderItem.product_id);
                           }}
