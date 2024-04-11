@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import axios from "axios";
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'

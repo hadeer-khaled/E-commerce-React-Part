@@ -2,8 +2,11 @@ import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShoppingCartItemsThunk } from "../../store/slices/userShoppingCartSlice";
 import { addToCart, decrementQuantityInShoppingCart, incrementQuantityInShoppingCart, removeCartInShoppingCart, removeCartItemInShoppingCart } from "../../axios/userShoppingCart";
+import { useNavigate } from "react-router-dom"
 
 export default function ShoppingCart() {
+
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const { cartItems, totalQuantity, cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
 
@@ -175,7 +178,7 @@ export default function ShoppingCart() {
                 <button className="btn btn-md btn-outline btn-error mx-2"  onClick={() => removeCart()}>
                   Delete all
                 </button>
-                <button className="btn btn-outline btn-primary mx-2">
+                <button className="btn btn-outline btn-primary mx-2" onClick={()=> navigate('/order-details')}>
                   Order Now
                 </button>
               </td>

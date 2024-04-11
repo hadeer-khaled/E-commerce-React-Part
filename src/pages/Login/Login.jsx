@@ -21,7 +21,6 @@ const client = axios.create({
 
 function Login() {
 
-  const user = useSelector( (state) => state.userReducer)
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const formik = useFormik({

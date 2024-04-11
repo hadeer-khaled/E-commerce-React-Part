@@ -1,55 +1,43 @@
-import { useEffect } from "react";
 import axios from 'axios'
-// import  QueryString  from 'query-string'
+import { useSelector } from 'react-redux'
+
 function TestPayment() {
 
-useEffect(() => {
-    // // Check to see if this is a redirect back from Checkout
-    // const query = new URLSearchParams(window.location.search);
-    // console.log(query)
-    // // const values = QueryString(location.search)
-    // if (query.location.success) {
-    // console.log("Order placed! You will receive an email confirmation.");
-    // }
+    // user id
+    const user = useSelector( (state) => state.userReducer.LoggedUser)
+    console.log("userId:",user.user_id)
 
-    // if (query.location.canceled) {
-    //   // send alert !
-    // console.log(
-    //     "Order canceled -- continue to shop around and checkout when you're ready."
-    // );
-    // }
-}, []);
+    // Address , city
+    const {address , city} = useSelector((state) => state.orderDetailsReducer)
+    console.log('Address => '+ address)
+    console.log('City => '+ city)
 
-    const data = {
-	"user_id": 1,
-	"products" : [
-	{
-            "product_id": 1,
-            "name": "Google Pixel 6",
-            "price": "899.00",
-            "description": "The Google Pixel 6 is here, with an incredible camera and smooth performance.",
-            "avg_rating": "4.50",
-            "category": 1,
-            "quantity":1,
-            "payment_id":"price_1P2pQYEbT5QdQbCz6EHWq0yT"
-        },
-        {
-            "product_id": 2,
-            "name": "MacBook Pro 2023",
-            "price": "2399.00",
-            "description": "The ultimate MacBook Pro, with unmatched performance and stunning display.",
-            "avg_rating": "4.70",
-            "category": 2,
-            "quantity":1,
-            "payment_id":"price_1P2pUiEbT5QdQbCzsqFd7uBA"
+    // products 
+    const products = useSelector((state) => state.userShoppingCartReducer).cartItems
+    const order_products = products.map((el)=>{
+        let obj = {
+            ...el.product,
+            quantity: el.quantity
         }
-	],
-	"order_details": {
-	"city":"Cairo",
-	"address":"9 st. 5th settelment"   
-	}
-}
-    const url = import.meta.env.VITE_BASE_URL
+        return obj
+    })
+    console.log("prods",order_products)
+
+    // all data
+    const data = {
+        "user_id": user.user_id,
+        products: order_products,
+        order_details: {
+            address,
+            city
+        }
+    }
+
+    localStorage.setItem("data",JSON.stringify(data))
+    localStorage.setItem("user",JSON.stringify(user))
+
+    console.log("see Local storage")
+
     const client = axios.create({
         baseURL: "http://localhost:8000"
     })
@@ -76,13 +64,13 @@ useEffect(() => {
         <h5>$899.00</h5>
         </div>
         </div>
-        <form action={`${url}/payment/test-checkout`} method="POST">
+        {/* <form action={`${url}/payment/test-checkout`} method="POST">
         <button className="btn btn-successs" type="submit">
             Checkout
         </button>
-        </form>
+        </form> */}
 
-        <button className="btn btn-info" onClick={handleCheckout}>Pay Now</button>
+        <button className="btn btn-info" onClick={handleCheckout}>Check out</button>
     </section>
 )
 }
