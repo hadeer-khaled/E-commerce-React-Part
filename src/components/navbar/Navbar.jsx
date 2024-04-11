@@ -122,9 +122,9 @@ function Navbar() {
                 <div className="card-body">
                   <span className="font-bold text-lg">0 Items</span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <Link to="/wishlist" className="btn btn-primary btn-block">
                       Wishlist
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -159,9 +159,9 @@ function Navbar() {
                   <span className="font-bold text-lg">0 Items</span>
                   <span className="text-info">Subtotal: $999</span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <Link to="/shoppingCart" className="btn btn-primary btn-block">
                       View cart
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
