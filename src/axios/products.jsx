@@ -20,6 +20,8 @@ export const getProducts = ({ page, limit, order, search, ...filters }) => {
 
   return axiosInstance.get(url)
     .then((response) => {
+      console.log("response : " , response);
+      console.log("data : ", response.data);
       return response.data;
     })
     .catch((error) => {
