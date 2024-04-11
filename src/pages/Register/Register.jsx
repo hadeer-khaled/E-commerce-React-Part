@@ -4,16 +4,19 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.withCredentials = true
 
 const client = axios.create({
-  baseURL: "http://127.0.0.1:8000" 
+baseURL: "http://127.0.0.1:8000" 
 })
 
 function Register() {
+
+    const navigate = useNavigate();
 
     // image upload variables
     const [imgUrl,setImgUrl] = useState('')
@@ -33,7 +36,7 @@ function Register() {
             password:'',
             confirm_password:'',
             phone:'',
-            image:'/assets/default.png'
+            image:'https://res.cloudinary.com/dywqswxz9/image/upload/v1712786118/596d1abe-c91c-4927-b2cf-f1edaa443966_eqwmbl.jpg'
         },
         validationSchema: Yup.object({
             first_name: Yup.string().required("First Name is required").min(3).max(20),
@@ -87,6 +90,7 @@ function Register() {
                     text:'registered successfully !!',
                     timer:2000
                 })
+                navigate('/login')
             })
             .catch(
                 (err)=> {
@@ -102,13 +106,11 @@ function Register() {
                 }
             );
             console.log("res",response);
-            // console.log(values);
         }
 
         else {
             values.role = 'user'
-            values.image = '/assets/defult.png'
-            // console.log(values)
+            values.image = "https://res.cloudinary.com/dywqswxz9/image/upload/v1712786118/596d1abe-c91c-4927-b2cf-f1edaa443966_eqwmbl.jpg"
             const response = await client.post("/users/register/", values)
             .then(()=> {
                 Swal.fire({
@@ -116,6 +118,7 @@ function Register() {
                     text:'registered successfully !!',
                     timer:2000
                 })
+                navigate('/login')
             })
             .catch(
                     (err)=> {

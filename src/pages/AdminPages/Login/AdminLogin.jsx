@@ -1,14 +1,10 @@
-// function AdminLogin() {
-//   return (
-//     <div>AdminLogin</div>
-//   )
-// }
-
-// export default AdminLogin
-
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import Swal from 'sweetalert2';
 import axios from "axios"
+import { setProfileData , resetProfileData } from '../../../store/slices/userProfileSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -19,7 +15,10 @@ const client = axios.create({
 })
 
 function AdminLogin() {
-  // console.log(client.baseURL)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [email , setEmail] = useState('')
   const [password , setPassword] = useState('')
   const [validEmail , setValidEmail] = useState(true)
@@ -56,8 +55,24 @@ function AdminLogin() {
     }).then((res)=>{
       console.log(res.data.message)
       console.log(JSON.stringify(res.data.data))
+      
+      localStorage.setItem("jwt",res.data.jwt)
+      
+      Swal.fire({
+        icon:'success',
+        title:"Welcome boss",
+        timer:2000
+      })
+
+      dispatch(setProfileData(res.data.data))
+      // navigate('/')
     }).catch((err)=>{
       console.log(err.response.statusText)
+      Swal.fire({
+        icon:'error',
+        text:"invalid email or passwerd",
+        timer:2000
+      })
     })
     console.log("Email : " + email )
     console.log("Password : " + password )
@@ -66,9 +81,17 @@ function AdminLogin() {
   function handleLogout()
   {
     client.post("/users/logout/",{withCredentials:true}).then(res => {console.log(res.data.message)})
+    
+    localStorage.removeItem('jwt')
+    
+    dispatch(resetProfileData())
+    
+    navigate('/')
   }
   return (
-      <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
+    <>
+      <section className="h-screen flex flex-col justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
+        <h1 className="block text-blue-700 text-3xl font-bold">Admin Login</h1>
       <div className="md:w-1/3 max-w-sm">
         <img
           src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
@@ -86,13 +109,16 @@ function AdminLogin() {
         </div>
         <Link to='/register'>
         <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
-          Don&apos;t have an account? <p className="text-red-600 hover:underline hover:underline-offset-4" href="#">Register</p>
+          Don&apos;t have an account? <p className="text-red-600 hover:underline hover:underline-offset-4" href="#"
+          disabled={validEmail || validPassword}
+          >Register</p>
         </div>
         </Link>
       </div>
 
-      <button className="btn" onClick={handleLogout}>Logout</button>
+      <button className="btn" onClick={handleLogout} >Logout</button>
     </section>
+    </>
   )
 }
 
