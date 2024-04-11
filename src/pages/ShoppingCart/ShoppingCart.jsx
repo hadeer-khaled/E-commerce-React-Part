@@ -93,7 +93,7 @@ export default function ShoppingCart() {
                     <div className="avatar">
                       <div className="mask mask-squircle w-28 h-28">
                         <img
-                          src="https://cdn.mos.cms.futurecdn.net/WvxcvGGY8hJSQTVsqxLznE.jpeg"
+                          src={cartItem.product.image}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>

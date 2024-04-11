@@ -15,6 +15,7 @@ import ShopPage from "./pages/shop/shop";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import AdminCategory from "./pages/AdminCategory/AdminCategory"
+import AdminUsers from "./pages/AdminUsers/AdminUsers"
 function Layout() {
   return (
     <>
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path:'/adminCategory',
         element:<AdminCategory />
+      },
+      {
+        path:'/adminusers',
+        element:<AdminUsers />
       }
     ],
   },

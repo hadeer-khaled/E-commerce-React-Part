@@ -57,13 +57,13 @@ export default function Wishlist() {
           </thead>
           <tbody>
             {wishlistItems.map((product, index) => (
-              <tr key={index} className={index % 2 === 0 ? "" : ""}>
+              <tr key={index} >
                 <td>
                   <div className="flex items-center gap-9">
                     <div className="avatar">
                       <div className="mask mask-squircle w-28 h-28">
                         <img
-                          src="https://cdn.mos.cms.futurecdn.net/WvxcvGGY8hJSQTVsqxLznE.jpeg"
+                          src={product.image}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>
