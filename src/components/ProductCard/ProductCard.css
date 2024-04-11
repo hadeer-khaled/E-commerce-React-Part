@@ -14,7 +14,7 @@ figure {
 .rating-container {
 
 }
-.card {
+.card-product {
   display: flex;
   flex-direction: column; /* Set flex direction to column */
   height: 100%; /* Ensure the card takes the full height of its container */

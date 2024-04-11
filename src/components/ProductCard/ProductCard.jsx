@@ -22,7 +22,7 @@ const renderRatingStars = (avgRating) => {
 
 
 return (
-  <div className="card card-compact w-70 h-80 bg-base-300 shadow-lg m-0 p-0 border">
+  <div className="card card-product card-compact w-70 h-80 bg-base-300 shadow-lg m-0 p-0 border">
     <figure className='h-1/2'>
       <Link to={`/products/${product.product_id}`}>
         <img className='image-tag' src={imageUrl} alt={product.name} />
