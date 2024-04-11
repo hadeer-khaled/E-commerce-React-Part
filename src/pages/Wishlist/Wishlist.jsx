@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWishlistItemsThunk } from "../../store/slices/userShowWishlistSlice";
 import { addToWishlist, removeProductFromWishlist } from "../../axios/UserWishlist";
-
+import Swal from 'sweetalert2'
 export default function Wishlist() {
   const dispatch = useDispatch();
   const wishlistItems = useSelector(
@@ -34,7 +34,11 @@ export default function Wishlist() {
   const handleAddToWishlist = async (productId) => {
     try {
       const response = await addToWishlist(userId,productId); 
-      alert(response.message);
+      Swal.fire({
+        title: "adding the same product!",
+        text: response.message,
+        icon: "info"
+      });
     } catch (error) {
       console.error("Error adding product to wishlist:", error);
     }

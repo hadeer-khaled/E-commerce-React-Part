@@ -195,7 +195,6 @@ export default function ShoppingCart() {
           style={{ width: "500px", height: "500px", marginTop: "-30px" }}
         />
       </div>
-
     </div>
     
   );
