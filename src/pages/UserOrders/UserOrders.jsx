@@ -16,7 +16,10 @@ import {
 import Rating from "@mui/material/Rating";
 
 const UserOrders = () => {
-  const userId = 10;
+  // const userId = 10;
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,8 +31,13 @@ const UserOrders = () => {
   const [ratingValue, setRatingValue] = useState(0);
 
   useEffect(() => {
-    dispatch(getUserOrdersThunk(userId));
-  }, [dispatch]);
+    setUserId(loggedUser.user_id);
+    console.log("userId", userId);
+    if (userId != 0) {
+      console.log("userId", userId);
+      dispatch(getUserOrdersThunk(userId));
+    }
+  }, [userId]);
 
   console.log("userOrders:", userOrders);
 
@@ -49,7 +57,12 @@ const UserOrders = () => {
     try {
       const response = await getOrderDetails(userId, orderId);
       console.log("orderId", orderId);
-      setOrderDetails(response.data);
+      const updatedProducts = response.data.map((item) => ({
+        ...item,
+        product_rating: 0,
+      }));
+      setOrderDetails(updatedProducts);
+      console.log("OrderDetails After add product_rating: 0", orderDetails);
     } catch (error) {
       console.error("Error fetching order details:", error);
     } finally {
@@ -66,9 +79,21 @@ const UserOrders = () => {
         console.error("Error canceling order", error);
       });
   };
-
+  const updatedOrderDetailsRating = (newValue, produc_id) => {
+    const updatedProducts = orderDetails.map((item) => {
+      if (item.product_id === produc_id) {
+        return {
+          ...item,
+          product_rating: newValue,
+        };
+      }
+      return item;
+    });
+    setOrderDetails(updatedProducts);
+  };
   const handleRating = (newValue, produc_id) => {
     setRatingValue(newValue);
+    updatedOrderDetailsRating(newValue, produc_id);
     setProductRating(produc_id, userId, newValue)
       .then((res) => {
         console.log(res.data);
@@ -159,7 +184,7 @@ const UserOrders = () => {
                         <Rating
                           className="mt-3"
                           name="simple-controlled"
-                          value={ratingValue}
+                          value={orderItem.product_rating}
                           onChange={(event, newValue) => {
                             handleRating(newValue, orderItem.product_id);
                           }}
