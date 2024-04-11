@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWishlistItemsThunk } from "../../store/slices/userShowWishlistSlice";
-import { removeProductFromWishlist } from "../../axios/UserWishlist";
+import { addToWishlist, removeProductFromWishlist } from "../../axios/UserWishlist";
 
 export default function Wishlist() {
   const dispatch = useDispatch();
@@ -9,11 +9,11 @@ export default function Wishlist() {
     (state) => state.userWishlistReducer.wishlistItems
   );
   const [showAlert, setShowAlert] = useState(false);
-  const userId = 1;
+  const userId = 2;
 
   useEffect(() => {
     dispatch(fetchWishlistItemsThunk(userId));
-  }, [dispatch],[wishlistItems]);
+  }, [dispatch]);
 
   const handleClick = async (productId) => {
     try {
@@ -31,6 +31,14 @@ export default function Wishlist() {
     }
   };
 
+  const handleAddToWishlist = async (productId) => {
+    try {
+      const response = await addToWishlist(userId,productId); 
+      alert(response.message);
+    } catch (error) {
+      console.error("Error adding product to wishlist:", error);
+    }
+  };
   return (
     <div className="flex">
       {/* Image */}
@@ -118,11 +126,16 @@ export default function Wishlist() {
                   {showAlert && (
                     <div className="toast toast-bottom toast-end">
                       <div className="alert alert-success">
-                        <span>Product removed successfully from wishlist.</span>
+                        <span>Product : {product.name} removed successfully from wishlist.</span>
                       </div>
                     </div>
                   )}
                 </td>
+                <td>
+          <button className="btn btn-outline" onClick={() =>handleAddToWishlist(product.product_id)}>
+            Add to Wishlist
+          </button>
+        </td>
               </tr>
             ))}
           </tbody>
@@ -131,6 +144,7 @@ export default function Wishlist() {
           <h2 className="text-error ">Your wishlist is empty</h2>
         )}
       </div>
+
     </div>
   );
 }
