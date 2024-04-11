@@ -4,8 +4,7 @@ export const fetchWishlistItems = async (userId) => {
   try {
     const response = await axiosInstance.get('/wishlist/', { params: { user_id: userId } });
     if (response) {
-      console.log(response.data);
-      console.log(response.data[0].products);
+      console.log("from wishlist axios",response.data);
       return response.data[0].products;
     } else {
       console.log("not found");

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesThunk } from "../../store/slices/adminCategorySlice";
 import { addCategory, deleteCategory } from "../../axios/AdminCategory";

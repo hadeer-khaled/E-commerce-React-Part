@@ -19,7 +19,12 @@ const shoppingCartSlice = createSlice({
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetShoppingCart : (state)=> {
+      state.cartItems=[]
+      state.cartItemsCount=0
+      state.totalQuantity=0
+  }},
   extraReducers: (builder) => {
     builder
       .addCase(fetchShoppingCartItemsThunk.pending, (state) => {
@@ -43,3 +48,4 @@ const shoppingCartSlice = createSlice({
 });
 
 export default shoppingCartSlice.reducer;
+export const {resetShoppingCart}=shoppingCartSlice.actions

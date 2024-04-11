@@ -4,7 +4,7 @@ export const fetchShoppingCartItems = async (userId) => {
   try {
     const response = await axiosInstance.get('/cartItem/view-cart/', { params: { user_id: userId } });
     if (response) {
-      console.log(response.data);
+      console.log("from cart axios",response.data);
       return response.data;
     } else {
       console.log("not found");
