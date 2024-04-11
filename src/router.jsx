@@ -17,6 +17,7 @@ import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import OrderDetails from './pages/payment/OrderDetails/OrderDetails'
+import AdminUsers from "./pages/AdminUsers/AdminUsers"
 function Layout() {
   return (
     <>
@@ -85,16 +86,20 @@ const router = createBrowserRouter([
         element: <OrdersManagemet />,
       },
       {
-        path: "/wishlist", // Define the path for the wishlist page
-        element: <Wishlist />, // Render the Wishlist component
+        path: "/wishlist",
+        element: <Wishlist />, 
       },
       {
-        path: "/shoppingCart", // Define the path for the shoppingCart page
-        element: <ShoppingCart />, // Render the ShoppingCart component
+        path: "/shoppingCart", 
+        element: <ShoppingCart />,
       },
       {
         path: "/adminCategory",
         element: <AdminCategory />,
+      },
+      {
+        path:'/adminusers',
+        element:<AdminUsers />
       },
       {
         path: "*",

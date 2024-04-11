@@ -2,9 +2,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Swal from 'sweetalert2';
-import { setProfileData , resetProfileData } from '../../store/slices/userProfileSlice';
-import { useDispatch } from 'react-redux';
+import Swal from "sweetalert2";
+
+import {
+  setProfileData,
+  resetProfileData,
+} from "../../store/slices/userProfileSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -17,6 +21,7 @@ const client = axios.create({
 
 function Login() {
 
+  const user = useSelector( (state) => state.userReducer)
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const formik = useFormik({
@@ -25,7 +30,9 @@ function Login() {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Email is required").email("Invalid email format"),
+      email: Yup.string()
+        .required("Email is required")
+        .email("Invalid email format"),
       password: Yup.string().required("Password is required").min(8),
     }),
     onSubmit: (values) => {
@@ -37,22 +44,21 @@ function Login() {
           console.log(res.data.data);
           localStorage.setItem('jwt',res.data.jwt)
           Swal.fire({
-            icon: 'success',
+            icon: "success",
             title: `Welcome ${res.data.data.first_name}`,
-            timer: 2000
-          })
+            timer: 2000,
+          });
 
           dispatch(setProfileData(res.data.data))
           navigate('/')
         })
         .catch(() => {
           Swal.fire({
-            icon:'error',
-            text:"incorrect email or password",
-            timer:2000
-          })
+            icon: "error",
+            text: "incorrect email or password",
+            timer: 2000,
+          });
         });
-      
     },
   });
 
@@ -107,19 +113,33 @@ function Login() {
           <button
             className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
             type="submit"
-            disabled={!formik.isValid || !formik.dirty}
-          >
+            disabled={!formik.isValid || !formik.dirty}>
             Login
           </button>
         </div>
-          <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
-            Don &apos; t have an account?{" "}
-        <Link to="/register">
+        <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
+          Don &apos; t have an account?{" "}
+          <Link to="/register">
             <p className="text-red-600 hover:underline hover:underline-offset-4">
               Register
             </p>
-        </Link>
-          </div>
+          </Link>
+          <Link to="/userprofile">
+            <p className="text-red-600 hover:underline hover:underline-offset-4">
+              userprofile
+            </p>
+          </Link>
+          <Link to="/wishlist">
+            <p className="text-red-600 hover:underline hover:underline-offset-4">
+              wishlist
+            </p>
+          </Link>
+          <Link to="/shoppingCart">
+            <p className="text-red-600 hover:underline hover:underline-offset-4">
+              shoppingCart
+            </p>
+          </Link>
+        </div>
       </form>
 
       <button className="btn" onClick={handleLogout}>

@@ -29,16 +29,16 @@ const userProfile = createSlice({
     error: null,
   },
   reducers: {
-    setProfileData: (state,action)=> {
-        console.log(action.payload)
-        return {
-          ...state,
-          LoggedUser: action.payload
-        }
+    setProfileData: (state, action) => {
+      console.log(action.payload);
+      return {
+        ...state,
+        LoggedUser: action.payload,
+      };
     },
     resetProfileData: (state) => {
-      state.LoggedUser = {}
-    }
+      state.LoggedUser = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -68,5 +68,5 @@ const userProfile = createSlice({
   },
 });
 
-export const {setProfileData , resetProfileData} = userProfile.actions;
+export const { setProfileData, resetProfileData } = userProfile.actions;
 export default userProfile.reducer;

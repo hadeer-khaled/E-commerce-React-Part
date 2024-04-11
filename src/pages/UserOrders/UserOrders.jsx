@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { getOrderDetails, cancelOrder } from "../../axios/UserOrders.jsx";
+import {
+  getProductRatings,
+  setProductRating,
+} from "./../../axios/UserRatings.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersThunk } from "./../../store/slices/userOrdersSlice";
 import "./UserOrders.css";
@@ -9,8 +13,13 @@ import {
   isOrderDateOlderThan3Days,
 } from "./../../OrderHelperFunctions.jsx";
 
+import Rating from "@mui/material/Rating";
+
 const UserOrders = () => {
-  const userId = 10;
+  // const userId = 10;
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
+
   const [currentDate, setCurrentDate] = useState(new Date());
   const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,10 +28,16 @@ const UserOrders = () => {
   const userOrders = useSelector((state) => {
     return state.userOrdersReducer.UserOrdersList;
   });
+  const [ratingValue, setRatingValue] = useState(0);
 
   useEffect(() => {
-    dispatch(getUserOrdersThunk(userId));
-  }, [dispatch]);
+    setUserId(loggedUser.user_id);
+    console.log("userId", userId);
+    if (userId != 0) {
+      console.log("userId", userId);
+      dispatch(getUserOrdersThunk(userId));
+    }
+  }, [userId]);
 
   console.log("userOrders:", userOrders);
 
@@ -42,7 +57,12 @@ const UserOrders = () => {
     try {
       const response = await getOrderDetails(userId, orderId);
       console.log("orderId", orderId);
-      setOrderDetails(response.data);
+      const updatedProducts = response.data.map((item) => ({
+        ...item,
+        product_rating: 0,
+      }));
+      setOrderDetails(updatedProducts);
+      console.log("OrderDetails After add product_rating: 0", orderDetails);
     } catch (error) {
       console.error("Error fetching order details:", error);
     } finally {
@@ -59,7 +79,29 @@ const UserOrders = () => {
         console.error("Error canceling order", error);
       });
   };
-
+  const updatedOrderDetailsRating = (newValue, produc_id) => {
+    const updatedProducts = orderDetails.map((item) => {
+      if (item.product_id === produc_id) {
+        return {
+          ...item,
+          product_rating: newValue,
+        };
+      }
+      return item;
+    });
+    setOrderDetails(updatedProducts);
+  };
+  const handleRating = (newValue, produc_id) => {
+    setRatingValue(newValue);
+    updatedOrderDetailsRating(newValue, produc_id);
+    setProductRating(produc_id, userId, newValue)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="container user-order-container flex sm:flex-col md:flex-col lg:flex-row mx-auto mt-28 pt-6 pb-6 rounded-lg">
       <div className="orders-table pb-6 rounded-lg mx-3 ">
@@ -128,11 +170,9 @@ const UserOrders = () => {
           <div>
             <h3 className="my-4 font-bold	"> Order Details</h3>
             <hr></hr>
-            {orderDetails.map((orderItem, index) => (
-              <>
-                <div
-                  key={index - ` ${orderItem.order_item_id}`}
-                  className="card w-96">
+            {orderDetails.map((orderItem) => (
+              <div key={`order_${orderItem.order_item_id}`}>
+                <div className="card w-96">
                   <div className="order-item-card-body">
                     <div className="product-details flex justify-between items-center	w-full">
                       <div className="product-image-div">
@@ -140,6 +180,14 @@ const UserOrders = () => {
                           src={orderItem.product.image}
                           alt="product  image"
                           style={{ width: "160px" }}
+                        />
+                        <Rating
+                          className="mt-3"
+                          name="simple-controlled"
+                          value={orderItem.product_rating}
+                          onChange={(event, newValue) => {
+                            handleRating(newValue, orderItem.product_id);
+                          }}
                         />
                       </div>
                       <div className="product-data-div text-sm">
@@ -164,13 +212,10 @@ const UserOrders = () => {
                         </p>
                       </div>
                     </div>
-                    {/* <div className="">
-                      
-                    </div> */}
                   </div>
                 </div>
                 <hr></hr>
-              </>
+              </div>
             ))}
           </div>
         )}

@@ -13,8 +13,6 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import "./UserProfile.css";
 
 const UserProfile = () => {
-  const userId = 10;
-
   const phoneRegExp = /^(010|011|012|015)[0-9]{8}$/;
   const nameRegExp = /^[a-zA-Z ]+$/;
 
@@ -22,12 +20,16 @@ const UserProfile = () => {
   const navigate = useNavigate();
 
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
+
   const [imgUrl, setImgUrl] = useState("");
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(getLoggedUserThunk(userId));
-  }, [dispatch]);
+    setUserId(loggedUser.user_id);
+    console.log(userId);
+    console.log(loggedUser);
+  }, []);
 
   useEffect(() => {
     if (loggedUser) {
@@ -72,6 +74,7 @@ const UserProfile = () => {
 
   const updateUserProfile = async (formData) => {
     try {
+      console.log("userId", userId);
       dispatch(updateUserThunk({ userId, formData }));
       console.log("Update dispatch successful");
     } catch (error) {

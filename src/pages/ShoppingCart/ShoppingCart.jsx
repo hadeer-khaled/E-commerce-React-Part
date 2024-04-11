@@ -1,23 +1,29 @@
 import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShoppingCartItemsThunk } from "../../store/slices/userShoppingCartSlice";
-import { decrementQuantityInShoppingCart, incrementQuantityInShoppingCart, removeCartInShoppingCart, removeCartItemInShoppingCart } from "../../axios/userShoppingCart";
+import { addToCart, decrementQuantityInShoppingCart, incrementQuantityInShoppingCart, removeCartInShoppingCart, removeCartItemInShoppingCart } from "../../axios/userShoppingCart";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
   const { cartItems, totalQuantity, cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
 
   const [showAlert, setShowAlert] = useState(false);
-  const userId = 1;
+  // const userId = 2;
 
   const totalPrice = Array.isArray(cartItems) 
   ? cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0) 
   : 0;
 
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
+
   useEffect(() => {
-    dispatch(fetchShoppingCartItemsThunk(userId));
-    console.log(cartItems)
-  }, [dispatch]);
+    setUserId(loggedUser.user_id);
+    console.log("from cart page",userId);
+    if(userId!=0){
+      dispatch(fetchShoppingCartItemsThunk(userId));
+    }
+  }, [userId]);
 
   const handleClick = async (cartItemId) => {
     try {
@@ -67,7 +73,14 @@ export default function ShoppingCart() {
       console.error("Error handling decrementing quantity product:", error.message);
     }
   };
-  
+  const handleAddToCart = async (productId) => {
+    try {
+      await addToCart(userId, productId); 
+      console.log("Product added to cart successfully!");
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+  };
 
   return (
     <div className="flex">
@@ -93,7 +106,7 @@ export default function ShoppingCart() {
                     <div className="avatar">
                       <div className="mask mask-squircle w-28 h-28">
                         <img
-                          src="https://cdn.mos.cms.futurecdn.net/WvxcvGGY8hJSQTVsqxLznE.jpeg"
+                          src={cartItem.product.image}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>
@@ -137,6 +150,11 @@ export default function ShoppingCart() {
                     </svg>
                   </button>
                 </td>
+                <td>
+          <button className="btn btn-outline" onClick={() =>handleAddToCart(cartItem.product.product_id)}>
+            Add to Cart
+          </button>
+        </td>
               </tr>
             ))}
             <tr>
@@ -161,6 +179,7 @@ export default function ShoppingCart() {
                   Order Now
                 </button>
               </td>
+
             </tr>
           </tbody>
         </table>
@@ -172,7 +191,7 @@ export default function ShoppingCart() {
         {showAlert && (
           <div className="toast toast-bottom toast-end">
             <div className="alert alert-success">
-              <span>removed successfully.</span>
+              <span>Product removed successfully.</span>
             </div>
           </div>
         )}
@@ -182,7 +201,7 @@ export default function ShoppingCart() {
           style={{ width: "500px", height: "500px", marginTop: "-30px" }}
         />
       </div>
-      
     </div>
+    
   );
 }

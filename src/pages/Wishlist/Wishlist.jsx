@@ -1,19 +1,25 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWishlistItemsThunk } from "../../store/slices/userShowWishlistSlice";
-import { removeProductFromWishlist } from "../../axios/UserWishlist";
-
+import { addToWishlist, removeProductFromWishlist } from "../../axios/UserWishlist";
+import Swal from 'sweetalert2'
 export default function Wishlist() {
   const dispatch = useDispatch();
   const wishlistItems = useSelector(
     (state) => state.userWishlistReducer.wishlistItems
   );
   const [showAlert, setShowAlert] = useState(false);
-  const userId = 1;
+  // const userId = 2;
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const [userId, setUserId] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchWishlistItemsThunk(userId));
-  }, [dispatch],[wishlistItems]);
+    setUserId(loggedUser.user_id);
+    console.log("from wishlist page",userId);
+    if(userId!=0){
+      dispatch(fetchWishlistItemsThunk(userId));
+    }
+  }, [userId]);
 
   const handleClick = async (productId) => {
     try {
@@ -31,6 +37,18 @@ export default function Wishlist() {
     }
   };
 
+  const handleAddToWishlist = async (productId) => {
+    try {
+      const response = await addToWishlist(userId,productId); 
+      Swal.fire({
+        title: "adding the same product!",
+        text: response.message,
+        icon: "info"
+      });
+    } catch (error) {
+      console.error("Error adding product to wishlist:", error);
+    }
+  };
   return (
     <div className="flex">
       {/* Image */}
@@ -57,13 +75,13 @@ export default function Wishlist() {
           </thead>
           <tbody>
             {wishlistItems.map((product, index) => (
-              <tr key={index} className={index % 2 === 0 ? "" : ""}>
+              <tr key={index} >
                 <td>
                   <div className="flex items-center gap-9">
                     <div className="avatar">
                       <div className="mask mask-squircle w-28 h-28">
                         <img
-                          src="https://cdn.mos.cms.futurecdn.net/WvxcvGGY8hJSQTVsqxLznE.jpeg"
+                          src={product.image}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>
@@ -118,11 +136,16 @@ export default function Wishlist() {
                   {showAlert && (
                     <div className="toast toast-bottom toast-end">
                       <div className="alert alert-success">
-                        <span>Product removed successfully from wishlist.</span>
+                        <span>Product : {product.name} removed successfully from wishlist.</span>
                       </div>
                     </div>
                   )}
                 </td>
+                <td>
+          <button className="btn btn-outline" onClick={() =>handleAddToWishlist(product.product_id)}>
+            Add to Wishlist
+          </button>
+        </td>
               </tr>
             ))}
           </tbody>
@@ -131,6 +154,7 @@ export default function Wishlist() {
           <h2 className="text-error ">Your wishlist is empty</h2>
         )}
       </div>
+
     </div>
   );
 }
