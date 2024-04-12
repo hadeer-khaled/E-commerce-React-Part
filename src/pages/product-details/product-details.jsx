@@ -36,6 +36,21 @@ const ProductDetails = () => {
   const { images } = product;
   const imagesWithHttps = images.map(image => `https://${image}`);
 
+  const renderRatingStars = (avgRating) => {
+    const stars = [];
+    const maxRating = 5;
+    const filledColor = "bg-orange-400";
+    const emptyColor = "bg-gray-200";
+  
+    const roundedRating = Math.round(avgRating);
+  
+    for (let i = 1; i <= maxRating; i++) {
+      const starColor = i <= roundedRating ? filledColor : emptyColor;
+      stars.push(<input key={i} type="" name="rating" className={`cursor-default pointer-events-none mask mask-star-2 size-5 ${starColor}`} />);
+    }
+    return stars;
+  };
+
   return (
     <>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20">
@@ -76,6 +91,13 @@ const ProductDetails = () => {
               <div className="mr-4">
                 <span className="font-bold">Rating:</span>
                 <span> {product.avg_rating}</span>
+              </div>
+              <div className='flex'>
+                <div className="rating-container w-full text-start pb-1">
+                  <div className="rating grid-cols-subgrid">
+                      {renderRatingStars(product.avg_rating)}
+                  </div>
+                </div>
               </div>
             </div>
 
