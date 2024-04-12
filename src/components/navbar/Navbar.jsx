@@ -18,7 +18,7 @@ function Navbar() {
 
   useEffect(() => {
     // edit the static user id before finishing the feature #########################################################################
-    dispatch(getLoggedUserThunk(2));
+    dispatch(getLoggedUserThunk(loggedUser.user_id));
     console.log("loggedUser: " + loggedUser);
 
   }, [dispatch]);
