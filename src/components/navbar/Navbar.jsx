@@ -8,6 +8,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
 
+
   const { cartItems, totalQuantity, cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
   // console.log("cartItemsCount ==========", cartItemsCount);
 
@@ -17,7 +18,7 @@ function Navbar() {
 
   useEffect(() => {
     // edit the static user id before finishing the feature #########################################################################
-    dispatch(getLoggedUserThunk(2));
+    dispatch(getLoggedUserThunk(loggedUser.user_id));
     console.log("loggedUser: " + loggedUser);
 
   }, [dispatch]);
