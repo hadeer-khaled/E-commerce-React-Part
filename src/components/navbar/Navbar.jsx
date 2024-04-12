@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import ShoppingCart from "../../pages/ShoppingCart/ShoppingCart";
 import {getLoggedUserThunk} from "../../store/slices/userProfileSlice";
 import { useEffect } from "react";
 
 function Navbar() {
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
-
-  const { cartItems, totalQuantity, cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
+  const wishlistItems = useSelector(
+    (state) => state.userWishlistReducer.wishlistItems
+  );
+  const {cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
   // console.log("cartItemsCount ==========", cartItemsCount);
-
+  console.log("wishlist items equals ",wishlistItems)
   const isLoggedIn = !!loggedUser.user_id;
   console.log("isLoggedIn ==========", isLoggedIn);
   console.log("isLoggedIn ==========", loggedUser);
@@ -133,7 +134,7 @@ function Navbar() {
                   <div className="indicator">
                     <i className="fas fa-heart text-red-500 fa-lg"></i>
                     <span className="badge badge-sm indicator-item -translate-y-4">
-                      0
+                    {wishlistItems.length}
                     </span>
                   </div>
                 </div>
@@ -141,7 +142,7 @@ function Navbar() {
                   tabIndex={0}
                   className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
                   <div className="card-body">
-                    <span className="font-bold text-lg">0 Items</span>
+                    <span className="font-bold text-lg">{wishlistItems.length} Items</span>
                     <div className="card-actions">
                       <Link to="/wishlist" className="btn btn-primary btn-block">
                         Wishlist
