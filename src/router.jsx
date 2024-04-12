@@ -18,8 +18,8 @@ import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import AdminProducts from "./pages/AdminProducts/AdminProducts";
 import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import OrderDetails from './pages/payment/OrderDetails/OrderDetails'
-import AdminUsers from "./pages/AdminUsers/AdminUsers"
+import OrderDetails from "./pages/payment/OrderDetails/OrderDetails";
+import AdminUsers from "./pages/AdminUsers/AdminUsers";
 
 function Layout() {
   return (
@@ -74,11 +74,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/payment",
-        element: <TestPayment/>,
+        element: <TestPayment />,
       },
       {
         path: "/order-details",
-        element: <OrderDetails/>
+        element: <OrderDetails />,
       },
       {
         path: "/admin/login",
@@ -90,23 +90,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/wishlist",
-        element: <Wishlist />, 
+        element: <Wishlist />,
       },
       {
-        path: "/shoppingCart", 
+        path: "/shoppingCart",
         element: <ShoppingCart />,
       },
       {
-        path: "/adminProducts",
+        path: "/admin/adminProducts",
         element: <AdminProducts />,
       },
       {
-        path: "/adminCategory",
+        path: "/admin/adminCategory",
         element: <AdminCategory />,
       },
       {
-        path:'/adminusers',
-        element:<AdminUsers />
+        path: "/admin/adminusers",
+        element: <AdminUsers />,
       },
       {
         path: "*",
