@@ -17,6 +17,7 @@ export default function Wishlist() {
     setUserId(loggedUser.user_id);
     console.log("from wishlist page",userId);
     if(userId!=0){
+      console.log(userId)
       dispatch(fetchWishlistItemsThunk(userId));
     }
   }, [userId]);

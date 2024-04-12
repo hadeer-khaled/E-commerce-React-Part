@@ -114,6 +114,22 @@ function AdminLogin() {
           >Register</p>
         </div>
         </Link>
+        
+        <Link to='/admin/ordersmanagement'>
+        <p>Orders</p>
+        </Link>
+        
+        <Link to='/admin/adminCategory'>
+        <p>Category</p>
+        </Link>
+        
+        <Link to='/admin/adminProducts'>
+        <p>Products</p>
+        </Link>
+        
+        <Link to='/admin/adminusers'>
+        <p>Users</p>
+        </Link>
       </div>
 
       <button className="btn" onClick={handleLogout} >Logout</button>
