@@ -123,21 +123,6 @@ function Login() {
               Register
             </p>
           </Link>
-          <Link to="/userprofile">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              userprofile
-            </p>
-          </Link>
-          <Link to="/wishlist">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              wishlist
-            </p>
-          </Link>
-          <Link to="/shoppingCart">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              shoppingCart
-            </p>
-          </Link>
         </div>
       </form>
 
