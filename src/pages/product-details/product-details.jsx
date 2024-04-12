@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getProductByIdThunk } from '../../store/slices/productsSlice';
 import ProductCardSlider from '../../components/ProductCardSlider/ProductCardSlider';
+import { Link } from 'react-router-dom';
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -74,10 +75,15 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="md:flex-1 mx-10 p-5 m-3">
-            <h2 className="text-2xl font-bold mb-2 py-6 text-start">{product.name}</h2>
+            <h2 className="text-2xl font-bold mb-2 py-5 text-start">{product.name}</h2>
             <div className=' justify-items-start text-start'>
-              <span className="font-bold">Product Description:</span>
-              <p className="text-gray-600 text-sm mb-4 py-6">{product.description}</p>
+              <span className="font-bold">Category: </span>
+              <Link to={`/shop?category=${product.category}`} className='grid-cols-subgrid text-blue-600'>{product.category}</Link>
+            </div>
+
+            <div className=' justify-items-start text-start py-5'>
+              <span className="font-bold">Description:</span>
+              <p className="text-gray-600 text-sm mb-4 py-1">{product.description}</p>
             </div>
             <div className="flex mb-4 py-6">
               <div className="mr-4">
