@@ -18,9 +18,8 @@ import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
 import AdminProducts from "./pages/AdminProducts/AdminProducts";
 import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import OrderDetails from './pages/payment/OrderDetails/OrderDetails'
-import AdminUsers from "./pages/AdminUsers/AdminUsers"
-
+import OrderDetails from "./pages/payment/OrderDetails/OrderDetails";
+import AdminUsers from "./pages/AdminUsers/AdminUsers";
 function Layout() {
   return (
     <>
@@ -30,11 +29,19 @@ function Layout() {
     </>
   );
 }
+function AdminLayout() {
+  return (
+    <>
+      <AdminNavbar />
+      <Outlet />
+      <Footer />
+    </>
+  );
+}
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
-    // errorElement: <NotFoundPage />,
     children: [
       {
         path: "/",
@@ -74,39 +81,39 @@ const router = createBrowserRouter([
       },
       {
         path: "/payment",
-        element: <TestPayment/>,
+        element: <TestPayment />,
       },
       {
         path: "/order-details",
-        element: <OrderDetails/>
+        element: <OrderDetails />,
       },
       {
         path: "/admin/login",
         element: <AdminLogin />,
       },
       {
-        path: "/admin/ordersmanagement",
-        element: <OrdersManagemet />,
-      },
-      {
         path: "/wishlist",
-        element: <Wishlist />, 
+        element: <Wishlist />,
       },
       {
-        path: "/shoppingCart", 
+        path: "/shoppingCart",
         element: <ShoppingCart />,
       },
       {
-        path: "/admin/adminProducts",
+        path: "/admin/products",
         element: <AdminProducts />,
       },
       {
-        path: "/admin/adminCategory",
+        path: "/admin/categories",
         element: <AdminCategory />,
       },
       {
-        path:'/admin/adminusers',
-        element:<AdminUsers />
+        path: "/admin/users",
+        element: <AdminUsers />,
+      },
+      {
+        path: "/admin/orders",
+        element: <OrdersManagemet />,
       },
       {
         path: "*",
@@ -114,6 +121,15 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   element: <AdminLayout />,
+  //   children: [
+  //     {
+  //       path: "/admin/ordersmanagement",
+  //       element: <OrdersManagemet />,
+  //     },
+  //   ],
+  // },
 ]);
 
 export default router;

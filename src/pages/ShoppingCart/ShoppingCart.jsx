@@ -1,7 +1,7 @@
 import  { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShoppingCartItemsThunk } from "../../store/slices/userShoppingCartSlice";
-import { addToCart, decrementQuantityInShoppingCart, incrementQuantityInShoppingCart, removeCartInShoppingCart, removeCartItemInShoppingCart } from "../../axios/userShoppingCart";
+import { decrementQuantityInShoppingCart, incrementQuantityInShoppingCart, removeCartInShoppingCart, removeCartItemInShoppingCart } from "../../axios/userShoppingCart";
 import { useNavigate } from "react-router-dom"
 
 export default function ShoppingCart() {
@@ -76,14 +76,7 @@ export default function ShoppingCart() {
       console.error("Error handling decrementing quantity product:", error.message);
     }
   };
-  // const handleAddToCart = async (productId) => {
-  //   try {
-  //     await addToCart(userId, productId); 
-  //     console.log("Product added to cart successfully!");
-  //   } catch (error) {
-  //     console.error("Error adding product to cart:", error);
-  //   }
-  // };
+
 
   return (
     <div className="flex">
@@ -153,11 +146,6 @@ export default function ShoppingCart() {
                     </svg>
                   </button>
                 </td>
-                {/* <td>
-          <button className="btn btn-outline" onClick={() =>handleAddToCart(cartItem.product.product_id)}>
-            Add to Cart
-          </button>
-        </td> */}
               </tr>
             ))}
             <tr>

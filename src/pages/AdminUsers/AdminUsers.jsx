@@ -43,7 +43,9 @@ const UserAdminDashboard = () => {
             {users &&
               users.map((user) => (
                 <tr key={user.id} className="border border-gray-400">
-                  <td className="border border-gray-400 px-4 py-2">{user.image}</td>
+                  <td className="border border-gray-400 px-4 py-2">
+                    <img src={user.image} alt="" className="m-auto" style={{"borderRadius":"50%" , "width":"50px"}}/>
+                    </td>
                   <td className="border border-gray-400 px-4 py-2">{user.first_name}</td>
                   <td className="border border-gray-400 px-4 py-2">{user.last_name}</td>
                   <td className="border border-gray-400 px-4 py-2">{user.email}</td>
