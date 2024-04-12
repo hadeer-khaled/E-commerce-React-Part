@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedUserThunk } from "../../store/slices/userProfileSlice";
 import { useEffect } from "react";
-import { userLogout } from "../../axios/userAuth";
+import { userLogout } from "./../../axios/userAuth";
 import { resetProfileData } from "../../store/slices/userProfileSlice";
 import { useNavigate } from "react-router-dom";
 

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getLoggedUserThunk,
-  updateUserThunk,
-} from "./../../store/slices/userProfileSlice";
+import { updateUserThunk } from "./../../store/slices/userProfileSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 import "./UserProfile.css";
 
@@ -121,8 +119,12 @@ const UserProfile = () => {
       formData.append("last_name", values.last_name);
       formData.append("email", values.email);
       formData.append("phone", values.phone);
-      // formData.append("image", values.image);
       updateUserProfile(formData);
+      Swal.fire({
+        title: "Congratulation!",
+        text: "Your Profile updated Successfully",
+        icon: "success",
+      });
     },
   });
 
