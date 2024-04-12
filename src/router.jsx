@@ -3,7 +3,8 @@ import UserProfile from "./pages/UserProfile/UserProfile";
 import UserOrders from "./pages/UserOrders/UserOrders";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-import Payment from "./pages/payment/Payment";
+// import Payment from "./pages/payment/Payment";
+import TestPayment from "./pages/payment/TestPayment";
 import AdminLogin from "./pages/AdminPages/Login/AdminLogin";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
@@ -19,6 +20,7 @@ import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import OrderDetails from './pages/payment/OrderDetails/OrderDetails'
 import AdminUsers from "./pages/AdminUsers/AdminUsers"
+
 function Layout() {
   return (
     <>
@@ -72,7 +74,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/payment",
-        element: <Payment />,
+        element: <TestPayment/>,
       },
       {
         path: "/order-details",

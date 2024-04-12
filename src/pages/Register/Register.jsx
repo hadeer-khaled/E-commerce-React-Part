@@ -11,7 +11,7 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.withCredentials = true
 
 const client = axios.create({
-  baseURL: "http://127.0.0.1:8000" 
+baseURL: "http://127.0.0.1:8000" 
 })
 
 function Register() {
@@ -106,13 +106,11 @@ function Register() {
                 }
             );
             console.log("res",response);
-            // console.log(values);
         }
 
         else {
             values.role = 'user'
             values.image = "https://res.cloudinary.com/dywqswxz9/image/upload/v1712786118/596d1abe-c91c-4927-b2cf-f1edaa443966_eqwmbl.jpg"
-            // console.log(values)
             const response = await client.post("/users/register/", values)
             .then(()=> {
                 Swal.fire({

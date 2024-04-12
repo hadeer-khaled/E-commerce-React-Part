@@ -59,10 +59,24 @@ function Navbar() {
                   <Link to="/">Home</Link>
                 </li>
                 <li>
+                  <Link to="/userprofile">Porfile</Link>
+                </li>
+                <li>
                   <Link to="/shop">Shop</Link>
                 </li>
                 <li>
+                  <Link to="/shoppingCart">Shoppingcart</Link>
+                </li>
+                <li>
                   <Link to="/wishlist">Wishlist</Link>
+                </li>
+                <li>
+                  <Link to="/userorders">Orders</Link>
+                </li>
+                {/* <li>
+                  <Link to='/'>
+                    Contact
+                  </Link>
                 </li>
                 <li>
                   <Link to="/shoppingCart">Cart</Link>

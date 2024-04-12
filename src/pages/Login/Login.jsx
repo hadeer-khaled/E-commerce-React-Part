@@ -9,6 +9,7 @@ import {
   resetProfileData,
 } from "../../store/slices/userProfileSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom'
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -19,9 +20,9 @@ const client = axios.create({
 });
 
 function Login() {
-  const user = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -40,15 +41,15 @@ function Login() {
         .then((res) => {
           console.log(res.data.message);
           console.log(res.data.data);
+          localStorage.setItem('jwt',res.data.jwt)
           Swal.fire({
             icon: "success",
             title: `Welcome ${res.data.data.first_name}`,
             timer: 2000,
           });
 
-          dispatch(setProfileData(res.data.data));
-          console.log("data is set");
-          console.log("user", user);
+          dispatch(setProfileData(res.data.data))
+          navigate('/')
         })
         .catch(() => {
           Swal.fire({
@@ -61,9 +62,14 @@ function Login() {
   });
 
   function handleLogout() {
-    client.post("/users/logout/", { withCredentials: true }).then((res) => {
-      console.log(res.data.message);
-    });
+    client
+      .post("/users/logout/", { withCredentials: true })
+      .then((res) => {
+        console.log(res.data.message);
+      });
+      localStorage.removeItem('jwt')
+      dispatch(resetProfileData())
+      navigate('/')
   }
 
   return (
@@ -115,21 +121,6 @@ function Login() {
           <Link to="/register">
             <p className="text-red-600 hover:underline hover:underline-offset-4">
               Register
-            </p>
-          </Link>
-          <Link to="/userprofile">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              userprofile
-            </p>
-          </Link>
-          <Link to="/wishlist">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              wishlist
-            </p>
-          </Link>
-          <Link to="/shoppingCart">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              shoppingCart
             </p>
           </Link>
         </div>
