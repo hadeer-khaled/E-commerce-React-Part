@@ -182,7 +182,7 @@ function Navbar() {
                 </div>
                 <div
                   tabIndex={0}
-                  className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
+                  className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
                   <div className="card-body">
                     <span className="font-bold text-lg">{cartItemsCount} Items</span>
                     {/* <span className="text-info">Subtotal: $</span> */}
