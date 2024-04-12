@@ -37,9 +37,11 @@ function TestPayment() {
     localStorage.setItem("user",JSON.stringify(user))
 
     console.log("see Local storage")
+    
+    const baseURL = import.meta.env.VITE_BASE_URL
 
     const client = axios.create({
-        baseURL: "http://localhost:8000"
+        baseURL: baseURL
     })
 
     function handleCheckout()
@@ -52,26 +54,23 @@ function TestPayment() {
     }
 
     return (
-    <section className="mt-28">
-        <div className="product text-center">
-        <img
-            src="https://res.cloudinary.com/dywqswxz9/image/upload/v1712472992/6191aDbiwjL._AC_UF894_1000_QL80__q9tuqw.jpg"
-            alt="The cover of Stubborn Attachments"
-            style={{width:"200px", margin:"auto"}}
-        />
-        <div className="description">
-        <h3>Google Pixel 6</h3>
-        <h5>$899.00</h5>
-        </div>
-        </div>
-        {/* <form action={`${url}/payment/test-checkout`} method="POST">
-        <button className="btn btn-successs" type="submit">
-            Checkout
-        </button>
-        </form> */}
+        <>
+    <section className="mt-28 row grid grid-cols-3 gap-4 m-auto">
 
-        <button className="btn btn-info" onClick={handleCheckout}>Check out</button>
+        {order_products.map( (el) => {
+            return <>
+        <div className="p-4 text-center">
+        <img src={el.image} alt="The cover of Stubborn Attachments" style={{width:"200px", margin:"auto"}}/>
+        <div className="description my-5">
+        <h3>{el.name}</h3>
+        <h5>{el.price} $</h5>
+        </div>
+        </div>
+        </>           
+        })}
     </section>
+        <button className="btn btn-info text-center my-10" onClick={handleCheckout}>Check out</button>
+        </>
 )
 }
 

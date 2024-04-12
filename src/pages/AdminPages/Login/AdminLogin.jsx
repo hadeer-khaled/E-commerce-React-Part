@@ -10,8 +10,10 @@ axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.withCredentials = true
 
+const baseURL = import.meta.env.VITE_BASE_URL
+
 const client = axios.create({
-  baseURL: "http://127.0.0.1:8000" 
+  baseURL: baseURL
 })
 
 function AdminLogin() {
@@ -56,8 +58,8 @@ function AdminLogin() {
       console.log(res.data.message)
       console.log(JSON.stringify(res.data.data))
       
-      localStorage.setItem("jwt",res.data.jwt)
-      
+      // localStorage.setItem("jwt",res.data.jwt)
+      navigate('/admin/users')
       Swal.fire({
         icon:'success',
         title:"Welcome boss",
