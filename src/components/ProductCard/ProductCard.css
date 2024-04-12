@@ -23,3 +23,8 @@ figure {
 .card-body {
   flex-grow: 1; /* Allow the card-body to grow to fill the remaining space */
 }
+
+.fa-heart:hover {
+  scale: 1.07;
+  transition: all 0.1s;
+}

@@ -2,20 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getProductByIdThunk } from '../../store/slices/productsSlice';
-import ProductCardSlider from '../../components/ProductCardSlider/ProductCardSlider';
 import { Link } from 'react-router-dom';
+import ProductCardSlider from "../../components/ProductCardSlider/ProductCardSlider";
+import { getProductsThunk } from "../../store/slices/productsSlice";
 
 const ProductDetails = () => {
+
   const dispatch = useDispatch();
   const { productId } = useParams();
   const product = useSelector((state) => state.productsSliceReducer.productDetail);
   const isLoading = useSelector((state) => state.productsSliceReducer.isLoading);
   const error = useSelector((state) => state.productsSliceReducer.error);
-
+  const productList = useSelector(
+    (state) => state.productsSliceReducer.productList
+  );
+  
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     dispatch(getProductByIdThunk({ productId }));
+    dispatch(getProductsThunk({page:'1',limit:'16'}));
   }, [dispatch, productId]);
 
   const changeImage = (index) => {
@@ -52,9 +58,13 @@ const ProductDetails = () => {
     return stars;
   };
 
+
+
+
+
   return (
     <>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-2 min-h-screen content-center">
         <div className="flex flex-col md:flex-row -mx-4 px-20">
           <div className="md:flex-1 m-3 mx-10">
             <div className="h-[400px] rounded-lg mb-4">
@@ -123,6 +133,14 @@ const ProductDetails = () => {
 
       <div className="relatedCagegories bg-red-600 h-">
 
+      </div>
+
+
+      <div className="pb-5 pt-0">
+        <h3 className='text-3xl pb-8 text-center m-auto self-center'>Related products</h3>
+        {productList.length >= 4 && (
+          <ProductCardSlider productList={productList.filter((relatedProduct)=>relatedProduct.category == product.category)} className="h-52 bg-black static z-50"/>
+        )}
       </div>
 
     </>
