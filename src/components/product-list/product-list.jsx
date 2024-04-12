@@ -57,7 +57,7 @@ const ProductsList = ({ filters }) => {
             />
         </>
       ) : (
-        <h2 className='card-title text-4xl pb-8 text-center m-auto self-center'>No products</h2>
+        <h3 className='card-title text-4xl pb-8 text-center m-auto self-center'>No products</h3>
       )}
     </div>
   );

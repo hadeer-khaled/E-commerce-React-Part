@@ -1,7 +1,7 @@
 /* .container  */
 .ProductCardSlider-container {
-  position: absolute;
-  transform: translatey(-58vh);
+  /* position: absolute;
+  transform: translatey(-58vh); */
   left: 0;
   right: 0;
 }

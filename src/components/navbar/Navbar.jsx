@@ -60,28 +60,21 @@ function Navbar() {
                 <li>
                   <Link to="/shop">Shop</Link>
                 </li>
-                {/* <li>
-                  <Link to='/'>
-                    Contact
-                  </Link>
+                <li>
+                  <Link to="/wishlist">Wishlist</Link>
                 </li>
                 <li>
-                  <Link to='/'>
-                    about
-                  </Link>
+                  <Link to="/shoppingCart">Cart</Link>
                 </li>
                 <li>
-                  <Link to='/'>
-                    Footer
-                  </Link>
-                </li> */}
+                  <Link to="/userprofile">Profile</Link>
+                </li>
+
               </ul>
             </div>
           </div>
 
-          <div className="flex-1 text-start btn btn-ghost text-xl uppercase">
-            <Link to="/">E-Shop</Link>
-          </div>
+          <Link to="/" className="flex-1 text-start btn btn-ghost text-xl uppercase">E-Shop</Link>
         </div>
 
         <div className="navbar-center bg-gray-600">
@@ -100,8 +93,8 @@ function Navbar() {
             <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
           </div> */}
 
-          <div className="btn btn-ghost btn-circle">
-            <Link to="/shop">
+          <Link to="/shop">
+            <div className="btn btn-ghost btn-circle">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -115,8 +108,8 @@ function Navbar() {
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
-            </Link>
-          </div>
+            </div>
+          </Link>
 
           {!isLoggedIn && (
           <>
@@ -182,7 +175,7 @@ function Navbar() {
                 </div>
                 <div
                   tabIndex={0}
-                  className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
+                  className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
                   <div className="card-body">
                     <span className="font-bold text-lg">{cartItemsCount} Items</span>
                     {/* <span className="text-info">Subtotal: $</span> */}
