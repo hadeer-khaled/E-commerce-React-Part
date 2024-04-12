@@ -1,0 +1,11 @@
+.ProductHomeSliderSection {
+  position: absolute !important;
+  transform: translatey(-58vh) !important;
+  left: 0;
+  right: 0;
+}
+
+.ProductHomeSliderSection .ProductCardSlider-container {
+  margin-top: 0px ;
+  margin-bottom: 0px ;
+}

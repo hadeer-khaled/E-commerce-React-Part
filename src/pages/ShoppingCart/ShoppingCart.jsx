@@ -76,14 +76,14 @@ export default function ShoppingCart() {
       console.error("Error handling decrementing quantity product:", error.message);
     }
   };
-  const handleAddToCart = async (productId) => {
-    try {
-      await addToCart(userId, productId); 
-      console.log("Product added to cart successfully!");
-    } catch (error) {
-      console.error("Error adding product to cart:", error);
-    }
-  };
+  // const handleAddToCart = async (productId) => {
+  //   try {
+  //     await addToCart(userId, productId); 
+  //     console.log("Product added to cart successfully!");
+  //   } catch (error) {
+  //     console.error("Error adding product to cart:", error);
+  //   }
+  // };
 
   return (
     <div className="flex">
@@ -153,11 +153,11 @@ export default function ShoppingCart() {
                     </svg>
                   </button>
                 </td>
-                <td>
+                {/* <td>
           <button className="btn btn-outline" onClick={() =>handleAddToCart(cartItem.product.product_id)}>
             Add to Cart
           </button>
-        </td>
+        </td> */}
               </tr>
             ))}
             <tr>

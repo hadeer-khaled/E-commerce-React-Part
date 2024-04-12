@@ -15,6 +15,7 @@ import ProductDetails from "./pages/product-details/product-details";
 import ShopPage from "./pages/shop/shop";
 import Wishlist from "./pages/Wishlist/Wishlist";
 import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
+import AdminProducts from "./pages/AdminProducts/AdminProducts";
 import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import OrderDetails from './pages/payment/OrderDetails/OrderDetails'
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "/shoppingCart", 
         element: <ShoppingCart />,
+      },
+      {
+        path: "/adminProducts",
+        element: <AdminProducts />,
       },
       {
         path: "/adminCategory",

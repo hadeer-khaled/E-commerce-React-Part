@@ -1,19 +1,30 @@
 figure {
   background-color: rebeccapurple;
-  height: 100px !important;
+  /* height: 100px !important; */
 }
 
 /* img { */
 .image-tag {
   top: 0;
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   object-fit: cover;
 }
 
 .rating-container {
-  display: block !important;
-  width: 100%;
-  align-items: start;
-  text-align: start;
+
+}
+.card-product {
+  display: flex;
+  flex-direction: column; /* Set flex direction to column */
+  height: 100%; /* Ensure the card takes the full height of its container */
+}
+
+.card-body {
+  flex-grow: 1; /* Allow the card-body to grow to fill the remaining space */
+}
+
+.fa-heart:hover, .fa-cart-plus:hover {
+  scale: 1.1;
+  transition: all 0.15s;
 }

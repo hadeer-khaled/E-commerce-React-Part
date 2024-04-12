@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import ProductsList from '../../components/product-list/product-list';
 import Hero from '../../components/hero/hero';
 import './Home.css';
-import ProductCardSlider from '../../components/ProductCardSlider/ProductCardSlider';
+import ProductHomeSliderSection from '../../components/ProductHomeSliderSection/ProductHomeSliderSection';
 import Swal from 'sweetalert2';
 import { setProfileData } from "../../store/slices/userProfileSlice";
 import { useDispatch } from 'react-redux';
@@ -68,7 +68,7 @@ function Home() {
     <div className="home">
       <Hero/>
       <div className="home-content py-20">
-      <ProductCardSlider/>
+        <ProductHomeSliderSection/>
         {/* <h1 className="font-extrabold text-red-600 bg-emerald-200">Home-Page</h1> */}
         <ProductsList/>
       </div>
