@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 
 import "./UserProfile.css";
 
@@ -120,6 +121,11 @@ const UserProfile = () => {
       formData.append("phone", values.phone);
       // formData.append("image", values.image);
       updateUserProfile(formData);
+      Swal.fire({
+        title: "Congratulation!",
+        text: "Your Profile updated Successfully",
+        icon: "success",
+      });
     },
   });
 
