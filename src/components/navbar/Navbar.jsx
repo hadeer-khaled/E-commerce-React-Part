@@ -1,11 +1,27 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ShoppingCart from "../../pages/ShoppingCart/ShoppingCart";
+import {getLoggedUserThunk} from "../../store/slices/userProfileSlice";
+import { useEffect } from "react";
 
 function Navbar() {
+  const dispatch = useDispatch();
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
 
   const { cartItems, totalQuantity, cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
-  console.log("cartItemsCount ==========", cartItemsCount);
+  // console.log("cartItemsCount ==========", cartItemsCount);
+
+  const isLoggedIn = !!loggedUser.user_id;
+  console.log("isLoggedIn ==========", isLoggedIn);
+  console.log("isLoggedIn ==========", loggedUser);
+
+  useEffect(() => {
+    // edit the static user id before finishing the feature #########################################################################
+    dispatch(getLoggedUserThunk(2));
+    console.log("loggedUser: " + loggedUser);
+
+  }, [dispatch]);
+  
 
   return (
     <>
@@ -102,105 +118,114 @@ function Navbar() {
             </Link>
           </div>
 
-          <div id="login" className="px-5">
-            <Link to="/login">Login</Link>
-          </div>
-          <div id="register" className="px-4 pe-2">
-            <Link to="/register">Register</Link>
-          </div>
+          {!isLoggedIn && (
+          <>
+            <div id="login" className="px-5">
+              <Link to="/login">Login</Link>
+            </div>
+            <div id="register" className="px-4 pe-2">
+              <Link to="/register">Register</Link>
+            </div>
+          </>
+        )}
 
-          <div id="nav-cart-icons" className="flex-none">
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle">
-                <div className="indicator">
-                  <i className="fas fa-heart text-red-500 fa-lg"></i>
-                  <span className="badge badge-sm indicator-item -translate-y-4">
-                    0
-                  </span>
+          {isLoggedIn && (
+          <>
+            <div id="nav-cart-icons" className="flex-none">
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle">
+                  <div className="indicator">
+                    <i className="fas fa-heart text-red-500 fa-lg"></i>
+                    <span className="badge badge-sm indicator-item -translate-y-4">
+                      0
+                    </span>
+                  </div>
+                </div>
+                <div
+                  tabIndex={0}
+                  className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
+                  <div className="card-body">
+                    <span className="font-bold text-lg">0 Items</span>
+                    <div className="card-actions">
+                      <Link to="/wishlist" className="btn btn-primary btn-block">
+                        Wishlist
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div
-                tabIndex={0}
-                className="mt-3 z-[1] card card-compact dropdown-content w-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
-                <div className="card-body">
-                  <span className="font-bold text-lg">0 Items</span>
-                  <div className="card-actions">
-                    <Link to="/wishlist" className="btn btn-primary btn-block">
-                      Wishlist
-                    </Link>
+
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle translate-y-1 me-4">
+                  <div className="indicator">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                    <span className="badge badge-sm indicator-item">{cartItemsCount}</span>
+                  </div>
+                </div>
+                <div
+                  tabIndex={0}
+                  className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
+                  <div className="card-body">
+                    <span className="font-bold text-lg">{cartItemsCount} Items</span>
+                    {/* <span className="text-info">Subtotal: $</span> */}
+                    <div className="card-actions">
+                      <Link to="/shoppingCart" className="btn btn-primary btn-block">
+                        View cart
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle translate-y-1 me-4">
-                <div className="indicator">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+            <Link to="/userprofile" className="pe-1 uppercase">{loggedUser.first_name}</Link>
+            <div id="nav-profile" className="flex-none gap-2 me-2">
+              <div className="dropdown dropdown-end">
+                {/* Profile dropdown content */}
+                {/* Assuming you have a user profile picture */}
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 rounded-full">
+                    <img
+                      alt="User Profile"
+                      src={loggedUser.image}
+                      // src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
                     />
-                  </svg>
-                  <span className="badge badge-sm indicator-item">{cartItemsCount}</span>
-                </div>
-              </div>
-              <div
-                tabIndex={0}
-                className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
-                <div className="card-body">
-                  <span className="font-bold text-lg">{cartItemsCount} Items</span>
-                  {/* <span className="text-info">Subtotal: $</span> */}
-                  <div className="card-actions">
-                    <Link to="/shoppingCart" className="btn btn-primary btn-block">
-                      View cart
-                    </Link>
                   </div>
                 </div>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] py-4 shadow menu menu-sm dropdown-content w-36 h-30 p-2 bg-base-100 rounded-box translate-x-6 -translate-y-1 border border-slate-600 justify-evenly z-50"
+                >
+                  {/* Profile dropdown menu items */}
+                  <li>
+                    <Link to="/userprofile">Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/logout">Logout</Link>
+                  </li>
+                </ul>
               </div>
             </div>
-          </div>
-
-          <div id="nav-profile" className="flex-none gap-2 me-2">
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar">
-                <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                  />
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="mt-3 z-[1] py-4 shadow menu menu-sm dropdown-content w-36 h-30 p-2 bg-base-100 rounded-box translate-x-6 -translate-y-1 border border-slate-600 justify-evenly z-50">
-                <li>
-                  <Link to="/userprofile">Profile</Link>
-                </li>
-                {/* <li><Link to="/">Cart</Link></li>
-                <li><Link to="/">Wishlist</Link></li> */}
-                <li>
-                  <Link to="/logout">Logout</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
+          </>
+        )}
 
           <div id="nav-theme" className="dropdown fixed top-20 end-0">
             <div
