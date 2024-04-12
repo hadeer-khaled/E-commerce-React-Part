@@ -20,8 +20,6 @@ import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import OrderDetails from "./pages/payment/OrderDetails/OrderDetails";
 import AdminUsers from "./pages/AdminUsers/AdminUsers";
-import AdminNavbar from "./components/AdminNavbar/AdminNavbar";
-
 function Layout() {
   return (
     <>

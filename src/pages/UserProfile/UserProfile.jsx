@@ -119,7 +119,6 @@ const UserProfile = () => {
       formData.append("last_name", values.last_name);
       formData.append("email", values.email);
       formData.append("phone", values.phone);
-      // formData.append("image", values.image);
       updateUserProfile(formData);
       Swal.fire({
         title: "Congratulation!",
