@@ -3,21 +3,11 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
-
-import {
-  setProfileData,
-  resetProfileData,
-} from "../../store/slices/userProfileSlice";
+import { userLogin , userLogout} from './../../axios/userAuth'
+import { setProfileData, resetProfileData } from "../../store/slices/userProfileSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
 
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.withCredentials = true;
-
-const client = axios.create({
-  baseURL: "http://127.0.0.1:8000",
-});
 
 function Login() {
 
@@ -36,8 +26,9 @@ function Login() {
     }),
     onSubmit: (values) => {
       values.role = "user";
-      client
-        .post("/users/login/", values)
+      // client
+      //   .post("/users/login/", values)a
+      userLogin(values)
         .then((res) => {
           console.log(res.data.message);
           console.log(res.data.data);
@@ -62,8 +53,7 @@ function Login() {
   });
 
   function handleLogout() {
-    client
-      .post("/users/logout/", { withCredentials: true })
+      userLogout()
       .then((res) => {
         console.log(res.data.message);
       });

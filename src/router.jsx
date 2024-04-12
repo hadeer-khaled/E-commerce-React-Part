@@ -97,15 +97,15 @@ const router = createBrowserRouter([
         element: <ShoppingCart />,
       },
       {
-        path: "/adminProducts",
+        path: "/admin/adminProducts",
         element: <AdminProducts />,
       },
       {
-        path: "/adminCategory",
+        path: "/admin/adminCategory",
         element: <AdminCategory />,
       },
       {
-        path:'/adminusers',
+        path:'/admin/adminusers',
         element:<AdminUsers />
       },
       {
