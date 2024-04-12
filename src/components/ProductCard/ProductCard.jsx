@@ -84,9 +84,16 @@ return (
 
     </div>
     <div className="card-actions flex items-center justify-between pb-3 px-5">
-      <div className="flex w-full justify-between">
-        <button className="btn btn-primary grid-cols-subgrid xl:w-1/2 p-0" onClick={() =>handleAddToCart(product.product_id)}>Add to cart</button>
-        <button className="grid-cols-subgrid xl:w-1/2 ml-4 text-end" onClick={() =>handleAddToWishlist(product.product_id)}><i className="fas fa-heart fa-xl text-red-800"></i></button>
+      <div className="flex w-full justify-between gap-1 py-2 ps-1 pe-4">
+        {/* <div className='grid-cols-subgrid xl:w-1/2'>
+          <button className="btn btn-primary p-0 w-11/12 " onClick={() =>handleAddToCart(product.product_id)}>Add to cart</button>
+        </div>
+        <div className='grid-cols-subgrid xl:w-1/2'>
+          <button className="btn btn-primary p-0 w-11/12" onClick={() =>handleAddToCart(product.product_id)}>Add to wishlist</button>
+        </div> */}
+        {/* <button className="btn btn-primary grid-cols-subgrid xl:w-1/2 p-0" onClick={() =>handleAddToCart(product.product_id)}>Add to cart</button> */}
+        <span className="grid-cols-subgrid xl:w-1/2 ml-4 text-start"><i className="fas fa-cart-plus fa-xl cursor-pointer" onClick={() =>handleAddToCart(product.product_id)}></i></span>
+        <span className="grid-cols-subgrid xl:w-1/2 ml-4 text-end"><i className="fas fa-heart fa-xl cursor-pointer" onClick={() =>handleAddToWishlist(product.product_id)}></i></span>
       </div>
     </div>
   </div>
