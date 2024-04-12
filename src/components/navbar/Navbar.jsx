@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ShoppingCart from "../../pages/ShoppingCart/ShoppingCart";
 
 function Navbar() {
+
+  const { cartItems, totalQuantity, cartItemsCount } = useSelector((state) => state.userShoppingCartReducer);
+  console.log("cartItemsCount ==========", cartItemsCount);
+
   return (
     <>
       <div className="navbar me-auto fixed top-0 z-50 pe-5 ps-2 py-0 bg-base-200 left-0 right-0 shadow-md h-19 px-14">
@@ -122,9 +128,9 @@ function Navbar() {
                 <div className="card-body">
                   <span className="font-bold text-lg">0 Items</span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <Link to="/wishlist" className="btn btn-primary btn-block">
                       Wishlist
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -149,19 +155,19 @@ function Navbar() {
                       d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                     />
                   </svg>
-                  <span className="badge badge-sm indicator-item">0</span>
+                  <span className="badge badge-sm indicator-item">{cartItemsCount}</span>
                 </div>
               </div>
               <div
                 tabIndex={0}
                 className="mt-3 z-[1] card card-compact dropdown-content w-40 h-40 p-0 bg-base-100 shadow translate-x-16  border border-slate-600 z-50">
                 <div className="card-body">
-                  <span className="font-bold text-lg">0 Items</span>
-                  <span className="text-info">Subtotal: $999</span>
+                  <span className="font-bold text-lg">{cartItemsCount} Items</span>
+                  {/* <span className="text-info">Subtotal: $</span> */}
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <Link to="/shoppingCart" className="btn btn-primary btn-block">
                       View cart
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

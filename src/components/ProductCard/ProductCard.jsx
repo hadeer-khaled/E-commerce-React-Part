@@ -1,6 +1,9 @@
 import React from 'react';
 import './ProductCard.css';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import { addToWishlist } from '../../axios/UserWishlist';
+import { addToCart } from '../../axios/userShoppingCart';
 
 const ProductCard = ({ product }) => {
   const imageUrl = `https:\\${product.images[0]}`;
@@ -20,6 +23,28 @@ const renderRatingStars = (avgRating) => {
   return stars;
 };
 
+const userId = 1; // user
+const handleAddToWishlist = async (productId) => {
+  try {
+    const response = await addToWishlist(userId,productId); 
+    Swal.fire({
+      title: "adding the same product!",
+      text: response.message,
+      icon: "info"
+    });
+  } catch (error) {
+    console.error("Error adding product to wishlist:", error);
+  }
+};
+
+const handleAddToCart = async (productId) => {
+  try {
+    await addToCart(userId, productId); 
+    console.log("Product added to cart successfully!");
+  } catch (error) {
+    console.error("Error adding product to cart:", error);
+  }
+};
 
 return (
   <div className="card card-product card-compact w-70 h-80 bg-base-300 shadow-lg m-0 p-0 border">
@@ -60,8 +85,8 @@ return (
     </div>
     <div className="card-actions flex items-center justify-between pb-3 px-5">
       <div className="flex w-full justify-between">
-        <button className="btn btn-primary grid-cols-subgrid xl:w-1/2 p-0">Add to cart</button>
-        <button className="grid-cols-subgrid xl:w-1/2 ml-4 text-end"><i className="fas fa-heart fa-xl text-red-800"></i></button>
+        <button className="btn btn-primary grid-cols-subgrid xl:w-1/2 p-0" onClick={() =>handleAddToCart(product.product_id)}>Add to cart</button>
+        <button className="grid-cols-subgrid xl:w-1/2 ml-4 text-end" onClick={() =>handleAddToWishlist(product.product_id)}><i className="fas fa-heart fa-xl text-red-800"></i></button>
       </div>
     </div>
   </div>
