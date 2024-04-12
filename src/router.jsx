@@ -97,7 +97,7 @@ const router = createBrowserRouter([
         element: <ShoppingCart />,
       },
       {
-        path: "/admin/adminProducts",
+        path: "/admin/admin/adminProducts",
         element: <AdminProducts />,
       },
       {
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
         element: <AdminCategory />,
       },
       {
-        path: "/admin/adminusers",
+        path: "/adminusers",
         element: <AdminUsers />,
       },
       {

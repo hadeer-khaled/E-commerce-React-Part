@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { userLogout } from "./../../axios/userAuth";
 import { resetProfileData } from "../../store/slices/userProfileSlice";
 import { useNavigate } from "react-router-dom";
+import { userLogout } from './../../axios/userAuth'
+import { resetProfileData } from "../../store/slices/userProfileSlice";
+import { useNavigate } from 'react-router-dom'
 
 function Navbar() {
   const navigate = useNavigate();
@@ -16,6 +19,17 @@ function Navbar() {
     localStorage.removeItem("data");
     dispatch(resetProfileData());
     navigate("/");
+  }
+  const navigate = useNavigate()
+  function handleLogout() {
+      userLogout()
+      .then((res) => {
+        console.log(res.data.message);
+      });
+      localStorage.removeItem('jwt')
+      localStorage.removeItem('data')
+      dispatch(resetProfileData())
+      navigate('/')
   }
   const dispatch = useDispatch();
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
@@ -243,9 +257,7 @@ function Navbar() {
                       <Link to="/userprofile">Profile</Link>
                     </li>
                     <li>
-                      <Link to="/" onClick={handleLogout}>
-                        Logout
-                      </Link>
+                      <Link to="/logout">Logout</Link>
                     </li>
                   </ul>
                 </div>

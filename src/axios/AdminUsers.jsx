@@ -2,7 +2,7 @@ import axiosInstance from "./config";
 
 export const fetchUsers = async () => {
     try {
-      const response = await axiosInstance.get('/users/showUsers');
+      const response = await axiosInstance.get('/users/showUsers/');
       if (response) {
         console.log("from axios",response.data);
         return response.data;
