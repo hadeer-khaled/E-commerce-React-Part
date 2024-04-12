@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getLoggedUserThunk,
-  updateUserThunk,
-} from "./../../store/slices/userProfileSlice";
+import { updateUserThunk } from "./../../store/slices/userProfileSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

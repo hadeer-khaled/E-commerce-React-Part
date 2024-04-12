@@ -20,6 +20,7 @@ import AdminCategory from "./pages/AdminCategory/AdminCategory";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import OrderDetails from "./pages/payment/OrderDetails/OrderDetails";
 import AdminUsers from "./pages/AdminUsers/AdminUsers";
+import AdminNavbar from "./components/AdminNavbar/AdminNavbar";
 
 function Layout() {
   return (
@@ -30,11 +31,19 @@ function Layout() {
     </>
   );
 }
+function AdminLayout() {
+  return (
+    <>
+      <AdminNavbar />
+      <Outlet />
+      <Footer />
+    </>
+  );
+}
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
-    // errorElement: <NotFoundPage />,
     children: [
       {
         path: "/",
@@ -85,10 +94,6 @@ const router = createBrowserRouter([
         element: <AdminLogin />,
       },
       {
-        path: "/admin/ordersmanagement",
-        element: <OrdersManagemet />,
-      },
-      {
         path: "/wishlist",
         element: <Wishlist />,
       },
@@ -97,16 +102,20 @@ const router = createBrowserRouter([
         element: <ShoppingCart />,
       },
       {
-        path: "/admin/admin/adminProducts",
+        path: "/admin/products",
         element: <AdminProducts />,
       },
       {
-        path: "/admin/adminCategory",
+        path: "/admin/categories",
         element: <AdminCategory />,
       },
       {
-        path: "/adminusers",
+        path: "/admin/users",
         element: <AdminUsers />,
+      },
+      {
+        path: "/admin/orders",
+        element: <OrdersManagemet />,
       },
       {
         path: "*",
@@ -114,6 +123,15 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   element: <AdminLayout />,
+  //   children: [
+  //     {
+  //       path: "/admin/ordersmanagement",
+  //       element: <OrdersManagemet />,
+  //     },
+  //   ],
+  // },
 ]);
 
 export default router;
