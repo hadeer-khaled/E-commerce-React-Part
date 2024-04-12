@@ -37,18 +37,27 @@ export default function Wishlist() {
     }
   };
 
-  const handleAddToWishlist = async (productId) => {
-    try {
-      const response = await addToWishlist(userId,productId); 
-      Swal.fire({
-        title: "adding the same product!",
-        text: response.message,
-        icon: "info"
-      });
-    } catch (error) {
-      console.error("Error adding product to wishlist:", error);
-    }
-  };
+  // const handleAddToWishlist = async (productId) => {
+  //   try {
+  //     const isProductInWishlist = wishlistItems.some(item => item.product_id === productId);
+  //     if (isProductInWishlist) {
+  //       Swal.fire({
+  //         title: "Adding the same product!",
+  //         text: "This product is already in your wishlist.",
+  //         icon: "info"
+  //       });
+  //     } else {
+  //       const response = await addToWishlist(userId, productId); 
+  //         Swal.fire({
+  //         title: "Product added to wishlist!",
+  //         text: response.message,
+  //         icon: "success"
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding product to wishlist:", error);
+  //   }
+  // };
   return (
     <div className="flex">
       {/* Image */}
@@ -141,11 +150,11 @@ export default function Wishlist() {
                     </div>
                   )}
                 </td>
-                <td>
+                {/* <td>
           <button className="btn btn-outline" onClick={() =>handleAddToWishlist(product.product_id)}>
             Add to Wishlist
           </button>
-        </td>
+        </td> */}
               </tr>
             ))}
           </tbody>

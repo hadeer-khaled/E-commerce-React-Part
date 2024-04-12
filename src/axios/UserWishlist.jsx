@@ -36,7 +36,7 @@ export const removeProductFromWishlist = async (userId, productId) => {
         user_id: userId,
         product_id: productId
       });
-      console.log('Added to wishlist:', response.data);
+      console.log(response.data);
       return response.data; 
     } catch (error) {
       console.error('Error adding to wishlist:', error);
