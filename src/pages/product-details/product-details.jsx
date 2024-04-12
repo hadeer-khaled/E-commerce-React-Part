@@ -74,12 +74,14 @@ const ProductDetails = () => {
             </div>
           </div>
           <div className="md:flex-1 mx-10 p-5 m-3">
-            <h2 className="text-2xl font-bold mb-2 py-6">{product.name}</h2>
-            <span className="font-bold me-auto">Product Description:</span>
-            <p className="text-gray-600 text-sm mb-4 py-6">{product.description}</p>
+            <h2 className="text-2xl font-bold mb-2 py-6 text-start">{product.name}</h2>
+            <div className=' justify-items-start text-start'>
+              <span className="font-bold">Product Description:</span>
+              <p className="text-gray-600 text-sm mb-4 py-6">{product.description}</p>
+            </div>
             <div className="flex mb-4 py-6">
               <div className="mr-4">
-                <span className="font-bold">Price:</span>
+                <span className="font-bold">Price: </span>
                 <span>${product.price}</span>
               </div>
               <div>
@@ -89,8 +91,8 @@ const ProductDetails = () => {
             </div>
             <div className="flex mb-4 py-6">
               <div className="mr-4">
-                <span className="font-bold">Rating:</span>
-                <span> {product.avg_rating}</span>
+                <span className="font-bold">Rating: </span>
+                <span>{product.avg_rating}</span>
               </div>
               <div className='flex'>
                 <div className="rating-container w-full text-start pb-1">
