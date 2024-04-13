@@ -63,7 +63,7 @@ This project is licensed under the GNU General Public License v3.0.
 
 - Landing Page
   <br>
-  ![Landing Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/1-landing_page.png)
+  ![Landing Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/1-landing_page2.png)
   <br>
 
 - Theme Switcher
