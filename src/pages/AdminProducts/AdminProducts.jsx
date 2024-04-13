@@ -178,7 +178,7 @@ const AdminProducts = () => {
                 }}
                 className="w-full border rounded px-1 py-1"
               >
-                <option value="">Select Category</option>
+                <option value="">Category</option>
                 {categoriesList.map(category => (
                   <option key={category.category_id} value={category.category_id}>{category.name}</option>
                 ))}
