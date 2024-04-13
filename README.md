@@ -71,7 +71,7 @@ This project is licensed under the GNU General Public License v3.0.
   ![Theme Switcher](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/3-theme.png)
   <br>
 
-- Shop Page
+- Shop Page (Advanced Search and Filters)
   <br>
   ![Shop Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/5-shop.png)
   <br>
