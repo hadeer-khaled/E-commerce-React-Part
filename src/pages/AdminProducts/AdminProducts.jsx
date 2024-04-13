@@ -7,11 +7,10 @@ const AdminProducts = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.productsSliceReducer.productList);
   const isLoading = useSelector(state => state.productsSliceReducer.isLoading);
-  const error = useSelector(state => state.productsSliceReducer.error);
   const categoriesList = useSelector(state => state.categoriesSliceReducer.categoryList);
 
   const [newProduct, setNewProduct] = useState({
-    category: '',
+    category: null,
     name: '',
     price: 0,
     stock: 0,
@@ -22,6 +21,9 @@ const AdminProducts = () => {
     payment_id: '',
   });
 
+  const [editingProductId, setEditingProductId] = useState(null);
+  const [isCategorySelected, setIsCategorySelected] = useState(false);
+
   useEffect(() => {
     dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
     dispatch(getCategoriesThunk({ page: '', limit: '' }));
@@ -30,7 +32,7 @@ const AdminProducts = () => {
   const handleDeleteProduct = (product_id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       dispatch(deleteProductByIdThunk({ product_id })).then(() => {
-        dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' })); // Reload products after deletion
+        dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
       });
     }
   };
@@ -58,26 +60,87 @@ const AdminProducts = () => {
   };
 
   const handleAddProduct = () => {
+    for (const key in newProduct) {
+      if (newProduct[key] === '') {
+        alert('Please fill in all fields.');
+        return;
+      }
+    }
+
+    if (!isCategorySelected) {
+      alert('Please select a category.');
+      return;
+    }
+
     const imagesString = "/cdn.dummyjson.com/product-images/1/1.jpg,/cdn.dummyjson.com/product-images/1/2.jpg,/cdn.dummyjson.com/product-images/1/3.jpg,/cdn.dummyjson.com/product-images/1/4.jpg,/cdn.dummyjson.com/product-images/1/thumbnail.jpg";
     const imagesArray = imagesString.split(",");
     const newData = {
       ...newProduct,
       images: imagesArray,
-      category: parseInt(newProduct.category) // Ensure category is sent as a number
+      category: parseInt(newProduct.category)
     };
     dispatch(addProductThunk(newData)).then(() => {
-      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' })); // Reload products after addition
+      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
+      setNewProduct({
+        category: null,
+        name: '',
+        price: 0,
+        stock: 0,
+        description: '',
+        avg_rating: 0,
+        image: '',
+        images: [],
+        payment_id: '',
+      });
     });
   };
 
-  const handleUpdateProduct = (productId) => {
-    dispatch(updateProductByIdThunk({ productId, data: newProduct })).then(() => {
-      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' })); // Reload products after update
+  const handleUpdateProduct = (product_id) => {
+    const productToUpdate = products.find(product => product.product_id === product_id);
+    setNewProduct(productToUpdate);
+    setEditingProductId(product_id);
+  };
+
+  const handleConfirmUpdate = () => {
+    for (const key in newProduct) {
+      if (newProduct[key] === '') {
+        alert('Please fill in all fields.');
+        return;
+      }
+    }
+
+    if (!isCategorySelected) {
+      alert('Please select a category before updating the product.');
+      return;
+    }
+
+    const imagesString = "/cdn.dummyjson.com/product-images/1/1.jpg,/cdn.dummyjson.com/product-images/1/2.jpg,/cdn.dummyjson.com/product-images/1/3.jpg,/cdn.dummyjson.com/product-images/1/4.jpg,/cdn.dummyjson.com/product-images/1/thumbnail.jpg";
+    const imagesArray = imagesString.split(",");
+    const newData = {
+      ...newProduct,
+      images: imagesArray,
+      category: parseInt(newProduct.category)
+    };
+    dispatch(updateProductByIdThunk({ product_id: editingProductId, data: newData })).then(() => {
+      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
+      setEditingProductId(null);
+      setIsCategorySelected(false);
+      setNewProduct({
+        category: null,
+        name: '',
+        price: 0,
+        stock: 0,
+        description: '',
+        avg_rating: 0,
+        image: '',
+        images: [],
+        payment_id: '',
+      });
     });
   };
 
   return (
-    <div className='py-20 flex justify-center'>
+    <div className='py-32 px-20 flex justify-center'>
       {isLoading && <p>Loading...</p>}
       <table className="table-auto w-full border-collapse border">
         <thead>
@@ -101,9 +164,12 @@ const AdminProducts = () => {
             <td className="border px-2 py-2">
               <select
                 name="category"
-                value={newProduct.category}
-                onChange={handleProductChange}
-                className="w-24 border rounded px-1 py-1"
+                value={newProduct.category || ''}
+                onChange={(e) => {
+                  handleProductChange(e);
+                  setIsCategorySelected(!!e.target.value);
+                }}
+                className="w-full border rounded px-1 py-1"
               >
                 <option value="">Select Category</option>
                 {categoriesList.map(category => (
@@ -112,31 +178,31 @@ const AdminProducts = () => {
               </select>
             </td>
             <td className="border px-2 py-2">
-              <input type="text" name="name" value={newProduct.name} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+              <input type="text" name="name" value={newProduct.name} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <input type="number" name="price" value={newProduct.price} onChange={handleProductChange} className="w-16 border rounded px-1 py-1" />
+              <input type="number" name="price" value={newProduct.price} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <input type="number" name="stock" value={newProduct.stock} onChange={handleProductChange} className="w-16 border rounded px-1 py-1" />
+              <input type="number" name="stock" value={newProduct.stock} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <input type="text" name="description" value={newProduct.description} onChange={handleProductChange} className="w-32 border rounded px-1 py-1" />
+              <input type="text" name="description" value={newProduct.description} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <input type="number" name="avg_rating" value={newProduct.avg_rating} onChange={handleProductChange} className="w-16 border rounded px-1 py-1" />
+              <input type="number" name="avg_rating" value={newProduct.avg_rating} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <input type="text" name="image" value={newProduct.image} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+              <input type="text" name="image" value={newProduct.image} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <input type="text" name="images" value={newProduct.images} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+              <input type="text" name="images" value={newProduct.images} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <input type="text" name="payment_id" value={newProduct.payment_id} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+              <input type="text" name="payment_id" value={newProduct.payment_id} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <button onClick={handleAddProduct} className="w-16 h-8 bg-emerald-500 hover:bg-emerald-700 text-white font-bold rounded mx-auto">Add</button>
+              <button onClick={editingProductId ? handleConfirmUpdate : handleAddProduct} className="w-16 h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded mx-auto">{editingProductId ? 'Confirm' : 'Add'}</button>
             </td>
           </tr>
           {products.map(product => (
