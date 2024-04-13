@@ -9,7 +9,7 @@ import { getProductsThunk } from "../../store/slices/productsSlice";
 const ProductDetails = () => {
 
   const dispatch = useDispatch();
-  const { productId } = useParams();
+  const { product_id } = useParams();
   const product = useSelector((state) => state.productsSliceReducer.productDetail);
   const isLoading = useSelector((state) => state.productsSliceReducer.isLoading);
   const error = useSelector((state) => state.productsSliceReducer.error);
@@ -20,9 +20,9 @@ const ProductDetails = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    dispatch(getProductByIdThunk({ productId }));
+    dispatch(getProductByIdThunk({ product_id }));
     dispatch(getProductsThunk({page:'1',limit:'16'}));
-  }, [dispatch, productId]);
+  }, [dispatch, product_id]);
 
   const changeImage = (index) => {
     setCurrentImageIndex(index);

@@ -1,87 +1,178 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategoriesThunk } from "../../store/slices/adminCategorySlice";
-import { addCategory, deleteCategory } from "../../axios/AdminCategory";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductsThunk, deleteProductByIdThunk, updateProductByIdThunk, addProductThunk } from '../../store/slices/productsSlice';
+import { getCategoriesThunk } from '../../store/slices/categoriesSlice';
 
-const CategoryAdminDashboard = () => {
+const AdminProducts = () => {
   const dispatch = useDispatch();
-  const { categories } = useSelector(
-    (state) => state.adminCategoryReducer.categoryList
-  );
-  const userId = 1;
-  const [newCategoryName, setNewCategoryName] = useState("");
+  const products = useSelector(state => state.productsSliceReducer.productList);
+  const isLoading = useSelector(state => state.productsSliceReducer.isLoading);
+  const error = useSelector(state => state.productsSliceReducer.error);
+  const categoriesList = useSelector(state => state.categoriesSliceReducer.categoryList);
+
+  const [newProduct, setNewProduct] = useState({
+    category: '',
+    name: '',
+    price: 0,
+    stock: 0,
+    description: '',
+    avg_rating: 0,
+    image: '',
+    images: [],
+    payment_id: '',
+  });
 
   useEffect(() => {
-    dispatch(fetchCategoriesThunk(userId));
+    dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
+    dispatch(getCategoriesThunk({ page: '', limit: '' }));
   }, [dispatch]);
 
-  const handleAddCategory = async () => {
-    try {
-      await addCategory(newCategoryName);
-      dispatch(fetchCategoriesThunk(userId));
-      setNewCategoryName("");
-    } catch (error) {
-      console.error("Error adding category:", error);
+  const handleDeleteProduct = (product_id) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      dispatch(deleteProductByIdThunk({ product_id })).then(() => {
+        dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' })); // Reload products after deletion
+      });
     }
   };
 
-  const handleDeleteCategory = async (categoryId) => {
-    try {
-      await deleteCategory(categoryId);
-      dispatch(fetchCategoriesThunk(userId));
-    } catch (error) {
-      console.error("Error deleting category:", error);
+  const handleProductChange = (e) => {
+    const { name, value } = e.target;
+
+    let newValue = value;
+    if (name === 'avg_rating') {
+      const rating = parseFloat(value);
+      if (!isNaN(rating) && rating >= 0 && rating <= 5) {
+        newValue = rating;
+      } else {
+        alert('Average rating must be a number between 0 and 5.');
+        return;
+      }
+    } else if (name === 'price' || name === 'stock') {
+      newValue = parseFloat(value);
     }
+
+    setNewProduct(prevState => ({
+      ...prevState,
+      [name]: newValue,
+    }));
+  };
+
+  const handleAddProduct = () => {
+    const imagesString = "/cdn.dummyjson.com/product-images/1/1.jpg,/cdn.dummyjson.com/product-images/1/2.jpg,/cdn.dummyjson.com/product-images/1/3.jpg,/cdn.dummyjson.com/product-images/1/4.jpg,/cdn.dummyjson.com/product-images/1/thumbnail.jpg";
+    const imagesArray = imagesString.split(",");
+    const newData = {
+      ...newProduct,
+      images: imagesArray,
+      category: parseInt(newProduct.category) // Ensure category is sent as a number
+    };
+    dispatch(addProductThunk(newData)).then(() => {
+      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' })); // Reload products after addition
+    });
+  };
+
+  const handleUpdateProduct = (productId) => {
+    dispatch(updateProductByIdThunk({ productId, data: newProduct })).then(() => {
+      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' })); // Reload products after update
+    });
   };
 
   return (
-    <div className="categ flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold mb-4 bg-red-800">Products Admin Dashboard</h1>
-      {/* <div className="flex items-center mb-4">
-        <input
-          type="text"
-          value={newCategoryName}
-          onChange={(e) => setNewCategoryName(e.target.value)}
-          placeholder="Enter product name"
-          className="border border-gray-300 rounded px-4 py-2 mr-2"
-        />
-        <button
-          onClick={handleAddCategory}
-          className="bg-blue-500 text-white px-4 py-2 rounded bg-red-800"
-        >
-          Add Category
-        </button>
-      </div>
-      <div className="w-full max-w-screen-lg">
-        <table className="w-full border-collapse border border-gray-400">
-          <thead>
-            <tr>
-              <th className="border border-gray-400 px-4 py-2">Product Name</th>
-              <th className="border border-gray-400 px-4 py-2">Actions</th>
+    <div className='py-20 flex justify-center'>
+      {isLoading && <p>Loading...</p>}
+      <table className="table-auto w-full border-collapse border">
+        <thead>
+          <tr>
+            <th className="border px-2 py-1">Product ID</th>
+            <th className="border px-2 py-1">Category</th>
+            <th className="border px-2 py-1">Name</th>
+            <th className="border px-2 py-1">Price</th>
+            <th className="border px-2 py-1">Stock</th>
+            <th className="border px-2 py-1">Description</th>
+            <th className="border px-2 py-1">Avg Rating</th>
+            <th className="border px-2 py-1">Image</th>
+            <th className="border px-2 py-1">Images</th>
+            <th className="border px-2 py-1">Payment ID</th>
+            <th className="border px-2 py-1">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className=''>
+            <td className="border px-2 py-2">New</td>
+            <td className="border px-2 py-2">
+              <select
+                name="category"
+                value={newProduct.category}
+                onChange={handleProductChange}
+                className="w-24 border rounded px-1 py-1"
+              >
+                <option value="">Select Category</option>
+                {categoriesList.map(category => (
+                  <option key={category.category_id} value={category.category_id}>{category.name}</option>
+                ))}
+              </select>
+            </td>
+            <td className="border px-2 py-2">
+              <input type="text" name="name" value={newProduct.name} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <input type="number" name="price" value={newProduct.price} onChange={handleProductChange} className="w-16 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <input type="number" name="stock" value={newProduct.stock} onChange={handleProductChange} className="w-16 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <input type="text" name="description" value={newProduct.description} onChange={handleProductChange} className="w-32 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <input type="number" name="avg_rating" value={newProduct.avg_rating} onChange={handleProductChange} className="w-16 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <input type="text" name="image" value={newProduct.image} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <input type="text" name="images" value={newProduct.images} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <input type="text" name="payment_id" value={newProduct.payment_id} onChange={handleProductChange} className="w-24 border rounded px-1 py-1" />
+            </td>
+            <td className="border px-2 py-2">
+              <button onClick={handleAddProduct} className="w-16 h-8 bg-emerald-500 hover:bg-emerald-700 text-white font-bold rounded mx-auto">Add</button>
+            </td>
+          </tr>
+          {products.map(product => (
+            <tr key={product.product_id}>
+              <td className="border px-2 py-1">{product.product_id}</td>
+              <td className="border px-2 py-1">{product.category}</td>
+              <td className="border px-2 py-1">{product.name}</td>
+              <td className="border px-2 py-1">{product.price}</td>
+              <td className="border px-2 py-1">{product.stock}</td>
+              <td className="border px-2 py-1">{product.description}</td>
+              <td className="border px-2 py-1">{product.avg_rating}</td>
+              <td className="border px-2 py-3 align-top">
+                <img 
+                  src={`https://${product.image}`} 
+                  alt={`Image of ${product.name}`} 
+                  className="max-w-xs max-h-xs w-8 h-8 object-cover"
+                />
+              </td>
+              <td className="border px-2 py-1">
+                <div className="flex flex-row flex-wrap gap-1">
+                  {Array.isArray(product.images) && product.images.map((image, index) => (
+                    <img key={index} src={`https://${image}`} alt={`Image ${index + 1} of ${product.name}`} className="w-8 h-8" />
+                  ))}
+                </div>
+              </td>
+              <td className="border px-2 py-1">{product.payment_id}</td>
+              <td className="border px-2 py-1">
+                <button onClick={() => handleUpdateProduct(product.product_id)} className="w-16 h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded m-1">Edit</button>
+                <button onClick={() => handleDeleteProduct(product.product_id)} className="w-16 h-8 bg-red-500 hover:bg-red-700 text-white font-bold rounded m-1">Delete</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {categories &&
-              categories.map((category) => (
-                <tr key={category.id} className="border border-gray-400">
-                  <td className="border border-gray-400 px-4 py-2">{category.name}</td>
-                  <td className="border border-gray-400 px-4 py-2">
-                    <button
-                      onClick={() => handleDeleteCategory(category.category_id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div> */}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
-  
-
 };
 
-export default CategoryAdminDashboard;
+export default AdminProducts;

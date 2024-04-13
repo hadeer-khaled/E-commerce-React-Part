@@ -20,8 +20,6 @@ export const getProducts = ({ page, limit, order, search, ...filters }) => {
 
   return axiosInstance.get(url)
     .then((response) => {
-      // console.log("response : " , response);
-      // console.log("data : ", response.data);
       return response.data;
     })
     .catch((error) => {
@@ -30,8 +28,10 @@ export const getProducts = ({ page, limit, order, search, ...filters }) => {
     });
 };
 
-export const getProductById = ({ productId }) => {
-  let url = `products/${productId}`;
+export const getProductById = ({ product_id }) => {
+  console.log("product_id axios :", product_id);
+
+  let url = `products/${product_id}`;
   
   return axiosInstance.get(url)
     .then((response) => {
@@ -39,6 +39,46 @@ export const getProductById = ({ productId }) => {
     })
     .catch((error) => {
       console.error("Error fetching data:", error);
+      throw error;
+    });
+};
+
+export const addProduct = (data) => {
+  let url = `products`;
+  console.log("Adding data :", data);
+  
+  return axiosInstance.post(url, data)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error adding product:", error);
+      throw error;
+    });
+};
+
+export const updateProductById = ({ product_id, data }) => {
+  let url = `products/${product_id}`;
+  
+  return axiosInstance.put(url, data)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error updating product:", error);
+      throw error;
+    });
+};
+
+export const deleteProductById = ({ product_id }) => {
+  let url = `products/${product_id}`;
+  
+  return axiosInstance.delete(url)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error deleting product:", error);
       throw error;
     });
 };
