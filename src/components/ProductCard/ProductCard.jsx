@@ -38,6 +38,15 @@ const ProductCard = ({ product }) => {
 
   const handleAddToWishlist = async (productId) => {
     try {
+      if(!userId)
+      {
+        Swal.fire({
+          icon:'error',
+          title:'you are not logged in',
+          timer:2000
+        })
+        return null
+      }
       const isProductInWishlist = wishlistItems.some(
         (item) => item.product_id === productId
       );
@@ -62,6 +71,15 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = async (productId) => {
     try {
+      if(!userId)
+      {
+        Swal.fire({
+          icon:'error',
+          title:'you are not logged in',
+          timer:2000
+        })
+        return null
+      }
       await addToCart(userId, productId);
       console.log("Product added to cart successfully!");
       Swal.fire({
