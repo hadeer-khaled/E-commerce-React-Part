@@ -14,7 +14,7 @@ function Navbar() {
       console.log(res.data.message);
     });
     localStorage.removeItem("jwt");
-    localStorage.removeItem("data");
+    localStorage.removeItem("user");
     dispatch(resetProfileData());
     navigate("/");
   }

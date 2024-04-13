@@ -29,10 +29,14 @@ const ProductCard = ({ product }) => {
     }
     return stars;
   };
+
   const wishlistItems = useSelector(
     (state) => state.userWishlistReducer.wishlistItems
   );
-  const userId = 1; // user
+
+
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const userId = loggedUser.user_id; // user
   const handleAddToWishlist = async (productId) => {
     try {
       const isProductInWishlist = wishlistItems.some(
