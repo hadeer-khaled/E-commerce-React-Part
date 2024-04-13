@@ -6,15 +6,16 @@ import ProductHomeSliderSection from '../../components/ProductHomeSliderSection/
 import Swal from 'sweetalert2';
 import { setProfileData } from "../../store/slices/userProfileSlice";
 import { useDispatch } from 'react-redux';
-// import Hero from '../../components/hero/hero.jsx';
 import axios from 'axios';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
 
+const baseURL = import.meta.env.VITE_BASE_URL
+
 const client = axios.create({
-  baseURL: "http://127.0.0.1:8000",
+  baseURL: baseURL,
 });
 
 function Home() {
@@ -69,7 +70,6 @@ function Home() {
       <Hero/>
       <div className="home-content py-20">
         <ProductHomeSliderSection/>
-        {/* <h1 className="font-extrabold text-red-600 bg-emerald-200">Home-Page</h1> */}
         <ProductsList/>
       </div>
     </div>
