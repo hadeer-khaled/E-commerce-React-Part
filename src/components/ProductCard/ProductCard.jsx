@@ -114,6 +114,7 @@ const ProductCard = ({ product }) => {
 
         <div className="text-start">
           <p>{product.description}</p>
+          <p className="pt-2">Price: <span className="text-lime-700">${product.price}</span></p>
         </div>
       </div>
       <div className="card-actions flex items-center justify-between pb-3 px-5">
