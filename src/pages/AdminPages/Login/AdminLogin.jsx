@@ -80,16 +80,6 @@ function AdminLogin() {
     console.log("Password : " + password )
   }
 
-  function handleLogout()
-  {
-    client.post("/users/logout/",{withCredentials:true}).then(res => {console.log(res.data.message)})
-    
-    localStorage.removeItem('jwt')
-    
-    dispatch(resetProfileData())
-    
-    navigate('/')
-  }
   return (
     <>
       <section className="h-screen flex flex-col justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
@@ -97,7 +87,8 @@ function AdminLogin() {
       <div className="md:w-1/3 max-w-sm">
         <img
           src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-          alt="Sample image" />
+          alt="Sample image"
+          className="my-10" />
       </div>
       <div className="md:w-1/3 max-w-sm">
         <input className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded" type="text" placeholder="Email Address" onChange={emailHandler}/>
@@ -107,34 +98,16 @@ function AdminLogin() {
         <div className="mt-4 flex justify-between font-semibold text-sm">
         </div>
         <div className="text-center md:text-left">
-          <button className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider" type="submit" onClick={handleSubmit} disabled={validPassword && validEmail}>Login</button>
+          <button className="mx-auto bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider" type="submit" onClick={handleSubmit} disabled={validPassword && validEmail}>Login</button>
         </div>
-        <Link to='/register'>
+        <Link to='/register'/>
         <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left">
           Don&apos;t have an account? <p className="text-red-600 hover:underline hover:underline-offset-4" href="#"
           disabled={validEmail || validPassword}
           >Register</p>
         </div>
-        </Link>
-        
-        <Link to='/admin/ordersmanagement'>
-        <p>Orders</p>
-        </Link>
-        
-        <Link to='/admin/adminCategory'>
-        <p>Category</p>
-        </Link>
-        
-        <Link to='/admin/adminProducts'>
-        <p>Products</p>
-        </Link>
-        
-        <Link to='/admin/adminusers'>
-        <p>Users</p>
-        </Link>
       </div>
 
-      <button className="btn" onClick={handleLogout} >Logout</button>
     </section>
     </>
   )
