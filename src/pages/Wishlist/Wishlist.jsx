@@ -60,7 +60,7 @@ export default function Wishlist() {
   //   }
   // };
   return (
-    <div className="flex">
+    <div className="flex mt-20">
       {/* Image */}
       <div>
         <img
