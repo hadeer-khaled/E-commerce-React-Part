@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { getAllOrders, getOrderItems } from "./../../../axios/AdminOrders";
 import { cancelOrder } from "./../../../axios/AdminOrders";
 import { Row } from "./../../../components/AdminOrdersTableRow/Row";
+import Pagination from '../../../components/pagination/Pagination';
 
 const OrdersManagemet = () => {
   const [orders, setOrders] = useState([]);
@@ -17,6 +18,9 @@ const OrdersManagemet = () => {
   const [orderItems, setOrderItems] = useState([]);
   const [fetchingOrderItemsError, setFetchingOrderItemsError] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 5;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,10 +46,17 @@ const OrdersManagemet = () => {
     }
   };
 
-  function fetchAllOrders() {
-    getAllOrders()
+  useEffect(() => {
+    handlePageChange(currentPage);
+  }, [currentPage]);
+
+  function fetchAllOrders(page,limit) {
+    
+    getAllOrders({page,limit})
       .then((response) => {
-        const orders = response.data;
+        const orders = response.data.orders;
+        setTotalPages(response.data.total_pages);
+        console.log("response :", response);
         setOrders(orders);
         console.log("Orders:", orders);
       })
@@ -55,7 +66,7 @@ const OrdersManagemet = () => {
       });
   }
   useEffect(() => {
-    fetchAllOrders();
+    fetchAllOrders(currentPage,limit);
   }, []);
 
   const handleCancelOrder = (orderId) => {
@@ -68,53 +79,70 @@ const OrdersManagemet = () => {
         console.error("Error canceling order", error);
       });
   };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    console.log("page : " + page);
+    console.log("limit : " + limit);
+    fetchAllOrders(page,limit)
+  };
+
   return (
-    <div className="container  mx-auto mt-28 mb-28">
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: "#9e9e9e0d" }}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Order Date
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Total Price
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Quantity
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Adsress
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Status
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: "bold" }}>
-                Cancel
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order) => (
-              <Row
-                key={order.order_id}
-                order={order}
-                orderItems={orderItems}
-                handleCollapse={handleCollapse}
-                handleCancelOrder={handleCancelOrder}
-                currentDate={currentDate}
-                isOpen={order.order_id === openRowId}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+    <div className="container mx-auto mt-28 mb-28 rounded-lg px-36">
+      <div className="">
+        <TableContainer className=""
+          component={Paper}
+          style={{ backgroundColor: "#F5F5F5" }}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  ID
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Order Date
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Total Price
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Quantity
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Adsress
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Status
+                </TableCell>
+                <TableCell align="center" style={{ fontWeight: "bold" }}>
+                  Cancel
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders.map((order) => (
+                <Row
+                  key={order.order_id}
+                  order={order}
+                  orderItems={orderItems}
+                  handleCollapse={handleCollapse}
+                  handleCancelOrder={handleCancelOrder}
+                  currentDate={currentDate}
+                  isOpen={order.order_id === openRowId}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div className="pt-5">
+          <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
     </div>
   );
 };
