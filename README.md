@@ -88,12 +88,12 @@ This project is licensed under the GNU General Public License v3.0.
 
 - Admin Products Page
   <br>
-  ![Admin Products Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/12-admin_products.png)
+  ![Admin Products Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/12-admin_products2.png)
   <br>
 
 - Admin Users Page
   <br>
-  ![Admin Users Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/13-admin_users.png)
+  ![Admin Users Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/13-admin_users2.png)
   <br>
 
 ## Contact
