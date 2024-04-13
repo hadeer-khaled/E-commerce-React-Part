@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
   const wishlistItems = useSelector(
     (state) => state.userWishlistReducer.wishlistItems
   );
-  const userId = 1; // user
+  const userId = 7; // user
   const handleAddToWishlist = async (productId) => {
     try {
       const isProductInWishlist = wishlistItems.some(
