@@ -114,11 +114,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/products/:productId",
+        path: "/products/:product_id",
         element: <ProductDetails />,
       },
       {
         path: "/shop",
+        element: <ShopPage />,
+      },
+      {
+        path: "/products",
         element: <ShopPage />,
       },
       {
