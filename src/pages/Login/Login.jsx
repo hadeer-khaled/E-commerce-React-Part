@@ -2,16 +2,17 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
-import { userLogin , userLogout} from './../../axios/userAuth'
-import { setProfileData, resetProfileData } from "../../store/slices/userProfileSlice";
+import { userLogin, userLogout } from "./../../axios/userAuth";
+import {
+  setProfileData,
+  resetProfileData,
+} from "../../store/slices/userProfileSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom'
-
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -31,15 +32,15 @@ function Login() {
         .then((res) => {
           console.log(res.data.message);
           console.log(res.data.data);
-          localStorage.setItem('jwt',res.data.jwt)
+          localStorage.setItem("jwt", res.data.jwt);
           Swal.fire({
             icon: "success",
             title: `Welcome ${res.data.data.first_name}`,
             timer: 2000,
           });
 
-          dispatch(setProfileData(res.data.data))
-          navigate('/')
+          dispatch(setProfileData(res.data.data));
+          navigate("/");
         })
         .catch(() => {
           Swal.fire({
@@ -50,7 +51,6 @@ function Login() {
         });
     },
   });
-
 
   return (
     <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
@@ -101,6 +101,13 @@ function Login() {
           <Link to="/register">
             <p className="text-red-600 hover:underline hover:underline-offset-4">
               Register
+            </p>
+          </Link>
+        </div>
+        <div>
+          <Link to="/admin/login">
+            <p className="text-red-600 hover:underline hover:underline-offset-4">
+              Login as Admin
             </p>
           </Link>
         </div>

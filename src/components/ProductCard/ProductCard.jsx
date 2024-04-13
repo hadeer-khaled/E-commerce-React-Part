@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { addToWishlist } from "../../axios/UserWishlist";
 import { addToCart } from "../../axios/userShoppingCart";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchShoppingCartItemsThunk } from "../../store/slices/userShoppingCartSlice";
+import { fetchWishlistItemsThunk } from "../../store/slices/userShowWishlistSlice";
+
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
   const imageUrl = `https:\\${product.images[0]}`;
 
   const renderRatingStars = (avgRating) => {
@@ -32,20 +36,18 @@ const ProductCard = ({ product }) => {
     (state) => state.userWishlistReducer.wishlistItems
   );
 
-  
   const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
   const userId = loggedUser.user_id; // user
 
   const handleAddToWishlist = async (productId) => {
     try {
-      if(!userId)
-      {
+      if (!userId) {
         Swal.fire({
-          icon:'error',
-          title:'you are not logged in',
-          timer:2000
-        })
-        return null
+          icon: "error",
+          title: "you are not logged in",
+          timer: 2000,
+        });
+        return null;
       }
       const isProductInWishlist = wishlistItems.some(
         (item) => item.product_id === productId
@@ -58,6 +60,7 @@ const ProductCard = ({ product }) => {
         });
       } else {
         const response = await addToWishlist(userId, productId);
+        dispatch(fetchWishlistItemsThunk(userId));
         Swal.fire({
           title: "Product added to wishlist!",
           text: response.message,
@@ -71,22 +74,22 @@ const ProductCard = ({ product }) => {
 
   const handleAddToCart = async (productId) => {
     try {
-      if(!userId)
-      {
+      if (!userId) {
         Swal.fire({
-          icon:'error',
-          title:'you are not logged in',
-          timer:2000
-        })
-        return null
+          icon: "error",
+          title: "you are not logged in",
+          timer: 2000,
+        });
+        return null;
       }
       await addToCart(userId, productId);
+      dispatch(fetchShoppingCartItemsThunk(userId));
       console.log("Product added to cart successfully!");
       Swal.fire({
-          title: "Product added to Shopping Cart!",
-          text: "Added To cart",
-          icon: "success",
-        });
+        title: "Product added to Shopping Cart!",
+        text: "Added To cart",
+        icon: "success",
+      });
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }
@@ -123,8 +126,7 @@ const ProductCard = ({ product }) => {
           <div className="flex w-full justify-between m-0 p-0">
             <Link
               to={`/shop?category=${product.category}`}
-              className="grid-cols-subgrid text-blue-600"
-            >
+              className="grid-cols-subgrid text-blue-600">
               {product.category}
             </Link>
           </div>
@@ -132,7 +134,9 @@ const ProductCard = ({ product }) => {
 
         <div className="text-start">
           <p>{product.description}</p>
-          <p className="pt-2">Price: <span className="text-lime-700">${product.price}</span></p>
+          <p className="pt-2">
+            Price: <span className="text-lime-700">${product.price}</span>
+          </p>
         </div>
       </div>
       <div className="card-actions flex items-center justify-between pb-3 px-5">
@@ -147,8 +151,7 @@ const ProductCard = ({ product }) => {
           <span className="grid-cols-subgrid xl:w-1/2 ml-4 text-start ps-0 ms-0">
             <i
               className="fas fa-cart-plus fa-xl cursor-pointer"
-              onClick={() => handleAddToCart(product.product_id)}
-            ></i>
+              onClick={() => handleAddToCart(product.product_id)}></i>
           </span>
           <span className="grid-cols-subgrid xl:w-1/2 ml-4 text-end">
             <i
@@ -159,8 +162,7 @@ const ProductCard = ({ product }) => {
                   ? "text-red-500"
                   : "text-white"
               }`}
-              onClick={() => handleAddToWishlist(product.product_id)}
-            ></i>
+              onClick={() => handleAddToWishlist(product.product_id)}></i>
           </span>{" "}
         </div>
       </div>
