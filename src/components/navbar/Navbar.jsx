@@ -11,7 +11,6 @@ function Navbar() {
 
   function handleLogout() {
     userLogout().then((res) => {
-      console.log(res.data.message);
     });
     localStorage.removeItem("jwt");
     localStorage.removeItem("data");
@@ -27,18 +26,13 @@ function Navbar() {
   const { cartItemsCount } = useSelector(
     (state) => state.userShoppingCartReducer
   );
-  // console.log("cartItemsCount ==========", cartItemsCount);
-  console.log("wishlist items equals ", wishlistItems);
   const isLoggedIn = !!loggedUser.user_id;
-  console.log("isLoggedIn ==========", isLoggedIn);
-  console.log("isLoggedIn ==========", loggedUser);
 
   useEffect(() => {
     // edit the static user id before finishing the feature #########################################################################
     if(loggedUser.user_id)
     {
       dispatch(getLoggedUserThunk(loggedUser.user_id));
-      console.log("loggedUser: " + loggedUser);
     }
   }, [dispatch]);
 

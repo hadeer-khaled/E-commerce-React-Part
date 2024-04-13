@@ -28,7 +28,6 @@ function UserLayout() {
     const navigate = useNavigate()
     const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
     const path = window.location.pathname
-    console.log(path)
     if (path === '/' 
     || path === '/login' 
     || path === '/register' 
