@@ -29,7 +29,6 @@ export const getProducts = ({ page, limit, order, search, ...filters }) => {
 };
 
 export const getProductById = ({ product_id }) => {
-  console.log("product_id axios :", product_id);
 
   let url = `products/${product_id}`;
   
@@ -45,7 +44,6 @@ export const getProductById = ({ product_id }) => {
 
 export const addProduct = (data) => {
   let url = `products`;
-  console.log("Adding data :", data);
   
   return axiosInstance.post(url, data)
     .then((response) => {

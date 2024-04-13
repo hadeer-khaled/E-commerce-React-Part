@@ -37,7 +37,6 @@ export const updateProductByIdThunk = createAsyncThunk(
 export const deleteProductByIdThunk = createAsyncThunk(
   "products/deleteProductById",
   async ({ product_id }) => {
-    console.log("product_id slice :", product_id);
     await deleteProductById({ product_id });
     return product_id;
   }
