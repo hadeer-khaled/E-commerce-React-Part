@@ -60,16 +60,6 @@ export const incrementQuantityInShoppingCart = async (userId, cartItemId) => {
   
 
 
-  export const removeCartInShoppingCart = async (userId) => {
-    try {
-      const response = await axiosInstance.delete(`/shoppingCart/delete/?user_id=${userId}`);
-      console.log('Cart  removed successfully :', response.data);
-      return response.data; 
-    } catch (error) {
-      console.error('cart can not be removed:', error);
-      throw error; 
-    }
-  };
 
 
   export const addToCart = async (userId, productId) => {

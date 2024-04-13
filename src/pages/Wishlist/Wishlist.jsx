@@ -17,6 +17,7 @@ export default function Wishlist() {
     setUserId(loggedUser.user_id);
     console.log("from wishlist page",userId);
     if(userId!=0){
+      console.log(userId)
       dispatch(fetchWishlistItemsThunk(userId));
     }
   }, [userId]);
@@ -59,7 +60,7 @@ export default function Wishlist() {
   //   }
   // };
   return (
-    <div className="flex">
+    <div className="flex mt-20">
       {/* Image */}
       <div>
         <img

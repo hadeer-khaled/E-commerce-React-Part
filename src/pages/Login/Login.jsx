@@ -1,27 +1,17 @@
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
+import { userLogin , userLogout} from './../../axios/userAuth'
+import { setProfileData, resetProfileData } from "../../store/slices/userProfileSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom'
 
-import {
-  setProfileData,
-  resetProfileData,
-} from "../../store/slices/userProfileSlice";
-import { useDispatch, useSelector } from "react-redux";
-
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.withCredentials = true;
-
-const client = axios.create({
-  baseURL: "http://127.0.0.1:8000",
-});
 
 function Login() {
-  const user = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -35,20 +25,21 @@ function Login() {
     }),
     onSubmit: (values) => {
       values.role = "user";
-      client
-        .post("/users/login/", values)
+      // client
+      //   .post("/users/login/", values)a
+      userLogin(values)
         .then((res) => {
           console.log(res.data.message);
           console.log(res.data.data);
+          localStorage.setItem('jwt',res.data.jwt)
           Swal.fire({
             icon: "success",
             title: `Welcome ${res.data.data.first_name}`,
             timer: 2000,
           });
 
-          dispatch(setProfileData(res.data.data));
-          console.log("data is set");
-          console.log("user", user);
+          dispatch(setProfileData(res.data.data))
+          navigate('/')
         })
         .catch(() => {
           Swal.fire({
@@ -60,11 +51,6 @@ function Login() {
     },
   });
 
-  function handleLogout() {
-    client.post("/users/logout/", { withCredentials: true }).then((res) => {
-      console.log(res.data.message);
-    });
-  }
 
   return (
     <section className="h-screen flex flex-col md:flex-row justify-center space-y-10 md:space-y-0 md:space-x-16 items-center my-2 mx-5 md:mx-0 md:my-0">
@@ -117,27 +103,8 @@ function Login() {
               Register
             </p>
           </Link>
-          <Link to="/userprofile">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              userprofile
-            </p>
-          </Link>
-          <Link to="/wishlist">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              wishlist
-            </p>
-          </Link>
-          <Link to="/shoppingCart">
-            <p className="text-red-600 hover:underline hover:underline-offset-4">
-              shoppingCart
-            </p>
-          </Link>
         </div>
       </form>
-
-      <button className="btn" onClick={handleLogout}>
-        Logout
-      </button>
     </section>
   );
 }

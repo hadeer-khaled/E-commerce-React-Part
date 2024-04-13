@@ -1,8 +1,10 @@
 import axiosInstance from "./config";
 
-export const fetchUsers = async () => {
+export const fetchUsers = async ({ page, limit }) => {
     try {
-      const response = await axiosInstance.get('/users/showUsers');
+      let url = `/users/showUsers/?page=${page}&limit=${limit}`;
+
+      const response = await axiosInstance.get(url);
       if (response) {
         console.log("from axios",response.data);
         return response.data;

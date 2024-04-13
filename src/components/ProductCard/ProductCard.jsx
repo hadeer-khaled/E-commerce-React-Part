@@ -1,11 +1,9 @@
-import React from "react";
 import "./ProductCard.css";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { addToWishlist } from "../../axios/UserWishlist";
 import { addToCart } from "../../axios/userShoppingCart";
 import { useSelector } from "react-redux";
-
 const ProductCard = ({ product }) => {
   const imageUrl = `https:\\${product.images[0]}`;
 
@@ -33,7 +31,11 @@ const ProductCard = ({ product }) => {
   const wishlistItems = useSelector(
     (state) => state.userWishlistReducer.wishlistItems
   );
-  const userId = 7; // user
+
+  
+  const loggedUser = useSelector((state) => state.userReducer.LoggedUser);
+  const userId = loggedUser.user_id; // user
+
   const handleAddToWishlist = async (productId) => {
     try {
       const isProductInWishlist = wishlistItems.some(
@@ -62,6 +64,11 @@ const ProductCard = ({ product }) => {
     try {
       await addToCart(userId, productId);
       console.log("Product added to cart successfully!");
+      Swal.fire({
+          title: "Product added to Shopping Cart!",
+          text: "Added To cart",
+          icon: "success",
+        });
     } catch (error) {
       console.error("Error adding product to cart:", error);
     }
