@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductsThunk, deleteProductByIdThunk, updateProductByIdThunk, addProductThunk } from '../../store/slices/productsSlice';
 import { getCategoriesThunk } from '../../store/slices/categoriesSlice';
+import Pagination from '../../components/pagination/Pagination'; // Importing Pagination component
 
 const AdminProducts = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.productsSliceReducer.productList);
   const isLoading = useSelector(state => state.productsSliceReducer.isLoading);
   const categoriesList = useSelector(state => state.categoriesSliceReducer.categoryList);
+  const currentPage = useSelector(state => state.productsSliceReducer.currentPage);
+  const totalPages = useSelector(state => state.productsSliceReducer.totalPages);
 
   const [newProduct, setNewProduct] = useState({
     category: null,
@@ -25,14 +28,14 @@ const AdminProducts = () => {
   const [isCategorySelected, setIsCategorySelected] = useState(false);
 
   useEffect(() => {
-    dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
+    dispatch(getProductsThunk({ page: 1, limit: 10, order: '-product_id' }));
     dispatch(getCategoriesThunk({ page: '', limit: '' }));
   }, [dispatch]);
 
   const handleDeleteProduct = (product_id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       dispatch(deleteProductByIdThunk({ product_id })).then(() => {
-        dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
+        dispatch(getProductsThunk({ page: 1, limit: 10, order: '-product_id' }));
       });
     }
   };
@@ -80,7 +83,7 @@ const AdminProducts = () => {
       category: parseInt(newProduct.category)
     };
     dispatch(addProductThunk(newData)).then(() => {
-      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
+      dispatch(getProductsThunk({ page: 1, limit: 10, order: '-product_id' }));
       setNewProduct({
         category: null,
         name: '',
@@ -122,7 +125,7 @@ const AdminProducts = () => {
       category: parseInt(newProduct.category)
     };
     dispatch(updateProductByIdThunk({ product_id: editingProductId, data: newData })).then(() => {
-      dispatch(getProductsThunk({ page: 1, limit: 5, order: '-product_id' }));
+      dispatch(getProductsThunk({ page: 1, limit: 10, order: '-product_id' }));
       setEditingProductId(null);
       setIsCategorySelected(false);
       setNewProduct({
@@ -139,8 +142,12 @@ const AdminProducts = () => {
     });
   };
 
+  const handlePageChange = (page) => {
+    dispatch(getProductsThunk({ page, limit: 10, order: '-product_id' }));
+  };
+
   return (
-    <div className='py-32 px-20 flex justify-center'>
+    <div className='py-32 px-20 '>
       {isLoading && <p>Loading...</p>}
       <table className="table-auto w-full border-collapse border">
         <thead>
@@ -202,7 +209,7 @@ const AdminProducts = () => {
               <input type="text" name="payment_id" value={newProduct.payment_id} onChange={handleProductChange} className="w-full border rounded px-1 py-1" />
             </td>
             <td className="border px-2 py-2">
-              <button onClick={editingProductId ? handleConfirmUpdate : handleAddProduct} className="w-16 h-8 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded mx-auto">{editingProductId ? 'Confirm' : 'Add'}</button>
+              <button onClick={editingProductId ? handleConfirmUpdate : handleAddProduct} className="w-16 h-8 bg-emerald-500 hover:bg-emerald-700 text-white font-bold rounded mx-auto">{editingProductId ? 'Confirm' : 'Add'}</button>
             </td>
           </tr>
           {products.map(product => (
@@ -237,6 +244,13 @@ const AdminProducts = () => {
           ))}
         </tbody>
       </table>
+      <div className='pt-5'>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 };
