@@ -59,39 +59,39 @@ This project serves as the frontend for the E-shop application. It provides a us
 
 This project is licensed under the GNU General Public License v3.0.
 
-### Screenshots
+## Screenshots
 
-### Landing Page
+- Landing Page
   <br>
   ![Landing Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/1-landing_page.png)
   <br>
 
-### Theme Switcher
+- Theme Switcher
   <br>
   ![Theme Switcher](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/3-theme.png)
   <br>
 
-### Shop Page (Advanced Search and Filters)
+- Shop Page (Advanced Search and Filters)
   <br>
   ![Shop Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/5-shop.png)
   <br>
 
-### Product Details Page
+- Product Details Page
   <br>
   ![Product Details Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/6-product_details.png)
   <br>
 
-### Profile Page
+- Profile Page
   <br>
   ![Profile Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/11-profile.png)
   <br>
 
-### Admin Products Page
+- Admin Products Page
   <br>
   ![Admin Products Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/12-admin_products.png)
   <br>
 
-### Admin Users Page
+- Admin Users Page
   <br>
   ![Admin Users Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/13-admin_users.png)
   <br>
