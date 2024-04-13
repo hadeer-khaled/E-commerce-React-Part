@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductsThunk, deleteProductByIdThunk, updateProductByIdThunk, addProductThunk } from '../../store/slices/productsSlice';
 import { getCategoriesThunk } from '../../store/slices/categoriesSlice';
 import Pagination from '../../components/pagination/Pagination'; // Importing Pagination component
+import Swal from 'sweetalert2'
 
 const AdminProducts = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,12 @@ const AdminProducts = () => {
       if (!isNaN(rating) && rating >= 0 && rating <= 5) {
         newValue = rating;
       } else {
-        alert('Average rating must be a number between 0 and 5.');
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: ('Average rating must be a number between 0 and 5.'),
+        });
+        
         return;
       }
     } else if (name === 'price' || name === 'stock') {
@@ -65,13 +71,21 @@ const AdminProducts = () => {
   const handleAddProduct = () => {
     for (const key in newProduct) {
       if (newProduct[key] === '') {
-        alert('Please fill in all fields.');
+        Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: 'Please fill in all fields.',
+});
         return;
       }
     }
 
     if (!isCategorySelected) {
-      alert('Please select a category.');
+      Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: 'Please select a category.',
+});
       return;
     }
 
@@ -107,13 +121,21 @@ const AdminProducts = () => {
   const handleConfirmUpdate = () => {
     for (const key in newProduct) {
       if (newProduct[key] === '') {
-        alert('Please fill in all fields.');
+        Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: 'Please fill in all fields.',
+});
         return;
       }
     }
 
     if (!isCategorySelected) {
-      alert('Please select a category before updating the product.');
+      Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: 'Please select a category before updating the product.',
+});
       return;
     }
 
