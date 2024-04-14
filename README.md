@@ -53,6 +53,10 @@ This project serves as the frontend for the E-shop application. It provides a us
 
   2. Open your browser and go to [http://localhost:5173](http://localhost:5173) to view the application.
 
+  ### Running the Backend
+
+  To run the backend server, please go to the [E-commerce Django Backend repository](https://github.com/hadeer-khaled/E-commerce-Django-Part/) and follow the instructions in the README.
+
 </details>
 
 ## License
