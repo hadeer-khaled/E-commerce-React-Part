@@ -86,7 +86,7 @@ This project is licensed under the GNU General Public License v3.0.
   ![Shopping Cart Page](https://github.com/hadeer-khaled/E-commerce-React-Part/blob/main/assets/9-cart.png?raw=true)
   <br>
 
-  - Wishlist Page
+- Wishlist Page
   <br>
   ![Wishlist Page](https://github.com/hadeer-khaled/E-commerce-React-Part/blob/main/assets/8-wishlist.png?raw=true)
   <br>
