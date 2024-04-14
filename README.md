@@ -1,6 +1,6 @@
-- Wishlist Page
+- Hello everyone
   <br>
-  ![Wishlist Page](https://github.com/hadeer-khaled/E-commerce-React-Part/blob/main/assets/8-wishlist.png?raw=true)
+  ![HON](https://github.com/hadeer-khaled/E-commerce-React-Part/blob/main/assets/logo.jpg?raw=true)
   <br>
   
 # E-commerce React Frontend
