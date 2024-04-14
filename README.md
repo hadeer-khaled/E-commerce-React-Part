@@ -1,8 +1,3 @@
-- Hello everyone
-  <br>
-  ![HON](https://github.com/hadeer-khaled/E-commerce-React-Part/blob/main/assets/logo.jpg?raw=true)
-  <br>
-  
 # E-commerce React Frontend
 
 Welcome to the E-commerce React Frontend repository! This frontend application is built using React with Vite.
