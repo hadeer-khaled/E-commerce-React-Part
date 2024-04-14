@@ -1,5 +1,6 @@
+- Wishlist Page
   <br>
-  ![Landing Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/1-landing_page2.png)
+  ![Wishlist Page](https://github.com/hadeer-khaled/E-commerce-React-Part/blob/main/assets/8-wishlist.png?raw=true)
   <br>
   
 # E-commerce React Frontend
