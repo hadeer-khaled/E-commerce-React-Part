@@ -1,5 +1,5 @@
   <br>
-  ![HON](https://github.com/hadeer-khaled/E-commerce-React-Part/blob/main/assets/logo.jpg?raw=true)
+  ![Landing Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/1-landing_page2.png)
   <br>
   
 # E-commerce React Frontend
