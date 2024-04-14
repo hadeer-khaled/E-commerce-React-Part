@@ -16,7 +16,7 @@ This project serves as the frontend for the E-shop application. It provides a us
 - Advanced Search and Filters: Offers powerful search functionality and filters for sorting products by price, category, and rating.
 - Category Pages: Intuitive categorization pages for easier navigation and product discovery.
 - Stock Indicators: Provides real-time updates on product availability.
-- Theme Switcher: Allows users to switch between light and dark themes for better accessibility and user experience.
+- Theme Switcher: Allows users to switch between many available themes for better accessibility and user experience.
 
 ## Getting Started
 
