@@ -66,7 +66,7 @@ This project is licensed under the GNU General Public License v3.0.
   ![Landing Page](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/1-landing_page2.png)
   <br>
 
-- Theme Switcher (Multi theme support)
+- Theme Switcher (Multi Theme Support)
   <br>
   ![Theme Switcher](https://raw.githubusercontent.com/hadeer-khaled/E-commerce-React-Part/main/assets/3-theme.png)
   <br>
